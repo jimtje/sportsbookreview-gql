@@ -1,7 +1,7 @@
 import sgqlc.types
 
 
-sbrschema = sgqlc.types.Schema()
+sbr_july_2020 = sgqlc.types.Schema()
 
 
 
@@ -9,7 +9,7 @@ sbrschema = sgqlc.types.Schema()
 # Scalars and Enumerations
 ########################################################################
 class BestLine(sgqlc.types.Scalar):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
 
 
 Boolean = sgqlc.types.Boolean
@@ -19,41 +19,34 @@ Float = sgqlc.types.Float
 Int = sgqlc.types.Int
 
 class JSON(sgqlc.types.Scalar):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
 
-
-class JSON(sgqlc.types.Scalar):
-    __schema__ = sbrschema
-
-
-class JSON(sgqlc.types.Scalar):
-    __schema__ = sbrschema
 
 
 class MarketTypeLayout(sgqlc.types.Enum):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __choices__ = ('PARTICIPANTS', 'BETTING_OPTIONS')
 
 
 class ORDER(sgqlc.types.Enum):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __choices__ = ('ASC', 'DESC')
 
 
 class ShowLive(sgqlc.types.Enum):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __choices__ = ('ONLY_LIVE_EVENTS', 'HIDE_LIVE_EVENTS', 'IGNORE')
 
 
 String = sgqlc.types.String
 
 class TopPerformerIdentity(sgqlc.types.Enum):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __choices__ = ('PASSING', 'RUSHING', 'RECEIVING')
 
 
 class TypeInput(sgqlc.types.Enum):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __choices__ = ('TOP', 'UPCOMING')
 
 
@@ -62,23 +55,26 @@ class TypeInput(sgqlc.types.Enum):
 # Input Objects
 ########################################################################
 class BetSlipArgs(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'mtid', 'partid', 'boid', 'sbid')
     eid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='eid')
     mtid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='mtid')
     partid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='partid')
-    boid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='boid')
-    sbid = sgqlc.types.Field(Int, graphql_name='sbid')
+    boid = sgqlc.types.Field(Int, graphql_name='boid')
+    sbid = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='sbid')
 
 
 class EventFilterGroupMarketTypeSetting(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'mtid', 'layout')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
     layout = sgqlc.types.Field(String, graphql_name='layout')
 
 
 class EventFilterGroupsArgs(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('efgids', 'sitid', 'time_zone_offset', 'startdate', 'show_live', 'spid', 'market_types', 'active', 'enabled')
     efgids = sgqlc.types.Field(sgqlc.types.list_of(String), graphql_name='efgids')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     time_zone_offset = sgqlc.types.Field(Float, graphql_name='timeZoneOffset')
@@ -91,33 +87,39 @@ class EventFilterGroupsArgs(sgqlc.types.Input):
 
 
 class GeolocationIntput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('latitude', 'longitude', 'max_distance')
     latitude = sgqlc.types.Field(sgqlc.types.non_null(Float), graphql_name='latitude')
     longitude = sgqlc.types.Field(sgqlc.types.non_null(Float), graphql_name='longitude')
     max_distance = sgqlc.types.Field(sgqlc.types.non_null(Float), graphql_name='maxDistance')
 
 
 class GroupInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('by',)
     by = sgqlc.types.Field(sgqlc.types.non_null(sgqlc.types.list_of(String)), graphql_name='by')
 
 
 class InputQueryFloat(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('gt', 'eq', 'between')
     gt = sgqlc.types.Field(Float, graphql_name='gt')
     eq = sgqlc.types.Field(Float, graphql_name='eq')
     between = sgqlc.types.Field(sgqlc.types.list_of(Float), graphql_name='between')
 
 
 class LeagueFilter(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('enabled', 'sitid', 'did', 'lid')
     enabled = sgqlc.types.Field(sgqlc.types.non_null(Boolean), graphql_name='enabled')
     sitid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='sitid')
     did = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='did')
+    lid = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='lid')
 
 
 class LeagueGroup(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'lid', 'spid', 'writeingame')
     mtid = sgqlc.types.Field(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='mtid')
     lid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='lid')
     spid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='spid')
@@ -125,7 +127,8 @@ class LeagueGroup(sgqlc.types.Input):
 
 
 class LineGroupArgs(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'mtid', 'partid', 'boid', 'sbid', 'market_type_layout')
     eid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='eid')
     mtid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='mtid')
     partid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='partid')
@@ -135,13 +138,15 @@ class LineGroupArgs(sgqlc.types.Input):
 
 
 class LocationInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('city', 'dt')
     city = sgqlc.types.Field(sgqlc.types.non_null(String), graphql_name='city')
     dt = sgqlc.types.Field(sgqlc.types.non_null(String), graphql_name='dt')
 
 
 class MenuOptionInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mid', 'sitid', 'mbid', 'parentlink', 'level')
     mid = sgqlc.types.Field(String, graphql_name='mid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     mbid = sgqlc.types.Field(Int, graphql_name='mbid')
@@ -150,7 +155,8 @@ class MenuOptionInput(sgqlc.types.Input):
 
 
 class MenuOptionSettingInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mid', 'did', 'title', 'url', 'iconurl', 'showicon', 'showtext', 'enabled', 'ord')
     mid = sgqlc.types.Field(String, graphql_name='mid')
     did = sgqlc.types.Field(Int, graphql_name='did')
     title = sgqlc.types.Field(String, graphql_name='title')
@@ -163,7 +169,8 @@ class MenuOptionSettingInput(sgqlc.types.Input):
 
 
 class RangeInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('gt', 'gte', 'eq', 'between')
     gt = sgqlc.types.Field(Float, graphql_name='gt')
     gte = sgqlc.types.Field(Float, graphql_name='gte')
     eq = sgqlc.types.Field(Float, graphql_name='eq')
@@ -171,13 +178,15 @@ class RangeInput(sgqlc.types.Input):
 
 
 class SortInput(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('by', 'order')
     by = sgqlc.types.Field(sgqlc.types.non_null(sgqlc.types.list_of(String)), graphql_name='by')
     order = sgqlc.types.Field(ORDER, graphql_name='order')
 
 
 class SportbooksByCategoryArgs(sgqlc.types.Input):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sitid', 'did', 'cid', 'spid', 'enabled', 'sort_with', 'famid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     did = sgqlc.types.Field(Int, graphql_name='did')
     cid = sgqlc.types.Field(Int, graphql_name='cid')
@@ -192,7 +201,8 @@ class SportbooksByCategoryArgs(sgqlc.types.Input):
 # Output Objects and Interfaces
 ########################################################################
 class Astronomy(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sunrise', 'sunset', 'moonrise', 'moonset')
     sunrise = sgqlc.types.Field(String, graphql_name='sunrise')
     sunset = sgqlc.types.Field(String, graphql_name='sunset')
     moonrise = sgqlc.types.Field(String, graphql_name='moonrise')
@@ -200,36 +210,51 @@ class Astronomy(sgqlc.types.Type):
 
 
 class BetSlipInfo(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('events', 'current_lines', 'market_types')
     events = sgqlc.types.Field(sgqlc.types.list_of('Event'), graphql_name='events')
     current_lines = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='currentLines', args=sgqlc.types.ArgDict((
         ('paid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='paid', default=None)),
 ))
     )
-    market_types = sgqlc.types.Field(sgqlc.types.list_of('MarketType'), graphql_name='marketTypes')
+    market_types = sgqlc.types.Field(sgqlc.types.list_of('MarketTypeWithSettings'), graphql_name='marketTypes')
 
 
 class BettingOption(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('boid', 'nam', 'sequence')
     boid = sgqlc.types.Field(Int, graphql_name='boid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sequence = sgqlc.types.Field(Int, graphql_name='sequence')
 
 
+class CMSSportsbook(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'name', 'provider_id', 'affiliate_link', 'image')
+    id = sgqlc.types.Field(Int, graphql_name='ID')
+    name = sgqlc.types.Field(String, graphql_name='name')
+    provider_id = sgqlc.types.Field(Int, graphql_name='providerId')
+    affiliate_link = sgqlc.types.Field(String, graphql_name='affiliateLink')
+    image = sgqlc.types.Field(String, graphql_name='image')
+
+
 class ClimateAverages(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('month',)
     month = sgqlc.types.Field(sgqlc.types.list_of('Month'), graphql_name='month')
 
 
 class Conference(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'name', 'shortname')
     id = sgqlc.types.Field(Int, graphql_name='id')
     name = sgqlc.types.Field(String, graphql_name='name')
     shortname = sgqlc.types.Field(String, graphql_name='shortname')
 
 
 class Consensus(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'mtid', 'bb', 'boid', 'partid', 'sbid', 'paid', 'lineid', 'wag', 'perc', 'vol', 'tvol', 'sequence', 'tim', 'wb', 'line')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
     bb = sgqlc.types.Field(Int, graphql_name='bb')
@@ -249,13 +274,15 @@ class Consensus(sgqlc.types.Type):
 
 
 class ConsensusWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('consensus', 'max_sequence')
     consensus = sgqlc.types.Field(sgqlc.types.list_of(Consensus), graphql_name='consensus')
     max_sequence = sgqlc.types.Field(Int, graphql_name='maxSequence')
 
 
 class CurrentCondition(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('observation_time', 'temp__c', 'temp__f', 'weather_code', 'weather_icon_url', 'weather_desc', 'windspeed_miles', 'windspeed_kmph', 'winddir_degree', 'winddir16_point', 'precip_mm', 'humidity', 'visibility', 'pressure', 'cloudcover', 'feels_like_c', 'feels_like_f')
     observation_time = sgqlc.types.Field(String, graphql_name='observation_time')
     temp__c = sgqlc.types.Field(String, graphql_name='temp_C')
     temp__f = sgqlc.types.Field(String, graphql_name='temp_F')
@@ -276,19 +303,22 @@ class CurrentCondition(sgqlc.types.Type):
 
 
 class CurrentLinesWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('current_lines', 'max_sequence')
     current_lines = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='currentLines')
     max_sequence = sgqlc.types.Field(Float, graphql_name='maxSequence')
 
 
 class Customized(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('value', 'parentid')
     value = sgqlc.types.Field(Boolean, graphql_name='value')
     parentid = sgqlc.types.Field(Int, graphql_name='parentid')
 
 
 class DepthChart(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'seid', 'tmid', 'pid', 'pposid', 'week', 'val', 'position')
     id = sgqlc.types.Field(Int, graphql_name='id')
     seid = sgqlc.types.Field(Int, graphql_name='seid')
     tmid = sgqlc.types.Field(Int, graphql_name='tmid')
@@ -300,14 +330,16 @@ class DepthChart(sgqlc.types.Type):
 
 
 class Division(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'name', 'shortname')
     id = sgqlc.types.Field(Int, graphql_name='id')
     name = sgqlc.types.Field(String, graphql_name='name')
     shortname = sgqlc.types.Field(String, graphql_name='shortname')
 
 
 class Domain(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('did', 'sitid', 'nam', 'is_sport_customized', 'is_league_customized', 'is_market_type_customized', 'is_market_type_group_customized', 'is_footer_bar_customized', 'is_family_bar_customized', 'ord', 'ismainregion', 'countries', 'enabled')
     did = sgqlc.types.Field(Int, graphql_name='did')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -324,7 +356,8 @@ class Domain(sgqlc.types.Type):
 
 
 class Event(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'cit', 'dt', 'des', 'es', 'ic', 'hl', 'lu', 'lid', 'rid', 'spid', 'sta', 'st', 'cou', 'zcode', 'ven', 'tvs', 'sequence', 'seid', 'writeingame', 'scores', 'league', 'participants', 'statistics', 'statistics_by_groups', 'event_statistics_by_group', 'market_type', 'market_types', 'current_lines', 'opening_lines', 'best_lines', 'betting_options', 'plays', 'event_group', 'event_tags', 'consensus', 'weather', 'event_markets_count', 'tl', 'att', 'fo', 'tr', 'lat', 'lon')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     cit = sgqlc.types.Field(String, graphql_name='cit')
     dt = sgqlc.types.Field(Float, graphql_name='dt')
@@ -346,7 +379,7 @@ class Event(sgqlc.types.Type):
     seid = sgqlc.types.Field(Int, graphql_name='seid')
     writeingame = sgqlc.types.Field(Boolean, graphql_name='writeingame')
     scores = sgqlc.types.Field(sgqlc.types.list_of('Score'), graphql_name='scores')
-    league = sgqlc.types.Field('League', graphql_name='league')
+    league = sgqlc.types.Field('LeagueWithSettings', graphql_name='league')
     participants = sgqlc.types.Field(sgqlc.types.list_of('Participant'), graphql_name='participants')
     statistics = sgqlc.types.Field(sgqlc.types.list_of('Statistic'), graphql_name='statistics', args=sgqlc.types.ArgDict((
         ('sgid', sgqlc.types.Arg(Int, graphql_name='sgid', default=None)),
@@ -363,8 +396,8 @@ class Event(sgqlc.types.Type):
         ('statistic_group', sgqlc.types.Arg(sgqlc.types.non_null(String), graphql_name='statisticGroup', default=None)),
 ))
     )
-    market_type = sgqlc.types.Field('MarketType', graphql_name='marketType')
-    market_types = sgqlc.types.Field(sgqlc.types.list_of('MarketType'), graphql_name='marketTypes')
+    market_type = sgqlc.types.Field('MarketTypeWithSettings', graphql_name='marketType')
+    market_types = sgqlc.types.Field(sgqlc.types.list_of('MarketTypeWithSettings'), graphql_name='marketTypes')
     current_lines = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='currentLines', args=sgqlc.types.ArgDict((
         ('need_sbid', sgqlc.types.Arg(Boolean, graphql_name='needSbid', default=None)),
         ('paid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='paid', default=None)),
@@ -393,6 +426,7 @@ class Event(sgqlc.types.Type):
 ))
     )
     event_group = sgqlc.types.Field('EventGroup', graphql_name='eventGroup')
+    event_tags = sgqlc.types.Field(sgqlc.types.list_of('EventTag'), graphql_name='eventTags')
     consensus = sgqlc.types.Field(sgqlc.types.list_of(Consensus), graphql_name='consensus')
     weather = sgqlc.types.Field(sgqlc.types.list_of('WeatherOutput'), graphql_name='weather')
     event_markets_count = sgqlc.types.Field(Int, graphql_name='eventMarketsCount')
@@ -405,7 +439,8 @@ class Event(sgqlc.types.Type):
 
 
 class EventBettingOption(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'partid', 'boid', 'nam', 'mtid', 'spid', 'sequence')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     boid = sgqlc.types.Field(Int, graphql_name='boid')
@@ -416,7 +451,8 @@ class EventBettingOption(sgqlc.types.Type):
 
 
 class EventCatalog(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('des', 'date', 'league', 'sport', 'spid', 'region', 'eid', 'search_participants', 'event_participants', 'lid', 'path')
     des = sgqlc.types.Field(String, graphql_name='des')
     date = sgqlc.types.Field(String, graphql_name='date')
     league = sgqlc.types.Field(String, graphql_name='league')
@@ -431,13 +467,15 @@ class EventCatalog(sgqlc.types.Type):
 
 
 class EventDateCount(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('dt', 'size')
     dt = sgqlc.types.Field(Float, graphql_name='dt')
     size = sgqlc.types.Field(Int, graphql_name='size')
 
 
 class EventFilter(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('efid', 'nam', 'efgids', 'spid', 'mtids', 'events', 'lids', 'eids', 'rids', 'sortmode', 'filtertype', 'eventtoshow', 'cutoffpoint', 'amount', 'ord', 'showlive', 'minutes', 'enabled', 'active')
     efid = sgqlc.types.Field(String, graphql_name='efid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     efgids = sgqlc.types.Field(String, graphql_name='efgids')
@@ -460,7 +498,8 @@ class EventFilter(sgqlc.types.Type):
 
 
 class EventFilterGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('efgid', 'nam', 'sitid', 'ord', 'maxshow', 'enabled', 'active', 'events_filters', 'max_sequences')
     efgid = sgqlc.types.Field(String, graphql_name='efgid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
@@ -473,7 +512,8 @@ class EventFilterGroup(sgqlc.types.Type):
 
 
 class EventFilterGroupLegacy(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'sitid', 'settings')
     egid = sgqlc.types.Field(String, graphql_name='egid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     settings = sgqlc.types.Field('EventFilterGroupSettings', graphql_name='settings', args=sgqlc.types.ArgDict((
@@ -484,7 +524,8 @@ class EventFilterGroupLegacy(sgqlc.types.Type):
 
 
 class EventFilterGroupSettings(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'did', 'nam', 'enabled', 'active')
     egid = sgqlc.types.Field(String, graphql_name='egid')
     did = sgqlc.types.Field(Int, graphql_name='did')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -493,7 +534,8 @@ class EventFilterGroupSettings(sgqlc.types.Type):
 
 
 class EventFilterGroupWithEventIds(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'sitid', 'event_ids_by_sport', 'event_ids_by_filter')
     egid = sgqlc.types.Field(String, graphql_name='egid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     event_ids_by_sport = sgqlc.types.Field(sgqlc.types.list_of('EventIdsBySport'), graphql_name='eventIdsBySport', args=sgqlc.types.ArgDict((
@@ -507,7 +549,8 @@ class EventFilterGroupWithEventIds(sgqlc.types.Type):
 
 
 class EventFilterGroupWithEvents(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'events_by_sport', 'events_by_filter', 'max_sequences')
     egid = sgqlc.types.Field(String, graphql_name='egid')
     events_by_sport = sgqlc.types.Field(sgqlc.types.list_of('EventsBySport'), graphql_name='eventsBySport')
     events_by_filter = sgqlc.types.Field(sgqlc.types.list_of('EventsByFilter'), graphql_name='eventsByFilter')
@@ -515,7 +558,8 @@ class EventFilterGroupWithEvents(sgqlc.types.Type):
 
 
 class EventGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'nam', 'alias', 'lid', 'eid', 'disord', 'ic', 'sdt', 'edt', 'parentname', 'parentid')
     egid = sgqlc.types.Field(Int, graphql_name='egid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     alias = sgqlc.types.Field(String, graphql_name='alias')
@@ -530,7 +574,8 @@ class EventGroup(sgqlc.types.Type):
 
 
 class EventGroupBySeason(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('egid', 'nam', 'alias', 'ceg', 'seid', 'disord', 'sdt', 'edt', 'eids', 'mtids', 'hl')
     egid = sgqlc.types.Field(Int, graphql_name='egid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     alias = sgqlc.types.Field(String, graphql_name='alias')
@@ -539,17 +584,25 @@ class EventGroupBySeason(sgqlc.types.Type):
     disord = sgqlc.types.Field(Int, graphql_name='disord')
     sdt = sgqlc.types.Field(Float, graphql_name='sdt')
     edt = sgqlc.types.Field(Float, graphql_name='edt')
+    eids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='eids')
+    mtids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='mtids')
+    hl = sgqlc.types.Field(Boolean, graphql_name='hl', args=sgqlc.types.ArgDict((
+        ('catid', sgqlc.types.Arg(Int, graphql_name='catid', default=None)),
+))
+    )
 
 
 class EventIdsBySport(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'mtid', 'eids')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
     eids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='eids')
 
 
 class EventInfoByParticipant(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('partid', 'eid', 'events', 'events_by_participant')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     eid = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='eid')
     events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events', args=sgqlc.types.ArgDict((
@@ -568,7 +621,8 @@ class EventInfoByParticipant(sgqlc.types.Type):
 
 
 class EventLocation(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'lat', 'lon', 'add', 'cou', 'sta', 'ven', 'cit', 'zcode', 'att', 'fo')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     lat = sgqlc.types.Field(Float, graphql_name='lat')
     lon = sgqlc.types.Field(Float, graphql_name='lon')
@@ -583,7 +637,8 @@ class EventLocation(sgqlc.types.Type):
 
 
 class EventMarketLine(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'eid', 'act', 'maxsequence')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     act = sgqlc.types.Field(Boolean, graphql_name='act')
@@ -591,24 +646,28 @@ class EventMarketLine(sgqlc.types.Type):
 
 
 class EventMarkets(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtids',)
     mtids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='mtids')
 
 
 class EventRegion(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('available', 'active')
     available = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='available')
     active = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='active')
 
 
 class EventRoster(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('erid', 'eid', 'sid', 'pid', 'partid', 'act', 'sequence', 'ilu', 'luo', 'roster', 'statistics_by_groups')
     erid = sgqlc.types.Field(Int, graphql_name='erid')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     sid = sgqlc.types.Field(Int, graphql_name='sid')
     pid = sgqlc.types.Field(Int, graphql_name='pid')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     act = sgqlc.types.Field(Boolean, graphql_name='act')
+    sequence = sgqlc.types.Field(Int, graphql_name='sequence')
     ilu = sgqlc.types.Field(Boolean, graphql_name='ilu')
     luo = sgqlc.types.Field(Int, graphql_name='luo')
     roster = sgqlc.types.Field('Player', graphql_name='roster')
@@ -619,8 +678,18 @@ class EventRoster(sgqlc.types.Type):
     )
 
 
+class EventTag(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'link', 'tag', 'eid')
+    id = sgqlc.types.Field(Int, graphql_name='ID')
+    link = sgqlc.types.Field(String, graphql_name='link')
+    tag = sgqlc.types.Field('Tag', graphql_name='tag')
+    eid = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='eid')
+
+
 class EventsByFilter(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('efid', 'spid', 'lids', 'sortmode', 'events')
     efid = sgqlc.types.Field(String, graphql_name='efid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     lids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='lids')
@@ -629,32 +698,37 @@ class EventsByFilter(sgqlc.types.Type):
 
 
 class EventsBySport(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'events')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events')
 
 
 class EventsCarousel(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('event_filter_groups', 'sportbooks_by_category', 'max_sequences')
     event_filter_groups = sgqlc.types.Field(sgqlc.types.list_of(EventFilterGroup), graphql_name='eventFilterGroups')
     sportbooks_by_category = sgqlc.types.Field(sgqlc.types.list_of('SportbooksByCategory'), graphql_name='sportbooksByCategory')
     max_sequences = sgqlc.types.Field('MaxSequences', graphql_name='maxSequences')
 
 
 class EventsWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('events', 'max_sequence')
     events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events')
     max_sequence = sgqlc.types.Field(Int, graphql_name='maxSequence')
 
 
 class EventsWithMaxSequences(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('events', 'max_sequences')
     events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events')
     max_sequences = sgqlc.types.Field('MaxSequences', graphql_name='maxSequences')
 
 
 class GroupedHistoryLine(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('history_line',)
     history_line = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='historyLine', args=sgqlc.types.ArgDict((
         ('group_id', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='groupId', default=None)),
 ))
@@ -662,13 +736,15 @@ class GroupedHistoryLine(sgqlc.types.Type):
 
 
 class HistoryLine(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('tim', 'lines')
     tim = sgqlc.types.Field(Float, graphql_name='tim')
     lines = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='lines')
 
 
 class Hourly(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('time', 'utcdate', 'utctime', 'temp_c', 'temp_f', 'windspeed_miles', 'windspeed_kmph', 'winddir_degree', 'winddir16_point', 'weather_code', 'weather_icon_url', 'weather_desc', 'precip_mm', 'humidity', 'visibility', 'pressure', 'cloudcover', 'heat_index_c', 'heat_index_f', 'dew_point_c', 'dew_point_f', 'wind_chill_c', 'wind_chill_f', 'wind_gust_miles', 'wind_gust_kmph', 'feels_like_c', 'feels_like_f', 'chanceofrain', 'chanceofremdry', 'chanceofwindy', 'chanceofovercast', 'chanceofsunshine', 'chanceoffrost', 'chanceofhightemp', 'chanceoffog', 'chanceofsnow', 'chanceofthunder')
     time = sgqlc.types.Field(String, graphql_name='time')
     utcdate = sgqlc.types.Field(String, graphql_name='UTCdate')
     utctime = sgqlc.types.Field(String, graphql_name='UTCtime')
@@ -709,7 +785,8 @@ class Hourly(sgqlc.types.Type):
 
 
 class Image(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'filename', 'title', 'description', 'tags', 'sizes', 'updated_at', 'created_at')
     id = sgqlc.types.Field(String, graphql_name='id')
     filename = sgqlc.types.Field(String, graphql_name='filename')
     title = sgqlc.types.Field(String, graphql_name='title')
@@ -721,7 +798,8 @@ class Image(sgqlc.types.Type):
 
 
 class InjuryResponse(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('pid', 'tmid', 'seid', 'typ', 'stt', 'loc', 'det', 'side', 'retdt', 'disch', 'hl', 'not_', 'newstim', 'newsdate', 'team_roster_player', 'prio')
     pid = sgqlc.types.Field(Int, graphql_name='pid')
     tmid = sgqlc.types.Field(Int, graphql_name='tmid')
     seid = sgqlc.types.Field(Int, graphql_name='seid')
@@ -737,22 +815,23 @@ class InjuryResponse(sgqlc.types.Type):
     newstim = sgqlc.types.Field(Float, graphql_name='newstim')
     newsdate = sgqlc.types.Field(Float, graphql_name='newsdate')
     team_roster_player = sgqlc.types.Field('TeamRosterPlayer', graphql_name='teamRosterPlayer')
+    prio = sgqlc.types.Field(Int, graphql_name='prio')
 
 
 class League(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'nam', 'rid', 'spid', 'sn', 'lurl')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     sn = sgqlc.types.Field(String, graphql_name='sn')
-    settings = sgqlc.types.Field('LeagueSetting', graphql_name='settings')
-    sport = sgqlc.types.Field('Sport', graphql_name='sport')
     lurl = sgqlc.types.Field(String, graphql_name='lurl')
 
 
 class LeagueCatalog(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('did', 'lid', 'nam', 'rid', 'spid', 'sn', 'region', 'settings', 'path')
     did = sgqlc.types.Field(Int, graphql_name='did')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -765,7 +844,8 @@ class LeagueCatalog(sgqlc.types.Type):
 
 
 class LeagueHierarchy(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('team_id', 'season_id', 'league_id', 'conference', 'division')
     team_id = sgqlc.types.Field(Int, graphql_name='teamId')
     season_id = sgqlc.types.Field(Int, graphql_name='seasonId')
     league_id = sgqlc.types.Field(Int, graphql_name='leagueId')
@@ -774,13 +854,15 @@ class LeagueHierarchy(sgqlc.types.Type):
 
 
 class LeagueMarket(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'mtid')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
 
 
 class LeagueSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'sitid', 'did', 'enabled', 'alias', 'rotation', 'ord', 'shortnamealias', 'shortnamebreakpoint', 'matchupline', '_is_custom', '_is_favorite', '_is_default_favorite')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     did = sgqlc.types.Field(Int, graphql_name='did')
@@ -797,7 +879,8 @@ class LeagueSetting(sgqlc.types.Type):
 
 
 class LeagueSettings(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('enabled', 'alias', 'ord', 'shortnamealias')
     enabled = sgqlc.types.Field(Boolean, graphql_name='enabled')
     alias = sgqlc.types.Field(String, graphql_name='alias')
     ord = sgqlc.types.Field(Int, graphql_name='ord')
@@ -805,12 +888,13 @@ class LeagueSettings(sgqlc.types.Type):
 
 
 class LeagueV2(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'nam', 'rid', 'spid', 'market_type', 'sport', 'sn', 'enabled', 'alias', 'rotation', 'sitid', 'did', 'region', 'lurl', 'settings')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
-    market_type = sgqlc.types.Field('MarketType', graphql_name='marketType')
+    market_type = sgqlc.types.Field('MarketTypeWithSettings', graphql_name='marketType')
     sport = sgqlc.types.Field('Sport', graphql_name='sport')
     sn = sgqlc.types.Field(String, graphql_name='sn')
     enabled = sgqlc.types.Field(Boolean, graphql_name='enabled')
@@ -829,7 +913,8 @@ class LeagueV2(sgqlc.types.Type):
 
 
 class LeagueWithSettings(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'nam', 'rid', 'spid', 'did', 'sn', 'lurl', 'market_type', 'region', 'settings', 'sport')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
@@ -837,13 +922,15 @@ class LeagueWithSettings(sgqlc.types.Type):
     did = sgqlc.types.Field(Int, graphql_name='did')
     sn = sgqlc.types.Field(String, graphql_name='sn')
     lurl = sgqlc.types.Field(String, graphql_name='lurl')
-    market_type = sgqlc.types.Field('MarketType', graphql_name='marketType')
+    market_type = sgqlc.types.Field('MarketTypeWithSettings', graphql_name='marketType')
     region = sgqlc.types.Field('Region', graphql_name='region')
     settings = sgqlc.types.Field(LeagueSetting, graphql_name='settings')
+    sport = sgqlc.types.Field('Sport', graphql_name='sport')
 
 
 class LeagueWithSettingsV2(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'nam', 'rid', 'spid', 'did', 'lurl', 'sn', 'market_type', 'region', 'settings')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
@@ -851,20 +938,22 @@ class LeagueWithSettingsV2(sgqlc.types.Type):
     did = sgqlc.types.Field(Int, graphql_name='did')
     lurl = sgqlc.types.Field(String, graphql_name='lurl')
     sn = sgqlc.types.Field(String, graphql_name='sn')
-    market_type = sgqlc.types.Field('MarketType', graphql_name='marketType')
+    market_type = sgqlc.types.Field('MarketTypeWithSettings', graphql_name='marketType')
     region = sgqlc.types.Field('RegionLeagueV2', graphql_name='region')
     settings = sgqlc.types.Field(LeagueSetting, graphql_name='settings')
 
 
 class LeaguesAndRegionsBySport(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sitid', 'did', 'sports')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     did = sgqlc.types.Field(Int, graphql_name='did')
     sports = sgqlc.types.Field(sgqlc.types.list_of('SportsWithRegions'), graphql_name='sports')
 
 
 class LeaguesWithEventGroups(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('lid', 'nam', 'sn', 'enabled', 'alias', 'rotation', 'domain_ord', 'default_ord', 'shortnamealias', 'shortnamebreakpoint', 'matchupline', 'lurl', 'event_groups_by_league')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sn = sgqlc.types.Field(String, graphql_name='sn')
@@ -881,47 +970,43 @@ class LeaguesWithEventGroups(sgqlc.types.Type):
 
 
 class MainAffiliate(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('nam', 'enabled')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     enabled = sgqlc.types.Field(Boolean, graphql_name='enabled')
 
 
 class MarketType(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'spid', 'nam', 'des')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
-    ord = sgqlc.types.Field(Int, graphql_name='ord')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
-    mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     des = sgqlc.types.Field(String, graphql_name='des')
-    format = sgqlc.types.Field(String, graphql_name='format')
-    layout = sgqlc.types.Field(String, graphql_name='layout')
-    settings = sgqlc.types.Field('MarketTypeSetting', graphql_name='settings')
 
 
 class MarketTypeGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtgid', 'spid', 'nam')
     mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
-    sitid = sgqlc.types.Field(Int, graphql_name='sitid')
-    did = sgqlc.types.Field(Int, graphql_name='did')
-    market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketType), graphql_name='marketTypes')
-    settings = sgqlc.types.Field('MarketTypeGroupSetting', graphql_name='settings')
 
 
 class MarketTypeGroupFiltered(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtgid', 'ord', 'spid', 'nam', 'alias', 'mtids')
     mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
     ord = sgqlc.types.Field(Int, graphql_name='ord')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     alias = sgqlc.types.Field(String, graphql_name='alias')
-    mtids = sgqlc.types.Field(sgqlc.types.list_of(MarketType), graphql_name='mtids')
+    mtids = sgqlc.types.Field(sgqlc.types.list_of('MarketTypeWithSettings'), graphql_name='mtids')
 
 
 class MarketTypeGroupSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sitid', 'mtgid', 'did', 'enabled', 'ord', 'alias', 'url', 'active', '_is_custom', '_is_favorite', '_is_default_favorite')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
     did = sgqlc.types.Field(Int, graphql_name='did')
@@ -936,13 +1021,27 @@ class MarketTypeGroupSetting(sgqlc.types.Type):
 
 
 class MarketTypeGroupWithMarketTypes(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtgid', 'mtids')
     mtgid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='mtgid')
     mtids = sgqlc.types.Field(sgqlc.types.list_of(sgqlc.types.non_null('MarketTypesByMarketTypeGroup')), graphql_name='mtids')
 
 
+class MarketTypeGroupWithSettings(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtgid', 'spid', 'nam', 'sitid', 'did', 'market_types', 'settings')
+    mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
+    spid = sgqlc.types.Field(Int, graphql_name='spid')
+    nam = sgqlc.types.Field(String, graphql_name='nam')
+    sitid = sgqlc.types.Field(Int, graphql_name='sitid')
+    did = sgqlc.types.Field(Int, graphql_name='did')
+    market_types = sgqlc.types.Field(sgqlc.types.list_of('MarketTypeWithSettings'), graphql_name='marketTypes')
+    settings = sgqlc.types.Field(MarketTypeGroupSetting, graphql_name='settings')
+
+
 class MarketTypeSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'spid', 'sitid', 'did', 'enabled', 'alias', 'url', 'sort', 'template', 'format', 'layout', '_is_custom')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
@@ -957,34 +1056,54 @@ class MarketTypeSetting(sgqlc.types.Type):
     _is_custom = sgqlc.types.Field(Boolean, graphql_name='_isCustom')
 
 
+class MarketTypeWithSettings(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'ord', 'spid', 'mtgid', 'nam', 'des', 'format', 'layout', 'settings')
+    mtid = sgqlc.types.Field(Int, graphql_name='mtid')
+    ord = sgqlc.types.Field(Int, graphql_name='ord')
+    spid = sgqlc.types.Field(Int, graphql_name='spid')
+    mtgid = sgqlc.types.Field(Int, graphql_name='mtgid')
+    nam = sgqlc.types.Field(String, graphql_name='nam')
+    des = sgqlc.types.Field(String, graphql_name='des')
+    format = sgqlc.types.Field(String, graphql_name='format')
+    layout = sgqlc.types.Field(String, graphql_name='layout')
+    settings = sgqlc.types.Field(MarketTypeSetting, graphql_name='settings')
+
+
 class MarketTypesByMarketTypeGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mtid', 'ord')
     mtid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='mtid')
     ord = sgqlc.types.Field(Int, graphql_name='ord')
 
 
 class MatchupDates(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('dates',)
     dates = sgqlc.types.Field(sgqlc.types.list_of(String), graphql_name='dates')
 
 
 class MatchupEvents(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('events',)
     events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events')
 
 
 class MatchupId(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid',)
     eid = sgqlc.types.Field(Int, graphql_name='eid')
 
 
 class MaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('max_sequence',)
     max_sequence = sgqlc.types.Field(Int, graphql_name='maxSequence')
 
 
 class MaxSequences(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('events_max_sequence', 'scores_max_sequence', 'lines_max_sequence', 'statistics_max_sequence', 'statistics_by_groups_max_sequence', 'consensus_max_sequence', 'plays_max_sequence')
     events_max_sequence = sgqlc.types.Field(Int, graphql_name='eventsMaxSequence')
     scores_max_sequence = sgqlc.types.Field(Int, graphql_name='scoresMaxSequence')
     lines_max_sequence = sgqlc.types.Field(Float, graphql_name='linesMaxSequence')
@@ -995,7 +1114,8 @@ class MaxSequences(sgqlc.types.Type):
 
 
 class MenuOption(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mid', 'sitid', 'mbid', 'parentlink', 'level', 'settings', 'submenuoptions')
     mid = sgqlc.types.Field(String, graphql_name='mid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     mbid = sgqlc.types.Field(Int, graphql_name='mbid')
@@ -1010,7 +1130,8 @@ class MenuOption(sgqlc.types.Type):
 
 
 class MenuOptionSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('mid', 'did', 'title', 'url', 'iconurl', 'showicon', 'showtext', 'enabled', 'ord')
     mid = sgqlc.types.Field(String, graphql_name='mid')
     did = sgqlc.types.Field(Int, graphql_name='did')
     title = sgqlc.types.Field(String, graphql_name='title')
@@ -1023,7 +1144,8 @@ class MenuOptionSetting(sgqlc.types.Type):
 
 
 class Month(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('index', 'name', 'avg_min_temp', 'avg_min_temp__f', 'abs_max_temp', 'abs_max_temp__f', 'avg_daily_rainfall')
     index = sgqlc.types.Field(String, graphql_name='index')
     name = sgqlc.types.Field(String, graphql_name='name')
     avg_min_temp = sgqlc.types.Field(String, graphql_name='avgMinTemp')
@@ -1034,14 +1156,16 @@ class Month(sgqlc.types.Type):
 
 
 class MultipleResult(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('search_event', 'search_sport', 'search_league')
     search_event = sgqlc.types.Field(sgqlc.types.list_of(EventCatalog), graphql_name='searchEvent')
     search_sport = sgqlc.types.Field(sgqlc.types.list_of('SportCatalog'), graphql_name='searchSport')
     search_league = sgqlc.types.Field(sgqlc.types.list_of(LeagueCatalog), graphql_name='searchLeague')
 
 
 class New(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('hl', 'not_', 'anly', 'prio', 'inid', 'pid', 'seid', 'act', 'tim', 'date')
     hl = sgqlc.types.Field(String, graphql_name='hl')
     not_ = sgqlc.types.Field(String, graphql_name='not')
     anly = sgqlc.types.Field(String, graphql_name='anly')
@@ -1055,7 +1179,8 @@ class New(sgqlc.types.Type):
 
 
 class OddFormat(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'dcp', 'np', 'dep', 'tim', 'act')
     id = sgqlc.types.Field(Int, graphql_name='id')
     dcp = sgqlc.types.Field(Float, graphql_name='dcp')
     np = sgqlc.types.Field(Int, graphql_name='np')
@@ -1065,7 +1190,8 @@ class OddFormat(sgqlc.types.Type):
 
 
 class Participant(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('partid', 'eid', 'ptid', 'psid', 'partbeid', 'act', 'stt', 'rot', 'ih', 'sbrid', 'sppil', 'sppic', 'tr', 'starting_pitcher', 'source', 'stats_identity', 'statistics_by_groups', 'eventrosters')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     ptid = sgqlc.types.Field(Int, graphql_name='ptid')
@@ -1091,7 +1217,8 @@ class Participant(sgqlc.types.Type):
 
 
 class ParticipantByEvent(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('partid', 'eid', 'ptid', 'act', 'psid', 'rot', 'ih', 'tr', 'sbrid', 'sppil', 'sppic', 'sppid', 'partbeid', 'seid')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     ptid = sgqlc.types.Field(Int, graphql_name='ptid')
@@ -1109,7 +1236,8 @@ class ParticipantByEvent(sgqlc.types.Type):
 
 
 class ParticipantGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('partgid', 'nam', 'lid', 'act', 'stt', 'participants')
     partgid = sgqlc.types.Field(Int, graphql_name='partgid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
@@ -1119,7 +1247,8 @@ class ParticipantGroup(sgqlc.types.Type):
 
 
 class Play(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'sqid', 'siid', 'gid', 'nam', 'val', 'tim', 'sequence')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     sqid = sgqlc.types.Field(Int, graphql_name='sqid')
     siid = sgqlc.types.Field(Int, graphql_name='siid')
@@ -1131,7 +1260,8 @@ class Play(sgqlc.types.Type):
 
 
 class Player(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('pid', 'fn', 'lnam', 'cit', 'sta', 'cou', 'act', 'stt', 'hei', 'wei', 'bd', 'sch', 'dy', 'hsurl')
     pid = sgqlc.types.Field(Int, graphql_name='pid')
     fn = sgqlc.types.Field(String, graphql_name='fn')
     lnam = sgqlc.types.Field(String, graphql_name='lnam')
@@ -1149,13 +1279,15 @@ class Player(sgqlc.types.Type):
 
 
 class PlaysWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('plays', 'max_sequence')
     plays = sgqlc.types.Field(sgqlc.types.list_of(Play), graphql_name='plays')
     max_sequence = sgqlc.types.Field(Int, graphql_name='maxSequence')
 
 
 class Position(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'spid', 'nam', 'sn')
     id = sgqlc.types.Field(Int, graphql_name='id')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -1163,7 +1295,8 @@ class Position(sgqlc.types.Type):
 
 
 class Query(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('my_hash', 'player', 'players', 'team', 'teams', 'division_teams', 'season_teams', 'team_rosters', 'league_hierarchy', 'participant', 'participants', 'participant_by_event', 'events_info_by_participant', 'matchups', 'last_matchups_by_participants', 'get_event_roster_by_events', 'head_to_head_events', 'event_filter_groups', 'events', 'events_by_sport', 'events_by_sport_v2', 'events_by_date_deprecate', 'events_by_date', 'events_by_date_new', 'events_by_date_by_league_group', 'event_markets', 'events_by_league_group', 'events_v2', 'events_by_event_group', 'events_by_event_group_v2', 'nearest_season_events', 'leagues_with_events', 'events_region_by_sport', 'events_dates_count', 'events_dates_count_summary', 'calendar_events_by_event_group', 'calendar_events_by_event_group_v2', 'get_updated_events', 'sports_with_live_events', 'event_groups_by_leagues', 'event_groups_by_sport', 'events_by_team_id', 'related_events', 'events_location', 'upcoming_events', 'upcoming_events_new', 'league_setting', 'leagues_setting', 'league_settings_v2', 'league_markets', 'leagues_with_settings', 'get_leagues_with_settings_v2', 'league', 'leagues', 'leagues_by_id', 'sport_setting', 'sport_settings_v2', 'get_sports_with_settings_v2', 'sport', 'sports', 'get_leagues_and_regions_by_sport', 'conferences', 'divisions', 'region', 'regions', 'regions_by_sport', 'scores', 'get_updated_scores', 'statistic', 'statistics', 'get_updated_statistics', 'market_type', 'market_types', 'outright_market_types', 'market_types_by_id', 'current_lines', 'best_lines', 'get_updated_current_lines', 'get_current_lines_group_by_event_market', 'opening_lines', 'consensus', 'updated_consensus', 'consensus_history', 'weather', 'week_weather_forecast', 'event_group_by_event', 'event_groups_by_league', 'events_groups_by_season', 'get_event_tags', 'get_sportsbook_bonus_lists', 'betting_options', 'betting_options_by_event', 'bet_slip_info', 'market_type_group', 'market_type_groups_filtered', 'market_type_groups', 'market_type_groups_with_market_types', 'market_type_groups_by_id', 'max_sequences', 'formats', 'sportsbook_setting', 'sportsbook', 'sportsbooks', 'images', 'history_lines', 'line_history', 'menu_option', 'menu_options', 'search_event', 'multiple_search', 'domains', 'plays', 'plays_v2', 'updated_plays', 'sportbooks_by_category', 'statistics_by_groups', 'statistics_by_event', 'statistics_by_season', 'team_statistics', 'statistics_betting_odds_trends', 'statistics_umpire', 'top_performers', 'get_active_event_filter_groups', 'events_by_event_filter_group', 'event_filter_group_with_event_ids', 'events_carousel', 'live_lines', 'injuries', 'news')
     my_hash = sgqlc.types.Field(Boolean, graphql_name='myHash')
     player = sgqlc.types.Field(Player, graphql_name='player', args=sgqlc.types.ArgDict((
         ('pid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='pid', default=None)),
@@ -1188,8 +1321,13 @@ class Query(sgqlc.types.Type):
     teams = sgqlc.types.Field(sgqlc.types.list_of('Team'), graphql_name='teams', args=sgqlc.types.ArgDict((
         ('tmid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='tmid', default=None)),
         ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
+        ('seid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='seid', default=None)),
         ('nam', sgqlc.types.Arg(String, graphql_name='nam', default=None)),
         ('act', sgqlc.types.Arg(Boolean, graphql_name='act', default=None)),
+        ('divids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='divids', default=None)),
+        ('conids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='conids', default=None)),
+        ('istmlhrchy', sgqlc.types.Arg(Boolean, graphql_name='istmlhrchy', default=None)),
+        ('is_special', sgqlc.types.Arg(Boolean, graphql_name='isSpecial', default=None)),
 ))
     )
     division_teams = sgqlc.types.Field(sgqlc.types.list_of('Team'), graphql_name='divisionTeams', args=sgqlc.types.ArgDict((
@@ -1208,6 +1346,7 @@ class Query(sgqlc.types.Type):
         ('seid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='seid', default=None)),
         ('pid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='pid', default=None)),
         ('act', sgqlc.types.Arg(Boolean, graphql_name='act', default=None)),
+        ('all', sgqlc.types.Arg(Boolean, graphql_name='all', default=None)),
 ))
     )
     league_hierarchy = sgqlc.types.Field(sgqlc.types.list_of(LeagueHierarchy), graphql_name='leagueHierarchy', args=sgqlc.types.ArgDict((
@@ -1351,6 +1490,39 @@ class Query(sgqlc.types.Type):
         ('sgid', sgqlc.types.Arg(Int, graphql_name='sgid', default=None)),
 ))
     )
+    events_by_date_deprecate = sgqlc.types.Field(EventsWithMaxSequences, graphql_name='eventsByDateDeprecate', args=sgqlc.types.ArgDict((
+        ('start_date', sgqlc.types.Arg(Float, graphql_name='startDate', default=None)),
+        ('hours_range', sgqlc.types.Arg(Int, graphql_name='hoursRange', default=None)),
+        ('timezone_offset', sgqlc.types.Arg(Float, graphql_name='timezoneOffset', default=None)),
+        ('egid', sgqlc.types.Arg(Int, graphql_name='egid', default=None)),
+        ('eid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='eid', default=None)),
+        ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
+        ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
+        ('rid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='rid', default=None)),
+        ('mtid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtid', default=None)),
+        ('hl', sgqlc.types.Arg(Boolean, graphql_name='hl', default=None)),
+        ('ic', sgqlc.types.Arg(Boolean, graphql_name='ic', default=None)),
+        ('nof', sgqlc.types.Arg(Boolean, graphql_name='nof', default=None)),
+        ('show_empty_events', sgqlc.types.Arg(Boolean, graphql_name='showEmptyEvents', default=None)),
+        ('market_type_layout', sgqlc.types.Arg(String, graphql_name='marketTypeLayout', default=None)),
+        ('market_type_format', sgqlc.types.Arg(String, graphql_name='marketTypeFormat', default=None)),
+        ('limit', sgqlc.types.Arg(Int, graphql_name='limit', default=None)),
+        ('skip', sgqlc.types.Arg(Int, graphql_name='skip', default=None)),
+        ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
+        ('provider_acount_opener', sgqlc.types.Arg(Int, graphql_name='providerAcountOpener', default=None)),
+        ('get_all_in_event_group', sgqlc.types.Arg(Boolean, graphql_name='getAllInEventGroup', default=None)),
+        ('show_live', sgqlc.types.Arg(ShowLive, graphql_name='showLive', default=None)),
+        ('eventtoshow', sgqlc.types.Arg(Int, graphql_name='eventtoshow', default=None)),
+        ('include_all_events', sgqlc.types.Arg(Boolean, graphql_name='includeAllEvents', default=None)),
+        ('domain_id', sgqlc.types.Arg(Int, graphql_name='domainId', default=None)),
+        ('events_with_ranked_participants', sgqlc.types.Arg(Boolean, graphql_name='eventsWithRankedParticipants', default=None)),
+        ('only_ranked', sgqlc.types.Arg(Boolean, graphql_name='onlyRanked', default=None)),
+        ('conference_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='conferenceIds', default=None)),
+        ('division_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='divisionIds', default=None)),
+        ('es', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='es', default=None)),
+        ('trunc_date', sgqlc.types.Arg(Boolean, graphql_name='truncDate', default=None)),
+))
+    )
     events_by_date = sgqlc.types.Field(EventsWithMaxSequences, graphql_name='eventsByDate', args=sgqlc.types.ArgDict((
         ('start_date', sgqlc.types.Arg(Float, graphql_name='startDate', default=None)),
         ('hours_range', sgqlc.types.Arg(Int, graphql_name='hoursRange', default=None)),
@@ -1381,6 +1553,24 @@ class Query(sgqlc.types.Type):
         ('conference_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='conferenceIds', default=None)),
         ('division_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='divisionIds', default=None)),
         ('es', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='es', default=None)),
+        ('trunc_date', sgqlc.types.Arg(Boolean, graphql_name='truncDate', default=None)),
+))
+    )
+    events_by_date_new = sgqlc.types.Field(EventsWithMaxSequences, graphql_name='eventsByDateNew', args=sgqlc.types.ArgDict((
+        ('start_date', sgqlc.types.Arg(Float, graphql_name='startDate', default=None)),
+        ('hours_range', sgqlc.types.Arg(Int, graphql_name='hoursRange', default=None)),
+        ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
+        ('mtid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtid', default=None)),
+        ('show_empty_events', sgqlc.types.Arg(Boolean, graphql_name='showEmptyEvents', default=None)),
+        ('fast_forward', sgqlc.types.Arg(Boolean, graphql_name='fastForward', default=None)),
+        ('fast_forward_offset', sgqlc.types.Arg(Int, graphql_name='fastForwardOffset', default=None)),
+        ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
+        ('only_ranked', sgqlc.types.Arg(Boolean, graphql_name='onlyRanked', default=None)),
+        ('conference_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='conferenceIds', default=None)),
+        ('division_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='divisionIds', default=None)),
+        ('es', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='es', default=None)),
+        ('spids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spids', default=None)),
+        ('rids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='rids', default=None)),
 ))
     )
     events_by_date_by_league_group = sgqlc.types.Field(EventsWithMaxSequences, graphql_name='eventsByDateByLeagueGroup', args=sgqlc.types.ArgDict((
@@ -1567,6 +1757,16 @@ class Query(sgqlc.types.Type):
         ('spid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='spid', default=None)),
 ))
     )
+    event_groups_by_leagues = sgqlc.types.Field(sgqlc.types.list_of(EventGroup), graphql_name='eventGroupsByLeagues', args=sgqlc.types.ArgDict((
+        ('lid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='lid', default=None)),
+        ('hl', sgqlc.types.Arg(Boolean, graphql_name='hl', default=None)),
+        ('ic', sgqlc.types.Arg(Boolean, graphql_name='ic', default=None)),
+        ('dt', sgqlc.types.Arg(RangeInput, graphql_name='dt', default=None)),
+        ('limit', sgqlc.types.Arg(Int, graphql_name='limit', default=None)),
+        ('skip', sgqlc.types.Arg(Int, graphql_name='skip', default=None)),
+        ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
+))
+    )
     event_groups_by_sport = sgqlc.types.Field(sgqlc.types.list_of(EventGroup), graphql_name='eventGroupsBySport', args=sgqlc.types.ArgDict((
         ('spid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='spid', default=None)),
         ('hl', sgqlc.types.Arg(Boolean, graphql_name='hl', default=None)),
@@ -1575,6 +1775,9 @@ class Query(sgqlc.types.Type):
         ('limit', sgqlc.types.Arg(Int, graphql_name='limit', default=None)),
         ('skip', sgqlc.types.Arg(Int, graphql_name='skip', default=None)),
         ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
+        ('rid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='rid', default=None)),
+        ('timezone_offset', sgqlc.types.Arg(Int, graphql_name='timezoneOffset', default=None)),
+        ('exact_date', sgqlc.types.Arg(Boolean, graphql_name='exactDate', default=None)),
 ))
     )
     events_by_team_id = sgqlc.types.Field(EventsWithMaxSequences, graphql_name='eventsByTeamId', args=sgqlc.types.ArgDict((
@@ -1609,6 +1812,18 @@ class Query(sgqlc.types.Type):
         ('limit', sgqlc.types.Arg(Int, graphql_name='limit', default=None)),
         ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
         ('participant_id', sgqlc.types.Arg(Int, graphql_name='participantId', default=None)),
+        ('seid', sgqlc.types.Arg(Int, graphql_name='seid', default=None)),
+))
+    )
+    upcoming_events_new = sgqlc.types.Field(sgqlc.types.list_of('UpcomingNew'), graphql_name='upcomingEventsNew', args=sgqlc.types.ArgDict((
+        ('lids', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(sgqlc.types.non_null(Int))), graphql_name='lids', default=None)),
+        ('start_date', sgqlc.types.Arg(Float, graphql_name='startDate', default=None)),
+        ('hours_range', sgqlc.types.Arg(Float, graphql_name='hoursRange', default=None)),
+        ('show_empty_events', sgqlc.types.Arg(Boolean, graphql_name='showEmptyEvents', default=None)),
+        ('location', sgqlc.types.Arg(GeolocationIntput, graphql_name='location', default=None)),
+        ('limit_by_participant', sgqlc.types.Arg(Int, graphql_name='limitByParticipant', default=None)),
+        ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
+        ('participant_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='participantIds', default=None)),
         ('seid', sgqlc.types.Arg(Int, graphql_name='seid', default=None)),
 ))
     )
@@ -1660,11 +1875,11 @@ class Query(sgqlc.types.Type):
         ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
 ))
     )
-    league = sgqlc.types.Field(League, graphql_name='league', args=sgqlc.types.ArgDict((
+    league = sgqlc.types.Field(LeagueWithSettings, graphql_name='league', args=sgqlc.types.ArgDict((
         ('lid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='lid', default=None)),
 ))
     )
-    leagues = sgqlc.types.Field(sgqlc.types.list_of(League), graphql_name='leagues', args=sgqlc.types.ArgDict((
+    leagues = sgqlc.types.Field(sgqlc.types.list_of(LeagueWithSettings), graphql_name='leagues', args=sgqlc.types.ArgDict((
         ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
         ('spid', sgqlc.types.Arg(Int, graphql_name='spid', default=None)),
         ('rid', sgqlc.types.Arg(Int, graphql_name='rid', default=None)),
@@ -1675,6 +1890,12 @@ class Query(sgqlc.types.Type):
         ('skip', sgqlc.types.Arg(Int, graphql_name='skip', default=None)),
         ('sort', sgqlc.types.Arg(SortInput, graphql_name='sort', default=None)),
         ('distinct', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='distinct', default=None)),
+))
+    )
+    leagues_by_id = sgqlc.types.Field(sgqlc.types.list_of(League), graphql_name='leaguesById', args=sgqlc.types.ArgDict((
+        ('lid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='lid', default=None)),
+        ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
+        ('rid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='rid', default=None)),
 ))
     )
     sport_setting = sgqlc.types.Field('SportSetting', graphql_name='sportSetting', args=sgqlc.types.ArgDict((
@@ -1688,6 +1909,7 @@ class Query(sgqlc.types.Type):
 ))
     )
     get_sports_with_settings_v2 = sgqlc.types.Field(sgqlc.types.list_of('SportWithSettings'), graphql_name='getSportsWithSettingsV2', args=sgqlc.types.ArgDict((
+        ('spids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spids', default=None)),
         ('sitid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='sitid', default=None)),
         ('did', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='did', default=None)),
 ))
@@ -1773,12 +1995,12 @@ class Query(sgqlc.types.Type):
         ('sgid', sgqlc.types.Arg(Int, graphql_name='sgid', default=None)),
 ))
     )
-    market_type = sgqlc.types.Field(MarketType, graphql_name='marketType', args=sgqlc.types.ArgDict((
+    market_type = sgqlc.types.Field(MarketTypeWithSettings, graphql_name='marketType', args=sgqlc.types.ArgDict((
         ('mtid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='mtid', default=None)),
-        ('spid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='spid', default=None)),
+        ('spid', sgqlc.types.Arg(Int, graphql_name='spid', default=None)),
 ))
     )
-    market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketType), graphql_name='marketTypes', args=sgqlc.types.ArgDict((
+    market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeWithSettings), graphql_name='marketTypes', args=sgqlc.types.ArgDict((
         ('mtid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtid', default=None)),
         ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
         ('sitid', sgqlc.types.Arg(String, graphql_name='sitid', default=None)),
@@ -1787,11 +2009,17 @@ class Query(sgqlc.types.Type):
         ('enabled', sgqlc.types.Arg(Boolean, graphql_name='enabled', default=None)),
 ))
     )
-    outright_market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketType), graphql_name='outrightMarketTypes', args=sgqlc.types.ArgDict((
+    outright_market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeWithSettings), graphql_name='outrightMarketTypes', args=sgqlc.types.ArgDict((
         ('lid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='lid', default=None)),
         ('spid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='spid', default=None)),
         ('dt', sgqlc.types.Arg(sgqlc.types.non_null(String), graphql_name='dt', default=None)),
         ('hl', sgqlc.types.Arg(sgqlc.types.non_null(Boolean), graphql_name='hl', default=None)),
+        ('mtid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtid', default=None)),
+))
+    )
+    market_types_by_id = sgqlc.types.Field(sgqlc.types.list_of(MarketType), graphql_name='marketTypesById', args=sgqlc.types.ArgDict((
+        ('mtid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtid', default=None)),
+        ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
 ))
     )
     current_lines = sgqlc.types.Field(sgqlc.types.list_of(JSON), graphql_name='currentLines', args=sgqlc.types.ArgDict((
@@ -1889,6 +2117,11 @@ class Query(sgqlc.types.Type):
         ('timezone_offset', sgqlc.types.Arg(sgqlc.types.non_null(Float), graphql_name='timezoneOffset', default=None)),
 ))
     )
+    get_event_tags = sgqlc.types.Field(sgqlc.types.list_of(EventTag), graphql_name='getEventTags', args=sgqlc.types.ArgDict((
+        ('eid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(sgqlc.types.non_null(Int))), graphql_name='eid', default=None)),
+))
+    )
+    get_sportsbook_bonus_lists = sgqlc.types.Field(sgqlc.types.list_of('SportsbookBonusList'), graphql_name='getSportsbookBonusLists')
     betting_options = sgqlc.types.Field(sgqlc.types.list_of(BettingOption), graphql_name='bettingOptions', args=sgqlc.types.ArgDict((
         ('boid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='boid', default=None)),
 ))
@@ -1902,7 +2135,7 @@ class Query(sgqlc.types.Type):
         ('bet_slip_args', sgqlc.types.Arg(sgqlc.types.list_of(BetSlipArgs), graphql_name='betSlipArgs', default=None)),
 ))
     )
-    market_type_group = sgqlc.types.Field(MarketTypeGroup, graphql_name='marketTypeGroup', args=sgqlc.types.ArgDict((
+    market_type_group = sgqlc.types.Field(MarketTypeGroupWithSettings, graphql_name='marketTypeGroup', args=sgqlc.types.ArgDict((
         ('mtgid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='mtgid', default=None)),
         ('spid', sgqlc.types.Arg(Int, graphql_name='spid', default=None)),
 ))
@@ -1914,11 +2147,12 @@ class Query(sgqlc.types.Type):
         ('sitid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='sitid', default=None)),
         ('did', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='did', default=None)),
         ('sam', sgqlc.types.Arg(Boolean, graphql_name='sam', default=None)),
+        ('mtgid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtgid', default=None)),
 ))
     )
-    market_type_groups = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeGroup), graphql_name='marketTypeGroups', args=sgqlc.types.ArgDict((
-        ('mtgid', sgqlc.types.Arg(Int, graphql_name='mtgid', default=None)),
-        ('spid', sgqlc.types.Arg(Int, graphql_name='spid', default=None)),
+    market_type_groups = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeGroupWithSettings), graphql_name='marketTypeGroups', args=sgqlc.types.ArgDict((
+        ('mtgid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtgid', default=None)),
+        ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
         ('sitid', sgqlc.types.Arg(sgqlc.types.non_null(Int), graphql_name='sitid', default=None)),
         ('did', sgqlc.types.Arg(Int, graphql_name='did', default=None)),
         ('enabled', sgqlc.types.Arg(Boolean, graphql_name='enabled', default=None)),
@@ -1927,7 +2161,12 @@ class Query(sgqlc.types.Type):
 ))
     )
     market_type_groups_with_market_types = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeGroupWithMarketTypes), graphql_name='marketTypeGroupsWithMarketTypes', args=sgqlc.types.ArgDict((
-        ('mtgid', sgqlc.types.Arg(Int, graphql_name='mtgid', default=None)),
+        ('mtgid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtgid', default=None)),
+))
+    )
+    market_type_groups_by_id = sgqlc.types.Field(sgqlc.types.list_of(MarketTypeGroup), graphql_name='marketTypeGroupsById', args=sgqlc.types.ArgDict((
+        ('mtgid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='mtgid', default=None)),
+        ('spid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='spid', default=None)),
 ))
     )
     max_sequences = sgqlc.types.Field(MaxSequences, graphql_name='maxSequences')
@@ -1947,8 +2186,10 @@ class Query(sgqlc.types.Type):
 ))
     )
     sportsbooks = sgqlc.types.Field(sgqlc.types.list_of('Sportsbook'), graphql_name='sportsbooks', args=sgqlc.types.ArgDict((
+        ('sitid', sgqlc.types.Arg(Int, graphql_name='sitid', default=None)),
+        ('did', sgqlc.types.Arg(Int, graphql_name='did', default=None)),
         ('enabled', sgqlc.types.Arg(Boolean, graphql_name='enabled', default=None)),
-        ('sbid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='sbid', default=None)),
+        ('sbids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='sbids', default=None)),
         ('limit', sgqlc.types.Arg(Int, graphql_name='limit', default=None)),
         ('skip', sgqlc.types.Arg(Int, graphql_name='skip', default=None)),
 ))
@@ -2049,6 +2290,15 @@ class Query(sgqlc.types.Type):
         ('order_by', sgqlc.types.Arg(SortInput, graphql_name='orderBy', default=None)),
 ))
     )
+    statistics_by_season = sgqlc.types.Field(sgqlc.types.list_of('StatisticByGroup'), graphql_name='statisticsBySeason', args=sgqlc.types.ArgDict((
+        ('seid', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(Int)), graphql_name='seid', default=None)),
+        ('idty', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='idty', default=None)),
+        ('grp', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='grp', default=None)),
+        ('stat', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='stat', default=None)),
+        ('entrid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='entrid', default=None)),
+        ('entgid', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='entgid', default=None)),
+))
+    )
     team_statistics = sgqlc.types.Field(sgqlc.types.list_of('StatisticByGroup'), graphql_name='teamStatistics', args=sgqlc.types.ArgDict((
         ('statistic_group', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(String)), graphql_name='statisticGroup', default=None)),
         ('team_ids', sgqlc.types.Arg(sgqlc.types.list_of(Int), graphql_name='teamIds', default=None)),
@@ -2130,27 +2380,31 @@ class Query(sgqlc.types.Type):
 
 
 class Region(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('rid', 'nam', 'sn')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sn = sgqlc.types.Field(String, graphql_name='sn')
 
 
 class RegionLeague(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('nam', 'sn')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sn = sgqlc.types.Field(String, graphql_name='sn')
 
 
 class RegionLeagueV2(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('nam', 'rid', 'sn')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
     sn = sgqlc.types.Field(String, graphql_name='sn')
 
 
 class RegionWithLeagues(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('rid', 'nam', 'sn', 'leagues')
     rid = sgqlc.types.Field(Int, graphql_name='rid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sn = sgqlc.types.Field(String, graphql_name='sn')
@@ -2158,19 +2412,22 @@ class RegionWithLeagues(sgqlc.types.Type):
 
 
 class RegionsBySport(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('active', 'available')
     active = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='active')
     available = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='available')
 
 
 class Request(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('type', 'query')
     type = sgqlc.types.Field(String, graphql_name='type')
     query = sgqlc.types.Field(String, graphql_name='query')
 
 
 class Score(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('eid', 'partid', 'pn', 'val', 'sequence')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
     pn = sgqlc.types.Field(Int, graphql_name='pn')
@@ -2179,13 +2436,15 @@ class Score(sgqlc.types.Type):
 
 
 class ScoreWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('scores', 'max_sequence')
     scores = sgqlc.types.Field(sgqlc.types.list_of(Score), graphql_name='scores')
     max_sequence = sgqlc.types.Field(Int, graphql_name='maxSequence')
 
 
 class SearchParticipant(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('nam', 'lnam', 'fn', 'nn', 'sn', 'abbr')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     lnam = sgqlc.types.Field(String, graphql_name='lnam')
     fn = sgqlc.types.Field(String, graphql_name='fn')
@@ -2195,7 +2454,8 @@ class SearchParticipant(sgqlc.types.Type):
 
 
 class Size(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('original', 'thumb', 'xs', 'sm', 'md', 'lg')
     original = sgqlc.types.Field(String, graphql_name='original')
     thumb = sgqlc.types.Field(String, graphql_name='thumb')
     xs = sgqlc.types.Field(String, graphql_name='xs')
@@ -2205,14 +2465,16 @@ class Size(sgqlc.types.Type):
 
 
 class Sport(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'nam', 'settings')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     settings = sgqlc.types.Field('SportSetting', graphql_name='settings')
 
 
 class SportCatalog(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('did', 'spid', 'nam', 'settings', 'path')
     did = sgqlc.types.Field(Int, graphql_name='did')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -2221,7 +2483,8 @@ class SportCatalog(sgqlc.types.Type):
 
 
 class SportSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'sitid', 'did', 'enabled', 'alias', 'mode', 'ord', 'nav', 'mtid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     did = sgqlc.types.Field(Int, graphql_name='did')
@@ -2234,14 +2497,16 @@ class SportSetting(sgqlc.types.Type):
 
 
 class SportSettings(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('enabled', 'alias', 'ord')
     enabled = sgqlc.types.Field(Boolean, graphql_name='enabled')
     alias = sgqlc.types.Field(String, graphql_name='alias')
     ord = sgqlc.types.Field(Int, graphql_name='ord')
 
 
 class SportSettingsV2(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'act', 'enabled', 'alias', 'mode', 'nav', 'mtid', 'ord', '_is_custom', '_is_favorite')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     act = sgqlc.types.Field(Boolean, graphql_name='act')
     enabled = sgqlc.types.Field(Boolean, graphql_name='enabled')
@@ -2255,7 +2520,8 @@ class SportSettingsV2(sgqlc.types.Type):
 
 
 class SportV2(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'nam', 'sport_has_custom_league_settings', 'sport_has_custom_market_type_settings', 'sport_has_custom_market_type_group_settings', 'settings')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     sport_has_custom_league_settings = sgqlc.types.Field(Customized, graphql_name='sportHasCustomLeagueSettings', args=sgqlc.types.ArgDict((
@@ -2278,7 +2544,8 @@ class SportV2(sgqlc.types.Type):
 
 
 class SportWithSettings(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'nam', 'act', 'settings')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     act = sgqlc.types.Field(Boolean, graphql_name='act')
@@ -2286,7 +2553,8 @@ class SportWithSettings(sgqlc.types.Type):
 
 
 class SportbooksByCategory(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('cid', 'afid', 'shortafid', 'safid', 'category_name', 'affiliate_url', 'main_affiliate', 'enabled', 'sportsbooksadmin')
     cid = sgqlc.types.Field(Int, graphql_name='cid')
     afid = sgqlc.types.Field(String, graphql_name='afid')
     shortafid = sgqlc.types.Field(String, graphql_name='shortafid')
@@ -2299,12 +2567,14 @@ class SportbooksByCategory(sgqlc.types.Type):
 
 
 class Sports(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spids',)
     spids = sgqlc.types.Field(sgqlc.types.list_of(Int), graphql_name='spids')
 
 
 class SportsWithRegions(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('spid', 'nam', 'alias', 'enabled', 'nav', 'mode', 'domain_ord', 'default_ord', 'regions')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
     alias = sgqlc.types.Field(String, graphql_name='alias')
@@ -2317,7 +2587,8 @@ class SportsWithRegions(sgqlc.types.Type):
 
 
 class Sportsbook(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sbid', 'paid', 'nam', 'iid', 'pre', 'suf', 'afid', 'settings', 'image')
     sbid = sgqlc.types.Field(Int, graphql_name='sbid')
     paid = sgqlc.types.Field(Int, graphql_name='paid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -2336,8 +2607,27 @@ class Sportsbook(sgqlc.types.Type):
     image = sgqlc.types.Field(Image, graphql_name='image')
 
 
+class SportsbookBonus(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'title', 'subtitle', 'tag', 'sportsbook')
+    id = sgqlc.types.Field(Int, graphql_name='ID')
+    title = sgqlc.types.Field(String, graphql_name='title')
+    subtitle = sgqlc.types.Field(String, graphql_name='subtitle')
+    tag = sgqlc.types.Field(String, graphql_name='tag')
+    sportsbook = sgqlc.types.Field(CMSSportsbook, graphql_name='sportsbook')
+
+
+class SportsbookBonusList(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('id', 'name', 'sportsbook_bonuses')
+    id = sgqlc.types.Field(Int, graphql_name='ID')
+    name = sgqlc.types.Field(String, graphql_name='name')
+    sportsbook_bonuses = sgqlc.types.Field(sgqlc.types.list_of(SportsbookBonus), graphql_name='sportsbookBonuses')
+
+
 class SportsbookSetting(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('sbid', 'sitid', 'did', 'spid', 'cid', 'ord', 'enabled', 'alias')
     sbid = sgqlc.types.Field(Int, graphql_name='sbid')
     sitid = sgqlc.types.Field(Int, graphql_name='sitid')
     did = sgqlc.types.Field(Int, graphql_name='did')
@@ -2349,7 +2639,8 @@ class SportsbookSetting(sgqlc.types.Type):
 
 
 class Statistic(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('typ', 'eid', 'partid', 'pid', 'nam', 'val', 'player', 'siid', 'sequence')
     typ = sgqlc.types.Field(String, graphql_name='typ')
     eid = sgqlc.types.Field(Int, graphql_name='eid')
     partid = sgqlc.types.Field(Int, graphql_name='partid')
@@ -2362,7 +2653,8 @@ class Statistic(sgqlc.types.Type):
 
 
 class StatisticByGroup(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('ent', 'grp', 'stat', 'tim', 'val', 'sequence', 'valid', 'entid', 'gid', 'statid', 'entgid', 'idty', 'entrid', 'sctim', 'eid', 'partbeid', 'partid', 'pid', 'seid', 'lid', 'tmid', 'tmblid', 'partname', 'partabbreviation', 'partshortname', 'pfn', 'pln', 'stgnam')
     ent = sgqlc.types.Field(String, graphql_name='ent')
     grp = sgqlc.types.Field(String, graphql_name='grp')
     stat = sgqlc.types.Field(String, graphql_name='stat')
@@ -2394,13 +2686,24 @@ class StatisticByGroup(sgqlc.types.Type):
 
 
 class StatisticWithMaxSequence(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('statistics', 'max_sequence')
     statistics = sgqlc.types.Field(sgqlc.types.list_of(Statistic), graphql_name='statistics')
     max_sequence = sgqlc.types.Field(Float, graphql_name='maxSequence')
 
 
+class Tag(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('name', 'background_color', 'text_color', 'dot_color')
+    name = sgqlc.types.Field(String, graphql_name='name')
+    background_color = sgqlc.types.Field(String, graphql_name='backgroundColor')
+    text_color = sgqlc.types.Field(String, graphql_name='textColor')
+    dot_color = sgqlc.types.Field(String, graphql_name='dotColor')
+
+
 class Team(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('tmid', 'lid', 'nam', 'tmblid', 'nn', 'sn', 'abbr', 'cit', 'sta', 'cou', 'act', 'stt', 'ven', 'seid', 'senam', 'conid', 'roster', 'statistics', 'divid', 'divname', 'hasteamstats', 'conname', 'imageurl', 'statistics_by_groups', 'statistics_by_season', 'social_networks', 'league_hierarchy', 'partid')
     tmid = sgqlc.types.Field(Int, graphql_name='tmid')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     nam = sgqlc.types.Field(String, graphql_name='nam')
@@ -2419,6 +2722,7 @@ class Team(sgqlc.types.Type):
     conid = sgqlc.types.Field(Int, graphql_name='conid')
     roster = sgqlc.types.Field(sgqlc.types.list_of('TeamRoster'), graphql_name='roster', args=sgqlc.types.ArgDict((
         ('seid', sgqlc.types.Arg(Int, graphql_name='seid', default=None)),
+        ('all', sgqlc.types.Arg(Boolean, graphql_name='all', default=None)),
 ))
     )
     statistics = sgqlc.types.Field(sgqlc.types.list_of(StatisticByGroup), graphql_name='statistics', args=sgqlc.types.ArgDict((
@@ -2435,12 +2739,21 @@ class Team(sgqlc.types.Type):
         ('identities', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='identities', default=None)),
 ))
     )
+    statistics_by_season = sgqlc.types.Field(sgqlc.types.list_of(StatisticByGroup), graphql_name='statisticsBySeason', args=sgqlc.types.ArgDict((
+        ('statistic_group', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='statisticGroup', default=None)),
+        ('grp', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='grp', default=None)),
+        ('stat', sgqlc.types.Arg(sgqlc.types.list_of(String), graphql_name='stat', default=None)),
+        ('idty', sgqlc.types.Arg(sgqlc.types.non_null(sgqlc.types.list_of(sgqlc.types.non_null(String))), graphql_name='idty', default=None)),
+))
+    )
     social_networks = sgqlc.types.Field(sgqlc.types.list_of('TeamSocialNetwork'), graphql_name='socialNetworks')
     league_hierarchy = sgqlc.types.Field(sgqlc.types.list_of(LeagueHierarchy), graphql_name='leagueHierarchy')
+    partid = sgqlc.types.Field(Int, graphql_name='partid')
 
 
 class TeamByLeague(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('tmid', 'lid', 'seid', 'senam', 'act', 'tmblid', 'conid', 'conname', 'divid', 'divname', 'event_groups')
     tmid = sgqlc.types.Field(Int, graphql_name='tmid')
     lid = sgqlc.types.Field(Int, graphql_name='lid')
     seid = sgqlc.types.Field(Int, graphql_name='seid')
@@ -2458,7 +2771,8 @@ class TeamByLeague(sgqlc.types.Type):
 
 
 class TeamRoster(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('pid', 'seid', 'act', 'pnum', 'ppid', 'ppnam', 'ppsn', 'depth_chart', 'player')
     pid = sgqlc.types.Field(Int, graphql_name='pid')
     seid = sgqlc.types.Field(Int, graphql_name='seid')
     act = sgqlc.types.Field(Boolean, graphql_name='act')
@@ -2466,49 +2780,66 @@ class TeamRoster(sgqlc.types.Type):
     ppid = sgqlc.types.Field(Int, graphql_name='ppid')
     ppnam = sgqlc.types.Field(String, graphql_name='ppnam')
     ppsn = sgqlc.types.Field(String, graphql_name='ppsn')
-    depth_chart = sgqlc.types.Field(sgqlc.types.list_of(DepthChart), graphql_name='depthChart')
+    depth_chart = sgqlc.types.Field(sgqlc.types.list_of(DepthChart), graphql_name='depthChart', args=sgqlc.types.ArgDict((
+        ('type_of_season', sgqlc.types.Arg(String, graphql_name='typeOfSeason', default=None)),
+))
+    )
     player = sgqlc.types.Field(Player, graphql_name='player')
 
 
 class TeamRosterPlayer(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('team_roster', 'player')
     team_roster = sgqlc.types.Field(TeamRoster, graphql_name='teamRoster')
     player = sgqlc.types.Field(Player, graphql_name='player')
 
 
 class TeamSocialNetwork(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('network', 'account')
     network = sgqlc.types.Field(sgqlc.types.non_null(String), graphql_name='network')
     account = sgqlc.types.Field(sgqlc.types.non_null(String), graphql_name='account')
 
 
 class TopPerformer(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('top_rosters', 'statistics')
     top_rosters = sgqlc.types.Field(sgqlc.types.list_of('TopPerformerRoster'), graphql_name='topRosters')
     statistics = sgqlc.types.Field(sgqlc.types.list_of(StatisticByGroup), graphql_name='statistics')
 
 
 class TopPerformerRoster(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('team_roster', 'player')
     team_roster = sgqlc.types.Field(TeamRoster, graphql_name='teamRoster')
     player = sgqlc.types.Field(Player, graphql_name='player')
 
 
 class Trends(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('vltext', 'vln', 'partbeid', 'identity')
     vltext = sgqlc.types.Field(String, graphql_name='vltext')
     vln = sgqlc.types.Field(String, graphql_name='vln')
     partbeid = sgqlc.types.Field(Int, graphql_name='partbeid')
     identity = sgqlc.types.Field(String, graphql_name='identity')
 
 
+class UpcomingNew(sgqlc.types.Type):
+    __schema__ = sbr_july_2020
+    __field_names__ = ('partid', 'events')
+    partid = sgqlc.types.Field(sgqlc.types.non_null(Int), graphql_name='partid')
+    events = sgqlc.types.Field(sgqlc.types.list_of(Event), graphql_name='events')
+
+
 class Value(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('value',)
     value = sgqlc.types.Field(String, graphql_name='value')
 
 
 class Weather(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('date', 'astronomy', 'maxtemp_c', 'maxtemp_f', 'mintemp_c', 'mintemp_f', 'total_snow_cm', 'sun_hour', 'uv_index', 'hourly')
     date = sgqlc.types.Field(String, graphql_name='date')
     astronomy = sgqlc.types.Field(sgqlc.types.list_of(Astronomy), graphql_name='astronomy')
     maxtemp_c = sgqlc.types.Field(String, graphql_name='maxtempC')
@@ -2522,16 +2853,18 @@ class Weather(sgqlc.types.Type):
 
 
 class WeatherOutput(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('location', 'request', 'current_condition', 'weather', 'climate_averages')
     location = sgqlc.types.Field(String, graphql_name='location')
     request = sgqlc.types.Field(sgqlc.types.list_of(Request), graphql_name='request')
     current_condition = sgqlc.types.Field(sgqlc.types.list_of(CurrentCondition), graphql_name='current_condition')
     weather = sgqlc.types.Field(sgqlc.types.list_of(Weather), graphql_name='weather')
-    climate_averages = sgqlc.types.Field(sgqlc.types.list_of(ClimateAverages), graphql_name='ClimateAverages')
+    climate_averages = sgqlc.types.Field(sgqlc.types.list_of('ClimateAverages'), graphql_name='ClimateAverages')
 
 
 class eventIdsByFilter(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('efid', 'spid', 'mtid', 'eids', 'lids', 'sortmode')
     efid = sgqlc.types.Field(String, graphql_name='efid')
     spid = sgqlc.types.Field(Int, graphql_name='spid')
     mtid = sgqlc.types.Field(Int, graphql_name='mtid')
@@ -2541,7 +2874,8 @@ class eventIdsByFilter(sgqlc.types.Type):
 
 
 class weekWeatherOutput(sgqlc.types.Type):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
+    __field_names__ = ('location', 'date', 'avg_day_forecast', 'day_forecast', 'night_forecast')
     location = sgqlc.types.Field(String, graphql_name='location')
     date = sgqlc.types.Field(String, graphql_name='date')
     avg_day_forecast = sgqlc.types.Field(Hourly, graphql_name='avgDayForecast')
@@ -2554,7 +2888,7 @@ class weekWeatherOutput(sgqlc.types.Type):
 # Unions
 ########################################################################
 class Source(sgqlc.types.Union):
-    __schema__ = sbrschema
+    __schema__ = sbr_july_2020
     __types__ = (Team, Player, ParticipantGroup)
 
 
@@ -2562,7 +2896,7 @@ class Source(sgqlc.types.Union):
 ########################################################################
 # Schema Entry Points
 ########################################################################
-sbrschema.query_type = Query
-sbrschema.mutation_type = None
-sbrschema.subscription_type = None
+sbr_july_2020.query_type = Query
+sbr_july_2020.mutation_type = None
+sbr_july_2020.subscription_type = None
 
