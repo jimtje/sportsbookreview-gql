@@ -1,0 +1,11538 @@
+"""
+
+"""
+type Query {
+  """
+
+  """
+  myHash: Boolean
+
+  """
+
+  """
+  player(pid: Int!, fn: String, lnam: String): Player
+
+  """
+
+  """
+  players(pid: [Int], fn: String, lnam: String): [Player]
+
+  """
+
+  """
+  depthChart(
+    teamIds: [Int]!
+    seasonIds: [Int]!
+    eventIds: [Int]
+    typeOfSeason: String
+  ): [DepthChart]
+
+  """
+
+  """
+  playerPerformance(
+    """
+    Player Id
+    """
+    pid: Int!
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Player Position Id (deprecated, it is used for nothing)
+    """
+    ppid: Int
+  ): PlayerPerformanceInfo
+
+  """
+
+  """
+  team(tmid: Int!, nam: String, seid: Int, senam: String, lid: Int): Team
+
+  """
+
+  """
+  teams(
+    """
+    Team Id
+    """
+    tmid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Season id
+    """
+    seid: [Int]
+
+    """
+    Name
+    """
+    nam: String
+
+    """
+    Is the team active
+    """
+    act: Boolean
+
+    """
+    Division Id
+    """
+    divids: [Int]
+
+    """
+    Conference Id
+    """
+    conids: [Int]
+
+    """
+    Is team league hierarchy?
+    If true divids and conids values are obtained from TeamLeagueHierarchy
+    """
+    istmlhrchy: Boolean
+
+    """
+    Is Special
+    """
+    isSpecial: Boolean
+
+    """
+    add virtuals teams
+    """
+    virtual: Boolean
+
+    """
+
+    """
+    rankLimit: Int
+  ): [Team]
+
+  """
+
+  """
+  topTeams(
+    """
+    Season id
+    """
+    seid: Int!
+
+    """
+    Number of teams
+    """
+    topLimit: Int
+
+    """
+    Is team league hierarchy?
+    If true divids and conids values are obtained from TeamLeagueHierarchy
+    """
+    istmlhrchy: Boolean
+
+    """
+
+    """
+    identity: String
+  ): [TopTeam]
+
+  """
+
+  """
+  divisionTeams(divid: Int, divname: String, seid: Int, act: Boolean): [Team]
+
+  """
+
+  """
+  seasonTeams(lid: [Int!]!, seid: Int): [TeamByLeague]
+
+  """
+
+  """
+  teamRosters(
+    tmid: [Int!]!
+    seid: Int!
+    pid: [Int]
+    act: Boolean
+    all: Boolean
+  ): [TeamRoster]
+
+  """
+
+  """
+  getPlayersBySeason(
+    """
+    Search by name
+    """
+    search: String
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Team Ids
+    """
+    tmid: [Int]
+  ): [TeamRoster]
+
+  """
+
+  """
+  leagueHierarchy(
+    conferenceIds: [Int]
+    divisionIds: [Int]
+    leagueIds: [Int]
+    eventDate: Float
+  ): [LeagueHierarchy]
+
+  """
+
+  """
+  teamsByName(name: String!, seasonIds: [Int]): [TeamSearchResult]
+
+  """
+
+  """
+  lineups(eid: Int!): [LineUp]
+
+  """
+  Get a team season scheduele
+  """
+  getTeamSchedule(tmid: Int!, seid: Int, startYear: Int): [Event]
+
+  """
+  Get a team by slug and league
+  """
+  getTeamBySlug(slg: String!, lid: Int!): Team
+
+  """
+  Get the leagues to which a team belongs
+  """
+  leaguesByTeam(tmid: Int!, startYear: Int): [TeamLeague]
+
+  """
+  Query a single Participant
+  """
+  participant(
+    """
+    Participant Id
+    """
+    partid: Int
+
+    """
+    Event Id
+    """
+    eid: Int
+
+    """
+    Participant Type Id
+    """
+    ptid: Int
+  ): Participant
+
+  """
+  Query multiple Participants
+  """
+  participants(
+    """
+    Participant Ids
+    """
+    partid: [Int]
+
+    """
+    Event Ids
+    """
+    eid: [Int]
+
+    """
+    Participant Type Id
+    """
+    ptid: Int
+  ): [Participant]
+
+  """
+
+  """
+  participantByEvent(
+    """
+    Event Ids
+    """
+    eid: [Int]!
+
+    """
+    Participant Type Id
+    """
+    ptid: Int
+
+    """
+    Season Id
+    """
+    seid: Int
+  ): [ParticipantByEvent]
+
+  """
+
+  """
+  eventsInfoByParticipant(
+    """
+    Participant Ids
+    """
+    partid: [Int]
+
+    """
+    TeamsIds
+    """
+    tmid: [Int]
+
+    """
+    Participant Type Id
+    """
+    ptid: Int
+
+    """
+    Season Id
+    """
+    seid: [Int]!
+
+    """
+
+    """
+    marketTypeLayout: String
+
+    """
+    Limit of Events by Participant
+    """
+    limitByParticipant: Int
+  ): [EventInfoByParticipant]
+
+  """
+  Query events with two participants
+  """
+  matchups(
+    """
+    Participant ID #1
+    """
+    participantId1: Int!
+
+    """
+    Participant ID #2
+    """
+    participantId2: Int!
+
+    """
+    Participant id if requires a specific home/away matchups
+    """
+    homeParticipantId: Int
+  ): [MatchupId]
+
+  """
+  get latest matchups by participants
+  """
+  lastMatchupsByParticipants(
+    """
+    Participant ID 1
+    """
+    participantId1: Int!
+
+    """
+    Participant ID 2
+    """
+    participantId2: Int!
+
+    """
+    Home Participant ID if is required matchups with one specific participant as home
+    """
+    homeParticipantId: Int
+
+    """
+    Number of events to return
+    """
+    limit: Int
+
+    """
+    MarketType Id
+    """
+    mtid: Int
+  ): MatchupEvents
+
+  """
+  Query event rosters by event id
+  """
+  getEventRosterByEvents(
+    """
+    Event Ids
+    """
+    eid: [Int]!
+  ): [EventRoster]
+
+  """
+
+  """
+  headToHeadEvents(
+    """
+    Participant ID 1
+    """
+    participantId1: Int!
+
+    """
+    Participant ID 2
+    """
+    participantId2: Int!
+
+    """
+    Home Participant ID if is required matchups with one specific participant as home
+    """
+    homeParticipantId: Int
+
+    """
+    Season Id
+    """
+    seid: Int
+
+    """
+
+    """
+    es: String!
+
+    """
+
+    """
+    sort: SortInput!
+
+    """
+
+    """
+    limit: Int!
+
+    """
+
+    """
+    limitDate: Float
+
+    """
+
+    """
+    seasonGroup: [SEASONGROUP]
+  ): [Event]
+
+  """
+
+  """
+  nextEventsByParticipant(
+    """
+    Start date epoch
+    """
+    startDate: Float
+
+    """
+    Participant Ids
+    """
+    partid: [Int]!
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Event Status (Default: scheduled)
+    """
+    es: [String]
+
+    """
+    The events have lines
+    """
+    hl: Boolean
+
+    """
+    Limit Event Dates From Current Date
+    """
+    timeLimit: Int
+
+    """
+    Do not impose a time limit (ignore timeLimit parameter if set)
+    """
+    noTimeLimit: Boolean
+
+    """
+    Limit of events per participant
+    """
+    limit: Int
+
+    """
+    Pagination: return limit rows, possibly advancing by skip rows first
+    """
+    skip: Int
+  ): [Event]
+
+  """
+
+  """
+  eventFilterGroups(
+    """
+    Event Filter Group
+    """
+    efgids: [String]
+
+    """
+    Site id
+    """
+    sitid: Int
+
+    """
+    Time zone offset
+    """
+    timeZoneOffset: Float
+
+    """
+    Start date
+    """
+    startdate: Float
+
+    """
+    Setting to manage live events
+    """
+    showLive: ShowLive
+
+    """
+    Resolves a specific market type
+    """
+    mtid: Int
+
+    """
+
+    """
+    active: Boolean
+
+    """
+
+    """
+    enabled: Boolean
+
+    """
+    If is true, the startdate is not calculated
+    """
+    useExactStartDate: Boolean
+
+    """
+
+    """
+    showEmptyEvents: Boolean
+
+    """
+
+    """
+    hoursRange: Int
+
+    """
+
+    """
+    marketTypes: [EventFilterGroupMarketTypeSetting]
+
+    """
+    Setting to filter event filter groups by sport ids
+    """
+    spid: [Int]
+  ): [EventFilterGroup]
+
+  """
+
+  """
+  events(
+    """
+    Event Id
+    """
+    eid: [Int]
+
+    """
+    Sportradar Id
+    """
+    srid: [String]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    distinct: [String]
+
+    """
+
+    """
+    type: TypeInput
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    group: GroupInput
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+
+    """
+    EventStatus
+    """
+    es: String
+
+    """
+
+    """
+    returnInactiveCompetitions: Boolean
+  ): [Event]
+
+  """
+
+  """
+  eventsBySport(
+    """
+    Event ID
+    """
+    eid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Int
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    get events with not lines for an specific mtid
+    """
+    showEmptyEvents: Boolean
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+  ): [Event]
+
+  """
+
+  """
+  eventsBySportV2(
+    """
+    Event ID
+    """
+    eid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Int
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    get events with not lines for an specific mtid
+    """
+    showEmptyEvents: Boolean
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsByDateDeprecate(
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    Event Group ID
+    """
+    egid: Int
+
+    """
+    Event ID
+    """
+    eid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Only look for events in hour range
+    """
+    nof: Boolean
+
+    """
+    Show Empty Events
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    Get all events from the eventGroups
+    """
+    getAllInEventGroup: Boolean
+
+    """
+
+    """
+    showLive: ShowLive
+
+    """
+
+    """
+    eventtoshow: Int
+
+    """
+
+    """
+    includeAllEvents: Boolean
+
+    """
+    Domain Id
+    """
+    domainId: Int
+
+    """
+    Show only Events whith ranked participants
+    """
+    eventsWithRankedParticipants: Boolean
+
+    """
+
+    """
+    onlyRanked: Boolean
+
+    """
+
+    """
+    conferenceIds: [Int]
+
+    """
+
+    """
+    divisionIds: [Int]
+
+    """
+
+    """
+    es: [String]
+
+    """
+
+    """
+    truncDate: Boolean
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsByDate(
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    Event Group ID
+    """
+    egid: Int
+
+    """
+    Event ID
+    """
+    eid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Only look for events in hour range
+    """
+    nof: Boolean
+
+    """
+    Show Empty Events
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    Get all events from the eventGroups
+    """
+    getAllInEventGroup: Boolean
+
+    """
+
+    """
+    showLive: ShowLive
+
+    """
+
+    """
+    eventtoshow: Int
+
+    """
+
+    """
+    includeAllEvents: Boolean
+
+    """
+    Domain Id
+    """
+    domainId: Int
+
+    """
+    Show only Events whith ranked participants
+    """
+    eventsWithRankedParticipants: Boolean
+
+    """
+
+    """
+    onlyRanked: Boolean
+
+    """
+
+    """
+    conferenceIds: [Int]
+
+    """
+
+    """
+    divisionIds: [Int]
+
+    """
+
+    """
+    es: [String]
+
+    """
+
+    """
+    truncDate: Boolean
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsByDateNew(
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    Show events wihtout lines
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Find the nearest events from startDate
+    """
+    fastForward: Boolean
+
+    """
+    Client's timezone offset whether fastForward is true
+    """
+    fastForwardOffset: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    Only look for events with team rank
+    """
+    onlyRanked: Boolean
+
+    """
+
+    """
+    conferenceIds: [Int]
+
+    """
+
+    """
+    divisionIds: [Int]
+
+    """
+
+    """
+    es: [String]
+
+    """
+    Sport Ids (Horse Racing)
+    """
+    spids: [Int]
+
+    """
+    Region Ids (Horse Racing)
+    """
+    rids: [Int]
+
+    """
+
+    """
+    writeingame: Boolean
+
+    """
+    Events Quantity Limit
+    """
+    limit: Int
+
+    """
+    Provider Account Id
+    """
+    paid: [Int]
+
+    """
+    Use this flag to append future events to query result
+    """
+    nextEvents: Boolean
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsByDateByLeagueGroup(
+    """
+
+    """
+    leagueGroups: [LeagueGroup]!
+
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    Event Group ID
+    """
+    egid: Int
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Only look for events in hour range
+    """
+    nof: Boolean
+
+    """
+    Show Empty Events
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    Get all events from the eventGroups
+    """
+    getAllInEventGroup: Boolean
+
+    """
+
+    """
+    es: [String]
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventMarkets(
+    """
+    Event ID
+    """
+    eid: Int
+  ): EventMarkets
+
+  """
+
+  """
+  eventsByLeagueGroup(
+    """
+    Event Id
+    """
+    eid: [Int]
+
+    """
+
+    """
+    leagueGroups: [LeagueGroup]!
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    distinct: [String]
+
+    """
+
+    """
+    type: TypeInput
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    group: GroupInput
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    get events with not lines for an specific mtid
+    """
+    showEmptyEvents: Boolean
+
+    """
+
+    """
+    es: [String]
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsV2(
+    """
+    Event Id
+    """
+    eid: [Int]
+
+    """
+    Sportradar Id
+    """
+    srid: [String]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    distinct: [String]
+
+    """
+
+    """
+    type: TypeInput
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    group: GroupInput
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    get events with not lines for an specific mtid
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Domain Id
+    """
+    domainId: Int
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+
+    """
+    Is prop competition?
+    """
+    ipc: Boolean
+
+    """
+    Provider Account Ids
+    """
+    paid: [Int]
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsByEventGroup(
+    """
+    Event Group ID
+    """
+    egid: [Int]!
+
+    """
+    Market Type ID
+    """
+    mtid: Int!
+
+    """
+    SeasonId
+    """
+    seid: [Int]
+
+    """
+    LeagueId
+    """
+    lid: [Int]
+
+    """
+    Have lines?
+    """
+    hl: Boolean
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Is competition?
+    """
+    ic: Boolean
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+  ): [Event]
+
+  """
+
+  """
+  eventsByEventGroupV2(
+    """
+    Event Group ID
+    """
+    egid: [Int]!
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]!
+
+    """
+    SeasonId
+    """
+    seid: [Int]
+
+    """
+    LeagueId
+    """
+    lid: [Int]
+
+    """
+    Have lines?
+    """
+    hl: Boolean
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Is competition?
+    """
+    ic: Boolean
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    onlyRanked: Boolean
+
+    """
+    TODO REMOVE!!!
+    """
+    sgid: Int
+
+    """
+
+    """
+    conferenceIds: [Int]
+
+    """
+
+    """
+    divisionIds: [Int]
+
+    """
+    Event Statuses
+    """
+    es: [String]
+
+    """
+    Provider Account Ids
+    """
+    paid: [Int]
+
+    """
+    get events with not lines
+    """
+    showEmptyEvents: Boolean
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  nearestSeasonEvents(
+    """
+    League ID
+    """
+    lid: Int
+
+    """
+    Market Type ID
+    """
+    mtid: Int
+
+    """
+    Season ID
+    """
+    seid: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    opening bt sportbook
+    """
+    providerAcountOpener: Int
+
+    """
+
+    """
+    es: [String]
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  leaguesWithEvents(
+    """
+    Sport ID
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Start Date
+    """
+    dt: RangeInput
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    Use leagueFilter to filter the leagues by enabled in an specific sitid-did
+    """
+    leagueFilter: LeagueFilter!
+  ): [LeagueWithSettings]
+
+  """
+
+  """
+  eventsRegionBySport(
+    """
+    Sport ID
+    """
+    spid: [Int]!
+
+    """
+    Market Type ID
+    """
+    mtid: [Int]
+  ): EventRegion
+
+  """
+
+  """
+  eventsDatesCount(
+    """
+    Leagues Ids
+    """
+    lid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Market Type Id
+    """
+    mtid: Int
+
+    """
+    Start Date
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    group: GroupInput
+
+    """
+
+    """
+    es: [String]
+  ): [EventDateCount]
+
+  """
+
+  """
+  eventsDatesCountSummary(
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+    Has Lines?
+    """
+    hl: Boolean
+
+    """
+    Is Competition?
+    """
+    ic: Boolean
+
+    """
+    Market Type Id
+    """
+    mtid: Int
+
+    """
+    Start Date
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    group: GroupInput
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+  ): [EventDateCount]
+
+  """
+
+  """
+  calendarEventsByEventGroup(
+    """
+    Event Group ID
+    """
+    egid: Int!
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Is competition?
+    """
+    ic: Boolean
+
+    """
+    League Id
+    """
+    lid: Int
+
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+  ): [Event]
+
+  """
+
+  """
+  calendarEventsByEventGroupV2(
+    """
+    Event Group ID
+    """
+    egid: Int!
+
+    """
+    Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Is competition?
+    """
+    ic: Boolean
+
+    """
+    League Id
+    """
+    lid: Int
+
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+  ): EventsWithMaxSequences
+
+  """
+  get all the updated events for the event ids, greater than the sequence
+  """
+  getUpdatedEvents(
+    """
+    Event Id
+    """
+    eventIds: [Int]!
+
+    """
+    greater than this sequence
+    """
+    sequence: Int!
+  ): EventsWithMaxSequence
+
+  """
+
+  """
+  sportsWithLiveEvents(
+    """
+    Days offset
+    """
+    days: Int!
+
+    """
+    Sport Id
+    """
+    spid: [Int]!
+  ): [Sports]
+
+  """
+
+  """
+  eventGroupsByLeagues(
+    """
+    League Id
+    """
+    lid: [Int]!
+
+    """
+    Events Have Lines ?
+    """
+    hl: Boolean
+
+    """
+    Is competition
+    """
+    ic: Boolean
+
+    """
+
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+  ): [EventGroup]
+
+  """
+
+  """
+  eventGroupsBySport(
+    """
+    Spid Id
+    """
+    spid: Int!
+
+    """
+    Events Have Lines?
+    """
+    hl: Boolean
+
+    """
+    Is competition
+    """
+    ic: Boolean
+
+    """
+    Events Datetime Range
+    """
+    dt: RangeInput
+
+    """
+    Limit items to show
+    """
+    limit: Int
+
+    """
+    Skip item id
+    """
+    skip: Int
+
+    """
+    Sort by
+    """
+    sort: SortInput
+
+    """
+    Region Ids
+    """
+    rid: [Int]
+
+    """
+    Timezone Offset
+    """
+    timezoneOffset: Int
+
+    """
+    Exact Date
+    """
+    exactDate: Boolean
+  ): [EventGroup]
+
+  """
+  Get all events of a team
+  """
+  eventsByTeamId(
+    """
+    Team id
+    """
+    tmid: Int!
+
+    """
+    Season Id
+    """
+    seid: Int
+
+    """
+    Start date
+    """
+    startDate: Float
+
+    """
+    Hours after start date to bring events
+    """
+    hoursRange: Int
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+    Has lines
+    """
+    hl: Boolean
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+    Is competition
+    """
+    ic: Boolean
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  relatedEvents(
+    """
+    Event ID
+    """
+    eid: Int!
+
+    """
+    Client's timezone offset
+    """
+    timezoneOffset: Float
+
+    """
+    Flag to select the stored procedure 'EVENT_GROUP', 'EVENT_DATE'
+    """
+    groupBy: String!
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  eventsLocation(
+    """
+    Events IDs
+    """
+    eid: [Int!]!
+  ): [EventLocation]
+
+  """
+
+  """
+  upcomingEvents(
+    """
+    League ids
+    """
+    lids: [Int!]!
+
+    """
+    Start date in epoch format
+    """
+    startDate: Float
+
+    """
+    Hours range from the start date
+    """
+    hoursRange: Float
+
+    """
+    Days range from the start date
+    """
+    daysRange: Int
+
+    """
+    Show events without lines
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Filters using a location
+    """
+    location: GeolocationIntput
+
+    """
+    Limit the amount of results expected
+    """
+    limit: Int
+
+    """
+    Sort results by
+    """
+    sort: SortInput
+
+    """
+
+    """
+    participantId: Int
+
+    """
+
+    """
+    seid: Int
+  ): [Event]
+
+  """
+  Upcoming events by participant
+  """
+  upcomingEventsNew(
+    """
+    League ids
+    """
+    lids: [Int!]!
+
+    """
+
+    """
+    participantIds: [Int]
+
+    """
+
+    """
+    seid: Int
+
+    """
+    Limit the amount of results expected by participant
+    """
+    limitByParticipant: Int
+
+    """
+    Start date in epoch format (deprecated)
+    """
+    startDate: Float
+
+    """
+    Hours range from the start date (deprecated)
+    """
+    hoursRange: Float
+
+    """
+    Show events without lines (deprecated)
+    """
+    showEmptyEvents: Boolean
+
+    """
+    Sort results by (deprecated)
+    """
+    sort: SortInput
+  ): [EventsByParticipant]
+
+  """
+
+  """
+  getTopEventsBySportsbook(
+    """
+    Event Start Date
+    """
+    startDate: Float!
+
+    """
+    Sportbook Ids
+    """
+    sbid: [Int]!
+
+    """
+    Top Consensus Wager Limit
+    """
+    topGamesLimit: Int!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Hours Range from startDate
+    """
+    hoursRange: Int
+  ): EventsWithMaxSequences
+
+  """
+
+  """
+  getEventIdsBySlug(
+    """
+    Slug
+    """
+    slg: String!
+
+    """
+    Actual Time
+    """
+    actTim: Float!
+
+    """
+    Slug Alphabetically
+    """
+    alphabetically: Boolean
+
+    """
+    League Event
+    """
+    leagueId: Int
+  ): EventIdsSlugInfo
+
+  """
+
+  """
+  competitionWinners(
+    """
+    Event Id
+    """
+    eid: [Int]
+  ): [CompetitionWinner]
+
+  """
+  Get Events with Prediction
+  """
+  getEventsWithPrediction(
+    """
+    min Sequence
+    """
+    minSequence: Int!
+
+    """
+    Leagues Ids
+    """
+    lid: [Int]!
+
+    """
+    Limit
+    """
+    limit: Int
+  ): [EventWithPrediction]
+
+  """
+
+  """
+  marketResultsByEvent(
+    pid: Int!
+    eid: Int
+    tmid: Int
+    seid: Int
+    mtids: [Int]
+    limit: Int
+    sort: SortInput
+    catid: Int
+    paid: [Int]
+  ): [Event]
+
+  """
+
+  """
+  leagueSetting(
+    """
+    League Id
+    """
+    lid: Int!
+  ): LeagueSetting
+
+  """
+
+  """
+  leaguesSetting(
+    lid: Int
+    enabled: Boolean
+    alias: String
+    rotation: Boolean
+    limit: Int
+    skip: Int
+    orderBy: String
+  ): [LeagueSetting]
+
+  """
+
+  """
+  leagueSettingsV2(
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+    Sport Id
+    """
+    rid: Int
+
+    """
+    Site Id
+    """
+    sitid: Int
+
+    """
+    Domain Id
+    """
+    did: Int
+
+    """
+    Merge Settings, indicates if custom and default settings should be merged
+    """
+    merge: Boolean
+
+    """
+    League Ids
+    """
+    lid: [Int]
+  ): [LeagueV2]
+
+  """
+
+  """
+  leagueMarkets(
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+  ): [LeagueMarket]
+
+  """
+
+  """
+  leaguesWithSettings(
+    """
+    SiteId
+    """
+    sitid: Int!
+
+    """
+    DomainId
+    """
+    did: Int!
+
+    """
+    Enabled
+    """
+    enabled: Boolean
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+    League Ids
+    """
+    lid: [Int]
+  ): [LeagueWithSettings]
+
+  """
+
+  """
+  getLeaguesWithSettingsV2(
+    """
+    SiteId
+    """
+    sitid: Int!
+
+    """
+    DomainId
+    """
+    did: Int!
+
+    """
+    Enabled
+    """
+    enabled: Boolean
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    League Ids
+    """
+    lid: [Int]
+  ): [LeagueWithSettingsV2]
+
+  """
+
+  """
+  league(lid: Int!): LeagueWithSettings
+
+  """
+
+  """
+  leagues(
+    """
+    League Id
+    """
+    lid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: Int
+
+    """
+    Region Id
+    """
+    rid: Int
+
+    """
+
+    """
+    enabled: Boolean
+
+    """
+
+    """
+    alias: String
+
+    """
+
+    """
+    rotation: Boolean
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    distinct: [String]
+  ): [LeagueWithSettings]
+
+  """
+
+  """
+  leaguesById(lid: [Int], spid: [Int], rid: [Int]): [League]
+
+  """
+
+  """
+  sportSetting(
+    """
+    Sport Id
+    """
+    spid: Int!
+
+    """
+
+    """
+    sitid: String
+
+    """
+
+    """
+    did: String
+  ): SportSetting
+
+  """
+
+  """
+  sportSettingsV2(
+    """
+    Site Name
+    """
+    sitid: Int!
+  ): [SportV2]
+
+  """
+
+  """
+  getSportsWithSettingsV2(
+    """
+    spids
+    """
+    spids: [Int]
+
+    """
+    Site Id
+    """
+    sitid: Int!
+
+    """
+    Domain Id
+    """
+    did: Int!
+  ): [SportWithSettings]
+
+  """
+
+  """
+  sport(
+    """
+    Sport Id
+    """
+    spid: Int!
+  ): Sport
+
+  """
+
+  """
+  sports(
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Is Enabled?
+    """
+    enabled: Boolean
+
+    """
+    Sport Alias
+    """
+    alias: String
+
+    """
+    Mode Setting
+    """
+    mode: String
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+  ): [Sport]
+
+  """
+
+  """
+  getLeaguesAndRegionsBySport(
+    sitid: Int!
+    did: Int!
+    sportEnabled: Boolean
+    leagueEnabled: Boolean
+  ): [LeaguesAndRegionsBySport]
+
+  """
+
+  """
+  conferences(ids: [Int]): [Conference]
+
+  """
+
+  """
+  conferencesV2(ids: [Int]): [Conference]
+
+  """
+
+  """
+  divisions(ids: [Int]): [Division]
+
+  """
+
+  """
+  divisionsV2(ids: [Int]): [Division]
+
+  """
+
+  """
+  seasonInfoByLeague(
+    """
+    League Id
+    """
+    lid: [Int]!
+  ): [LeagueSeasonInfo]
+
+  """
+
+  """
+  region(
+    """
+    Region Id
+    """
+    rid: Int!
+  ): Region
+
+  """
+
+  """
+  regions(
+    """
+    Region Id
+    """
+    rid: [Int]
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+  ): [Region]
+
+  """
+
+  """
+  regionsBySport(
+    """
+    SportId
+    """
+    spid: Int!
+
+    """
+    Input Query of dates in milliseconds
+    """
+    dt: InputQueryFloat
+
+    """
+    MarketTypeId
+    """
+    mtid: Int
+
+    """
+
+    """
+    ic: Boolean
+
+    """
+
+    """
+    hl: Boolean
+  ): RegionsBySport
+
+  """
+  Query multiple Scores
+  """
+  scores(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Participant Id
+    """
+    partid: Int
+
+    """
+    Period Number
+    """
+    pn: Int
+  ): [Score]
+
+  """
+  get all the updated scores for the event ids, greater than the sequence
+  """
+  getUpdatedScores(eventIds: [Int]!, sequence: Int!): ScoreWithMaxSequence
+
+  """
+  Query a single Statistic
+  """
+  statistic(
+    """
+
+    """
+    eid: Int!
+
+    """
+
+    """
+    partid: Int
+
+    """
+
+    """
+    pid: Int
+
+    """
+
+    """
+    typ: String
+
+    """
+    Statistics Group Id
+    """
+    sgid: Int
+  ): Statistic
+
+  """
+  Query multiple Statistics
+  """
+  statistics(
+    """
+
+    """
+    eid: [Int]!
+
+    """
+
+    """
+    partid: Int
+
+    """
+
+    """
+    pid: Int
+
+    """
+
+    """
+    typ: String
+
+    """
+    Statistics Group Id
+    """
+    sgid: Int
+  ): [Statistic]
+
+  """
+  get all the updated statistics for the event ids, greater than the sequence
+  """
+  getUpdatedStatistics(
+    """
+
+    """
+    eventIds: [Int]!
+
+    """
+
+    """
+    sequence: Float!
+
+    """
+    Statistics Group Id
+    """
+    sgid: Int
+  ): StatisticWithMaxSequence
+
+  """
+  Query a single MarketType
+  """
+  marketType(
+    """
+    MarketType Id
+    """
+    mtid: Int!
+
+    """
+    Sport Id
+    """
+    spid: Int
+  ): MarketTypeWithSettings
+
+  """
+  Query multiple MarketTypes
+  """
+  marketTypes(
+    """
+    MarketType Id
+    """
+    mtid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Site Name
+    """
+    sitid: String
+
+    """
+    Domain Name
+    """
+    did: String
+
+    """
+    Merge settings?
+    """
+    merge: Boolean
+
+    """
+    Is Enabled?
+    """
+    enabled: Boolean
+
+    """
+    Only Props?
+    """
+    onlyProps: Boolean
+  ): [MarketTypeWithSettings]
+
+  """
+  Query to get the Market outrights
+  """
+  outrightMarketTypes(
+    """
+    League Id
+    """
+    lid: [Int]!
+
+    """
+    Sport Id
+    """
+    spid: Int!
+
+    """
+    Date
+    """
+    dt: String!
+
+    """
+    has lines
+    """
+    hl: Boolean!
+
+    """
+
+    """
+    mtid: [Int]
+  ): [MarketTypeWithSettings]
+
+  """
+
+  """
+  marketTypesById(
+    """
+    MarketType Id
+    """
+    mtid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+  ): [MarketType]
+
+  """
+
+  """
+  currentLines(
+    """
+    Category Id
+    """
+    catid: Int
+
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Betting Option Id
+    """
+    boid: [Int]
+
+    """
+    participant id
+    """
+    partid: [Int]
+
+    """
+    SportBook id
+    """
+    sbid: [Int]
+
+    """
+    Provider Account Id
+    """
+    paid: [Int]
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    distinct: [String]
+
+    """
+
+    """
+    group: [String]
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+
+    """
+    needSbid: Boolean
+
+    """
+
+    """
+    groupByEntity: Boolean
+
+    """
+    Team Id
+    """
+    tmid: Int
+  ): [JSON]
+
+  """
+
+  """
+  bestLines(
+    """
+    Category Id (Please use one catid or paid)
+    """
+    catid: Int
+
+    """
+    Provider Acount Id (Please use one catid or paid)
+    """
+    paid: [Int]
+
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+
+    """
+    groupByEntity: Boolean
+
+    """
+    Team Id
+    """
+    tmid: Int
+  ): [BestLine]
+
+  """
+  get all the updated lines for the event ids, greater than the sequence
+  """
+  getUpdatedCurrentLines(
+    eventIds: [Int]!
+    sequence: Float!
+    mtid: Int
+  ): CurrentLinesWithMaxSequence
+
+  """
+
+  """
+  getCurrentLinesGroupByEventMarket(
+    sequence: Float!
+    sequenceRange: Int!
+  ): [EventMarketLine]
+
+  """
+
+  """
+  getLineByLineId(
+    """
+    Line ID
+    """
+    lineid: Float!
+
+    """
+    Category Id (Please use one catid or paid)
+    """
+    catid: Int
+
+    """
+    Provider Acount Id (Please use one catid or paid)
+    """
+    paid: [Int]
+  ): LineById
+
+  """
+  Query multiple Lines
+  """
+  openingLines(
+    """
+    Category Id
+    """
+    catid: Int
+
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]!
+
+    """
+    Market Type Format
+    """
+    marketTypeFormat: String
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+    Provider account id
+    """
+    paid: [Int]
+
+    """
+
+    """
+    groupByEntity: Boolean
+
+    """
+    Entity Reference ids
+    """
+    entrids: [Int]
+
+    """
+    Team Id
+    """
+    tmid: Int
+  ): [JSON]
+
+  """
+  Query multiple consensus
+  """
+  consensus(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Sequence
+    """
+    sequence: Int
+
+    """
+    Sequence
+    """
+    marketTypeLayout: String
+  ): [Consensus]
+
+  """
+  Query multiple consensusV2
+  """
+  consensusV2(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+  ): [ConsensusV2]
+
+  """
+  get all the updated consensus for the event ids, greater than the sequence
+  """
+  updatedConsensus(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    greater than this sequence
+    """
+    sequence: Int!
+  ): ConsensusWithMaxSequence
+
+  """
+  Get consensus history
+  """
+  consensusHistory(
+    """
+    Event Id
+    """
+    eid: Int!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Sort: default to tmid
+    """
+    sortBy: String
+
+    """
+    Order by: default DESC
+    """
+    order: String
+  ): [Consensus]
+
+  """
+
+  """
+  weather(
+    """
+
+    """
+    cities: [LocationInput]!
+
+    """
+
+    """
+    numberOfDays: Int
+
+    """
+    Time Interval: 1 = hour by hour, 2 = every two hours and so on
+    """
+    ti: Int
+  ): [WeatherOutput]
+
+  """
+
+  """
+  weekWeatherForecast(
+    """
+    Can be: zip(USA, CA), latitude and longitude("lat,long" *decimal)
+    , ip(###.###.###.###), or a City or town name
+    """
+    place: String!
+
+    """
+    date YYYY-MM-DD format
+    """
+    dt: String
+
+    """
+    Epoch time
+    """
+    ep: Float
+  ): [weekWeatherOutput]
+
+  """
+  It gets the parent Event Group of a Event by its eid
+  """
+  eventGroupByEvent(
+    """
+    Event Id
+    """
+    eid: [Int]!
+  ): [EventGroup]
+
+  """
+
+  """
+  eventGroupsByLeague(
+    """
+    League Id
+    """
+    lid: Int!
+
+    """
+    Events Have Lines?
+    """
+    hl: Boolean
+
+    """
+    Is competition
+    """
+    ic: Boolean
+
+    """
+    Events Datetime Range
+    """
+    dt: RangeInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    sort: SortInput
+  ): [EventGroup]
+
+  """
+
+  """
+  eventsGroupsBySeason(
+    seids: [Int!]!
+    timezoneOffset: Float!
+  ): [EventGroupBySeason]
+
+  """
+
+  """
+  getEventTags(eid: [Int!]!): [EventTag]
+
+  """
+
+  """
+  getSportsbookBonusLists(catid: Int): [SportsbookBonusList]
+
+  """
+
+  """
+  bettingOptions(boid: [Int]!): [BettingOption]
+
+  """
+
+  """
+  bettingOptionsByEvent(eid: [Int]!, mtid: Int): [EventBettingOption]
+
+  """
+
+  """
+  betSlipInfo(
+    betSlipArgs: [BetSlipArgs]
+    marketTypeLayout: MarketTypeLayout
+  ): BetSlipInfo
+
+  """
+  Query a single Group
+  """
+  marketTypeGroup(
+    """
+    MarketType Group Id
+    """
+    mtgid: Int!
+
+    """
+    Sport Id
+    """
+    spid: Int
+  ): MarketTypeGroupWithSettings
+
+  """
+  Queries Market Type Groups with a sport ID and mtgid Id
+  """
+  marketTypeGroupsFiltered(
+    """
+    Event Id
+    Required if showAllMarkets is true
+    """
+    eid: Int
+
+    """
+    Sport Id
+    """
+    spid: Int!
+
+    """
+    MarketType Group Name
+    """
+    nam: String
+
+    """
+    Site Name
+    """
+    sitid: Int!
+
+    """
+    Domain Id
+    """
+    did: Int!
+
+    """
+    showAllMarkets
+    """
+    sam: Boolean
+
+    """
+    MarketType Group Id
+    """
+    mtgid: [Int]
+  ): [MarketTypeGroupFiltered]
+
+  """
+  Query multiple Groups
+  """
+  marketTypeGroups(
+    """
+    MarketType Group Id
+    """
+    mtgid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+
+    """
+    Site Name
+    """
+    sitid: Int!
+
+    """
+
+    """
+    did: Int
+
+    """
+
+    """
+    enabled: Boolean
+
+    """
+    Available Markets
+    """
+    mtid: [Int]
+
+    """
+
+    """
+    merge: Boolean
+  ): [MarketTypeGroupWithSettings]
+
+  """
+  Queries Market Type Groups with array of Market Types and their order in the Market Type Group
+  """
+  marketTypeGroupsWithMarketTypes(
+    """
+    MarketType Group Id
+    """
+    mtgid: [Int]
+  ): [MarketTypeGroupWithMarketTypes]
+
+  """
+
+  """
+  marketTypeGroupsById(
+    """
+    MarketType Group Id
+    """
+    mtgid: [Int]
+
+    """
+    Sport Id
+    """
+    spid: [Int]
+  ): [MarketTypeGroup]
+
+  """
+
+  """
+  maxSequences: MaxSequences
+
+  """
+  Query multiple Lines
+  """
+  formats(
+    """
+
+    """
+    id: Int
+
+    """
+    Decimal Price
+    """
+    dcp: Float
+
+    """
+    Numerator
+    """
+    np: Int
+
+    """
+    Denominator
+    """
+    dep: Int
+  ): [OddFormat]
+
+  """
+
+  """
+  sportsbookSetting(
+    """
+    Sportsbook ID
+    """
+    sbid: Int!
+  ): SportsbookSetting
+
+  """
+
+  """
+  sportsbook(
+    """
+    Sportsbook ID
+    """
+    sbid: Int!
+  ): Sportsbook
+
+  """
+
+  """
+  sportsbooks(
+    """
+
+    """
+    sitid: Int
+
+    """
+
+    """
+    did: Int
+
+    """
+    Filter by Enabled
+    """
+    enabled: Boolean
+
+    """
+    Sportsbook ID
+    """
+    sbids: [Int]
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+  ): [Sportsbook]
+
+  """
+
+  """
+  sportsbooksByCategory(catid: Int!): [SportsbooksByCategory]
+
+  """
+
+  """
+  categories(sitid: Int, enabled: Boolean): [Category]
+
+  """
+
+  """
+  categoriesBySportsbook(
+    sbid: Int!
+    sitid: Int!
+    enabled: Boolean
+  ): [CategoryBySportsbook]
+
+  """
+  Query multiple Images
+  """
+  images(query: String!, offset: Int, pageSize: Int): [Image]
+
+  """
+  Query multiple Lines
+  """
+  historyLines(
+    """
+    Event Id
+    """
+    eid: Int!
+
+    """
+    Market Type Id
+    """
+    mtid: Int!
+
+    """
+    Provider acccount id
+    """
+    paid: Int!
+
+    """
+    Participant ids
+    """
+    partid: [Int]
+
+    """
+    Betting option ids
+    """
+    boid: [Int]
+  ): GroupedHistoryLine
+
+  """
+  Query multiple Lines
+  """
+  lineHistory(
+    """
+    Event Id
+    """
+    eid: Int!
+
+    """
+    Market Type Id
+    """
+    mtid: Int!
+
+    """
+    Provider account id
+    """
+    paid: Int!
+
+    """
+    Participant ids
+    """
+    partid: [Int]
+
+    """
+    Betting option ids
+    """
+    boid: [Int]
+
+    """
+    Entity Reference ids
+    """
+    entrids: [Int]
+  ): [HistoryLine]
+
+  """
+
+  """
+  menuOption(
+    """
+    Menu Option Id
+    """
+    mid: Int!
+  ): MenuOption
+
+  """
+
+  """
+  menuOptions(
+    """
+    Site Id
+    """
+    sitid: Int
+
+    """
+    Menu Option Ids
+    """
+    mid: [String]
+
+    """
+    Menu Bar Id
+    """
+    mbid: Int
+
+    """
+    Menu level
+    """
+    level: Int
+  ): [MenuOption]
+
+  """
+  Query the results
+  """
+  searchEvent(
+    """
+    Text to search
+    """
+    query: [String]!
+  ): [EventCatalog]
+
+  """
+
+  """
+  multipleSearch(
+    """
+    Text to search
+    """
+    query: [String]!
+
+    """
+    Domain Id
+    """
+    did: Int!
+  ): MultipleResult
+
+  """
+
+  """
+  domains(sitid: Int!, enabled: Boolean): [Domain]
+
+  """
+  Query multiple plays
+  """
+  plays(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Play Group Id
+    """
+    pgid: Int
+
+    """
+    Query only the last X  number of sequence ids
+    """
+    limitLastSeq: Int
+
+    """
+    Play group id for finished events
+    """
+    pgidWhenFinished: Int
+  ): [Play]
+
+  """
+
+  """
+  playsV2(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Sequence
+    """
+    sequence: Int
+
+    """
+    Play Group Id
+    """
+    pgid: Int
+
+    """
+    Query only the last X  number of sequence ids
+    """
+    limitLastSeq: Int
+  ): PlaysWithMaxSequence
+
+  """
+  get all the updated plays for the event ids, greater than the sequence
+  """
+  updatedPlays(
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    greater than this sequence
+    """
+    sequence: Int!
+
+    """
+    Play Group Id
+    """
+    pgid: Int
+  ): PlaysWithMaxSequence
+
+  """
+
+  """
+  playByPlayGroupByEvent(eid: [Int!]!): [PlayGroup]
+
+  """
+
+  """
+  playByPlayByEvent(eid: [Int!]!, driveid: [String]): [Play]
+
+  """
+
+  """
+  sportbooksByCategory(
+    sitid: Int!
+    did: Int!
+    cid: Int!
+    spid: Int!
+    enabled: Boolean
+    sortWith: Boolean
+    famid: Int
+  ): [SportbooksByCategory]
+
+  """
+
+  """
+  statisticsByGroups(
+    statisticGroup: [String]!
+    teamByLeagueIds: [Int]
+    participantByEventIds: [Int]
+    teamRosterIds: [Int]
+    identities: [String]
+    eids: [Int]
+    tmids: [Int]
+    partids: [Int]
+    seids: [Int]
+    ent: [ENT]
+  ): [StatisticByGroup]
+
+  """
+
+  """
+  picksPage(
+    """
+
+    """
+    events: [EventInput!]!
+
+    """
+
+    """
+    mtid: [Int]!
+
+    """
+
+    """
+    seid: Int!
+
+    """
+
+    """
+    rankIdty: String!
+
+    """
+    Category Id
+    """
+    catid: Int
+
+    """
+    Provider Id list
+    """
+    paid: [Int]
+
+    """
+    Randomize Providers Id list
+    """
+    randomizeProviders: Boolean
+  ): [PicksPageType]
+
+  """
+
+  """
+  teamPerformance(tmid: Int!, seid: Int!, spid: Int!): [teamPerformanceType]
+
+  """
+
+  """
+  statisticsByEvent(
+    eids: [Int]!
+    idtys: [String]
+    grps: [String]
+    stats: [String]
+    entrids: [Int]
+    entgids: [Int]
+    limit: Int
+    skip: Int
+    orderBy: SortInput
+  ): [StatisticByGroup]
+
+  """
+  WARNING (statisticsBySeason): Many results could be generated by this query and timeouts are possible, always
+   filter by some of these combination of parameters at least:
+   (seid + grp + stat) or (seid + entrid + stat) or (seid + idty)
+  """
+  statisticsBySeason(
+    seid: [Int]!
+    idty: [String]
+    grp: [String]
+    stat: [String]
+    entrid: [Int]
+    entgid: [Int]
+    statisticGroup: [String]
+    ent: ENT
+  ): [StatisticByGroup]
+
+  """
+
+  """
+  teamStatistics(
+    statisticGroup: [String]!
+    teamIds: [Int]
+    seasonIds: [Int]
+  ): [StatisticByGroup]
+
+  """
+
+  """
+  statisticsBettingOddsTrends(
+    """
+
+    """
+    participantByEventIds: [Int]
+
+    """
+    Win Stat
+    """
+    ws: String
+
+    """
+    Loss Stat
+    """
+    ls: String
+  ): [Trends]
+
+  """
+
+  """
+  statisticsUmpire(eventId: Int!, seasonId: Int!): [StatisticByGroup]
+
+  """
+
+  """
+  topPerformers(
+    spid: Int!
+    stgnam: String!
+    seid: Int!
+    tmids: [Int!]!
+    idty: TopPerformerIdentity!
+  ): TopPerformer
+
+  """
+
+  """
+  getActiveEventFilterGroups(
+    """
+    Event Group Filter Id
+    """
+    egid: [String]
+
+    """
+    Site Id
+    """
+    sitid: Int!
+  ): [EventFilterGroupLegacy]
+
+  """
+
+  """
+  eventsByEventFilterGroup(
+    """
+    Event Filter Group Id
+    """
+    egid: String!
+
+    """
+    Site Id
+    """
+    sitid: Int!
+
+    """
+    Domain Id
+    """
+    did: Int
+
+    """
+    Marketype id
+    """
+    mtid: Int
+  ): EventFilterGroupWithEvents
+
+  """
+
+  """
+  eventFilterGroupWithEventIds(
+    """
+    Event Filter Group
+    """
+    egid: String!
+
+    """
+    Domain Id
+    """
+    did: Int
+
+    """
+    Site Id
+    """
+    sitid: Int!
+  ): EventFilterGroupWithEventIds
+
+  """
+
+  """
+  eventsCarousel(
+    sportbooksByCategoryArgs: SportbooksByCategoryArgs
+    eventFilterGroupsArgs: EventFilterGroupsArgs
+  ): EventsCarousel
+
+  """
+
+  """
+  liveLines(
+    """
+    Category Id
+    """
+    catid: Int
+
+    """
+    Event Id
+    """
+    eid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtid: [Int]
+
+    """
+    Sportsbook Id
+    """
+    sbid: [Int]
+
+    """
+    participant Id
+    """
+    partid: [Int]
+
+    """
+    provider Acount Id
+    """
+    paid: [Int]
+
+    """
+    Betting Option Id
+    """
+    boid: [Int]
+
+    """
+    Market Type Layout
+    """
+    marketTypeLayout: String
+
+    """
+
+    """
+    sort: SortInput
+
+    """
+
+    """
+    limit: Int
+
+    """
+
+    """
+    skip: Int
+
+    """
+
+    """
+    distinct: [String]
+
+    """
+
+    """
+    needSbid: Boolean
+
+    """
+
+    """
+    groupByEntity: Boolean
+  ): [JSON]
+
+  """
+
+  """
+  injuries(
+    tmid: [Int]!
+    seid: Int!
+    limit: Int
+    sort: SortInput
+    eventdate: Float
+  ): [InjuryResponse]
+
+  """
+
+  """
+  news(pids: [Float]!, seid: Int!, sort: SortInput): [New]
+
+  """
+
+  """
+  getTwitterFeed(
+    first: [String]!
+    firstPartid: String!
+    second: [String]!
+    secondPartid: String!
+    eid: Int!
+    eventDate: Int!
+    count: Int
+  ): TwitterResponse
+
+  """
+
+  """
+  getTeamDepthChart(
+    """
+    Team Id
+    """
+    teamId: [Int]!
+
+    """
+    Season Id
+    """
+    seasonId: Int!
+  ): TeamDepthChart
+
+  """
+
+  """
+  getWinnerLineByEvent(
+    """
+    Event Id
+    """
+    eventId: Int!
+
+    """
+    Provider Id
+    """
+    providerId: Int!
+  ): WinnerLineByEvent
+
+  """
+
+  """
+  currentLinesByPlayer(
+    """
+    Array of Market Type ids.
+    """
+    mtid: [Int]!
+
+    """
+    Array of Provider account ids.
+    """
+    paid: [Int]!
+
+    """
+    Player id
+    """
+    pid: Int!
+
+    """
+    League Id
+    """
+    lid: Int!
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Event Id (Optional)
+    """
+    eid: Int
+  ): LinesByPlayer
+
+  """
+
+  """
+  openingLinesByPlayer(
+    """
+    Array of Market Type ids.
+    """
+    mtid: [Int]!
+
+    """
+    Array of Provider account ids.
+    """
+    paid: [Int]!
+
+    """
+    Player id
+    """
+    pid: Int!
+
+    """
+    League Id
+    """
+    lid: Int!
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Event Id (Optional)
+    """
+    eid: Int
+  ): LinesByPlayer
+
+  """
+
+  """
+  bestLinesByPlayer(
+    """
+    Array of Market Type ids.
+    """
+    mtid: [Int]!
+
+    """
+    Array of Provider account ids.
+    """
+    paid: [Int]!
+
+    """
+    Player id
+    """
+    pid: Int!
+
+    """
+    League Id
+    """
+    lid: Int!
+
+    """
+    Season Id
+    """
+    seid: Int!
+
+    """
+    Event Id (Optional)
+    """
+    eid: Int
+  ): LinesByPlayer
+
+  """
+
+  """
+  marketsByPlayer(
+    """
+    Player Id
+    """
+    pid: Int
+
+    """
+    League Id
+    """
+    lid: Int
+
+    """
+    Provider Acount Id
+    """
+    paid: [Int]!
+
+    """
+    Market Type Id
+    """
+    mtids: [Int]!
+
+    """
+    Season Id
+    """
+    seids: [Int]!
+  ): [MarketsByPlayer]
+
+  """
+
+  """
+  playerDetails(pid: Int!, seid: Int!): PlayerDetails
+
+  """
+
+  """
+  propLinesByEntry(
+    """
+    Event Id
+    """
+    eid: Int!
+
+    """
+    Market Types
+    """
+    mtid: [Int]!
+
+    """
+    SportBook Ids
+    """
+    sbid: [Int]!
+
+    """
+    (optional) Players Reference Id, If this Param are required can't send the tmid Param
+    """
+    pid: Int
+
+    """
+    (optional) Teams Reference Id, If this Param are required can't send the pid Param
+    """
+    tmid: Int
+
+    """
+    Lines to get
+    """
+    linesoptions: [LINESOPTIONS]
+
+    """
+    Category id (bestlines order)
+    """
+    catid: Int
+  ): PropLines
+
+  """
+
+  """
+  getMarketByLineId(
+    """
+    Line Id
+    """
+    lineid: Float!
+
+    """
+    SportBook Ids
+    """
+    sbid: [Int]
+
+    """
+    Lines to get
+    """
+    linesoptions: [LINESOPTIONS]
+
+    """
+    Category id (bestlines order)
+    """
+    catid: Int
+  ): PropLines
+}
+
+"""
+
+"""
+type Player {
+  """
+
+  """
+  pid: Int
+
+  """
+
+  """
+  fn: String
+
+  """
+
+  """
+  lnam: String
+
+  """
+
+  """
+  cit: String
+
+  """
+
+  """
+  sta: String
+
+  """
+
+  """
+  cou: String
+
+  """
+
+  """
+  act: Boolean
+
+  """
+
+  """
+  stt: String
+
+  """
+
+  """
+  hei: Int
+
+  """
+
+  """
+  wei: Int
+
+  """
+
+  """
+  bd: Float
+
+  """
+
+  """
+  age: Int
+
+  """
+
+  """
+  sch: String
+
+  """
+
+  """
+  dy: Float
+
+  """
+
+  """
+  hsurl: String
+
+  """
+
+  """
+  srid: String
+
+  """
+
+  """
+  playerTeamRosters(seids: [Int!]!): [TeamRoster]
+}
+
+"""
+
+"""
+type TeamRoster {
+  """
+  Team Roster Id
+  """
+  tmrid: Int
+
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  Player Id
+  """
+  pid: Int
+
+  """
+  Season Id
+  """
+  seid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Player Number
+  """
+  pnum: Int
+
+  """
+  Player Position Id
+  """
+  ppid: Int
+
+  """
+  Player Position Name
+  """
+  ppnam: String
+
+  """
+  Player Position Short Name
+  """
+  ppsn: String
+
+  """
+  Player Position Priority
+  """
+  ppprio: Int
+
+  """
+
+  """
+  depthChart(typeOfSeason: String, eventIds: [Int]): [DepthChart]
+
+  """
+  Starting Golies for Hockey
+  """
+  startingGolie(eid: [Int]!): DepthChart
+
+  """
+
+  """
+  player: Player
+
+  """
+  Market Type Counter
+  """
+  marketCounter: Int
+
+  """
+  Injuries
+  """
+  injuries: InjuryResponse
+}
+
+"""
+
+"""
+type DepthChart {
+  """
+
+  """
+  id: Int
+
+  """
+
+  """
+  seid: Int
+
+  """
+
+  """
+  tmid: Int
+
+  """
+
+  """
+  pid: Int
+
+  """
+
+  """
+  pposid: Int
+
+  """
+
+  """
+  week: Int
+
+  """
+
+  """
+  val: Int
+
+  """
+
+  """
+  position: Position
+
+  """
+
+  """
+  eid: Int
+
+  """
+  Is Confirmed?
+  """
+  cfrd: Boolean
+
+  """
+  Is Starter?
+  """
+  strtr: Boolean
+}
+
+"""
+
+"""
+type Position {
+  """
+
+  """
+  id: Int
+
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  sn: String
+}
+
+"""
+
+"""
+type InjuryResponse {
+  """
+  Player ID
+  """
+  pid: Int
+
+  """
+  Team ID
+  """
+  tmid: Int
+
+  """
+  Season ID
+  """
+  seid: Int
+
+  """
+  Injury type
+  """
+  typ: String
+
+  """
+  Injury status
+  """
+  stt: String
+
+  """
+  Location
+  """
+  loc: String
+
+  """
+  Injury detail
+  """
+  det: String
+
+  """
+  Injury side
+  """
+  side: String
+
+  """
+  Return date
+  """
+  retdt: Float
+
+  """
+  Discharged
+  """
+  disch: Boolean
+
+  """
+
+  """
+  hl: String
+
+  """
+
+  """
+  not: String
+
+  """
+
+  """
+  newstim: Float
+
+  """
+
+  """
+  newsdate: Float
+
+  """
+
+  """
+  teamRosterPlayer: TeamRosterPlayer
+
+  """
+  Priority
+  """
+  prio: Int
+
+  """
+  Is Injured a key Player?
+  """
+  isKeyInjuredPlayer: Boolean
+}
+
+"""
+
+"""
+type TeamRosterPlayer {
+  """
+
+  """
+  teamRoster: TeamRoster
+
+  """
+
+  """
+  player: Player
+}
+
+"""
+
+"""
+scalar PlayerPerformanceInfo
+
+"""
+
+"""
+type Team {
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  Sportradar Id
+  """
+  srid: String
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Team By League ID
+  """
+  tmblid: Int
+
+  """
+  Nick Name
+  """
+  nn: String
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  Abbreviation
+  """
+  abbr: String
+
+  """
+  City
+  """
+  cit: String
+
+  """
+  State
+  """
+  sta: String
+
+  """
+  Country
+  """
+  cou: String
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Status
+  """
+  stt: String
+
+  """
+  Venue
+  """
+  ven: String
+
+  """
+  SeasonId
+  """
+  seid: Int
+
+  """
+  Season Name
+  """
+  senam: String
+
+  """
+  Conference Id
+  """
+  conid: Int
+
+  """
+  Players Rooster
+  """
+  roster(seid: Int, all: Boolean): [TeamRoster]
+
+  """
+  Statistics
+  """
+  statistics(statisticGroup: String): [StatisticByGroup]
+
+  """
+  Division Id
+  """
+  divid: Int
+
+  """
+  Division Name
+  """
+  divname: String
+
+  """
+  Has team statistics
+  """
+  hasteamstats: Boolean
+
+  """
+  Conference Name
+  """
+  conname: String
+
+  """
+  Conference Short Name
+  """
+  consn: String
+
+  """
+  Image URL
+  """
+  imageurl: String
+
+  """
+  Statistics By Group
+  """
+  statisticsByGroups(
+    statisticGroup: [String]!
+    identities: [String]
+    eids: [Int]
+    tmids: [Int]
+    partids: [Int]
+    seids: [Int]
+    ent: [ENT]
+  ): [StatisticByGroup]
+
+  """
+  Statistics By Season
+  """
+  statisticsBySeason(
+    statisticGroup: [String]
+    grp: [String]
+    stat: [String]
+    idty: [String!]!
+  ): [StatisticByGroup]
+
+  """
+  Social Networks
+  """
+  socialNetworks: [TeamSocialNetwork]
+
+  """
+
+  """
+  leagueHierarchy: [LeagueHierarchy]
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Is Virtual?
+  """
+  iv: Boolean
+
+  """
+  Team Slug
+  """
+  slg: String
+
+  """
+  Team Rank
+  """
+  tr: Int
+}
+
+"""
+
+"""
+type StatisticByGroup {
+  """
+  Entity
+  """
+  ent: String
+
+  """
+  Group
+  """
+  grp: String
+
+  """
+  Statistic name
+  """
+  stat: String
+
+  """
+  Timestamp
+  """
+  tim: Float
+
+  """
+  Value
+  """
+  val: String
+
+  """
+  Sequence
+  """
+  sequence: Float
+
+  """
+  Value Id
+  """
+  valid: Float
+
+  """
+  Entity Id
+  """
+  entid: Int
+
+  """
+  Group Id
+  """
+  gid: Int
+
+  """
+  Stat Id
+  """
+  statid: Int
+
+  """
+  EntityGroup Id
+  """
+  entgid: Int
+
+  """
+  Identity
+  """
+  idty: String
+
+  """
+  EntityReference id
+  """
+  entrid: Int
+
+  """
+  Source Timestamp
+  """
+  sctim: Float
+
+  """
+  EventId
+  """
+  eid: Int
+
+  """
+  participant by event id
+  """
+  partbeid: Int
+
+  """
+  participant Id
+  """
+  partid: Int
+
+  """
+  player id
+  """
+  pid: Int
+
+  """
+  session id
+  """
+  seid: Int
+
+  """
+  league id
+  """
+  lid: Int
+
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  TeamByLeagueId
+  """
+  tmblid: Int
+
+  """
+  ParticipantName
+  """
+  partname: String
+
+  """
+  ParticipantAbbreviation
+  """
+  partabbreviation: String
+
+  """
+  ParticipantShortName
+  """
+  partshortname: String
+
+  """
+  PlayerFirstName
+  """
+  pfn: String
+
+  """
+  PlayerLastName
+  """
+  pln: String
+
+  """
+  Statistic Group Name
+  """
+  stgnam: String
+}
+
+"""
+
+"""
+enum ENT {
+  """
+
+  """
+  EVENT
+
+  """
+
+  """
+  EVENTLASTPLAY
+
+  """
+
+  """
+  EVENTROSTER
+
+  """
+
+  """
+  EVENTPARTICIPANT
+
+  """
+
+  """
+  TEAMBYLEAGUE
+
+  """
+
+  """
+  PLAYERBYLEAGUE
+
+  """
+
+  """
+  GROUPBYLEAGUE
+
+  """
+
+  """
+  SEASON
+
+  """
+
+  """
+  EVENTLASTPLAYDETAILS
+
+  """
+
+  """
+  TEAMROSTER
+
+  """
+
+  """
+  SEASONPARTICIPANT
+}
+
+"""
+
+"""
+type TeamSocialNetwork {
+  """
+  Social Network
+  """
+  network: String!
+
+  """
+  Account
+  """
+  account: String!
+}
+
+"""
+
+"""
+type LeagueHierarchy {
+  """
+
+  """
+  teamId: Int
+
+  """
+
+  """
+  seasonId: Int
+
+  """
+
+  """
+  leagueId: Int
+
+  """
+
+  """
+  conference: Conference
+
+  """
+
+  """
+  division: Division
+}
+
+"""
+
+"""
+type Conference {
+  """
+
+  """
+  id: Int
+
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  shortname: String
+
+  """
+
+  """
+  favoriteshortname: String
+
+  """
+
+  """
+  favoritename: String
+
+  """
+
+  """
+  imageurl: String
+}
+
+"""
+
+"""
+type Division {
+  """
+
+  """
+  id: Int
+
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  shortname: String
+
+  """
+
+  """
+  favoriteshortname: String
+
+  """
+
+  """
+  imageurl: String
+}
+
+"""
+
+"""
+type TopTeam {
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  Sportradar Id
+  """
+  srid: String
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Team By League ID
+  """
+  tmblid: Int
+
+  """
+  Nick Name
+  """
+  nn: String
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  Abbreviation
+  """
+  abbr: String
+
+  """
+  City
+  """
+  cit: String
+
+  """
+  State
+  """
+  sta: String
+
+  """
+  Country
+  """
+  cou: String
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Status
+  """
+  stt: String
+
+  """
+  Venue
+  """
+  ven: String
+
+  """
+  SeasonId
+  """
+  seid: Int
+
+  """
+  Season Name
+  """
+  senam: String
+
+  """
+  Conference Id
+  """
+  conid: Int
+
+  """
+  Division Id
+  """
+  divid: Int
+
+  """
+  Division Name
+  """
+  divname: String
+
+  """
+  Has team statistics
+  """
+  hasteamstats: Boolean
+
+  """
+  Conference Name
+  """
+  conname: String
+
+  """
+  Image URL
+  """
+  imageurl: String
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Team Rank
+  """
+  rank: Int
+
+  """
+  Team Slug
+  """
+  slg: String
+}
+
+"""
+
+"""
+type TeamByLeague {
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  SeasonId
+  """
+  seid: Int
+
+  """
+  Season Name
+  """
+  senam: String
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Team By League ID
+  """
+  tmblid: Int
+
+  """
+  Conference Id
+  """
+  conid: Int
+
+  """
+  Conference Name
+  """
+  conname: String
+
+  """
+  Division Id
+  """
+  divid: Int
+
+  """
+  Division Name
+  """
+  divname: String
+
+  """
+  Is this the current season?
+  """
+  isCurrent: Boolean
+
+  """
+  Events Groups Ordered with the current Event Group
+  """
+  eventGroups(timezoneOffset: Float!): [EventGroupBySeason]
+}
+
+"""
+
+"""
+type EventGroupBySeason {
+  """
+  Event Group Id
+  """
+  egid: Int
+
+  """
+  Event Group Name
+  """
+  nam: String
+
+  """
+  Event Group Alias
+  """
+  alias: String
+
+  """
+  Current Event Group
+  """
+  ceg: Int
+
+  """
+  Season Id
+  """
+  seid: Int
+
+  """
+  Display Order
+  """
+  disord: Int
+
+  """
+  Start Date
+  """
+  sdt: Float
+
+  """
+  End Date
+  """
+  edt: Float
+
+  """
+  Event Group Events Ids
+  """
+  eids: [Int]
+
+  """
+  Event Group Market Types Ids
+  """
+  mtids: [Int]
+
+  """
+  Have Event Group Lines?
+  """
+  hl(catid: Int): Boolean
+
+  """
+  Is this the current season?
+  """
+  isCurrent: Boolean
+}
+
+"""
+
+"""
+type TeamSearchResult {
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  Team Name
+  """
+  nam: String
+
+  """
+  Nick Name
+  """
+  nn: String
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  Abbreviation
+  """
+  abbr: String
+
+  """
+  City
+  """
+  cit: String
+
+  """
+  State
+  """
+  sta: String
+
+  """
+  Country
+  """
+  cou: String
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Season Id
+  """
+  seid: Int
+
+  """
+  Season Name
+  """
+  senam: String
+
+  """
+  Conference Name
+  """
+  conname: String
+
+  """
+  Division Name
+  """
+  divname: String
+
+  """
+  Participant Id
+  """
+  partid: Int
+}
+
+"""
+
+"""
+type LineUp {
+  """
+  Team Roster Id
+  """
+  tmrid: Int
+
+  """
+  Team Id
+  """
+  tmid: Int
+
+  """
+  Player Id
+  """
+  pid: Int
+
+  """
+  Season Id
+  """
+  seid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Player Number
+  """
+  pnum: Int
+
+  """
+  Player Position Id
+  """
+  ppid: Int
+
+  """
+  Player Position Name
+  """
+  ppnam: String
+
+  """
+  Player Position Short Name
+  """
+  ppsn: String
+
+  """
+  Player Position Priority
+  """
+  ppprio: Int
+
+  """
+
+  """
+  depthChart(typeOfSeason: String, eventIds: [Int]): [DepthChart]
+
+  """
+  Starting Golies for Hockey
+  """
+  startingGolie(eid: [Int]!): DepthChart
+
+  """
+
+  """
+  player: Player
+
+  """
+
+  """
+  position: Position
+
+  """
+
+  """
+  confirmed: Boolean
+
+  """
+
+  """
+  starter: Boolean
+}
+
+"""
+
+"""
+type Event {
+  """
+
+  """
+  eid: Int
+
+  """
+
+  """
+  srid: String
+
+  """
+
+  """
+  cit: String
+
+  """
+
+  """
+  dt: Float
+
+  """
+
+  """
+  des: String
+
+  """
+
+  """
+  es: String
+
+  """
+
+  """
+  ic: Boolean
+
+  """
+
+  """
+  hl: Boolean
+
+  """
+
+  """
+  lu: String
+
+  """
+
+  """
+  lid: Int
+
+  """
+
+  """
+  rid: Int
+
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  sta: String
+
+  """
+
+  """
+  st: String
+
+  """
+
+  """
+  cou: String
+
+  """
+
+  """
+  zcode: String
+
+  """
+
+  """
+  ven: String
+
+  """
+
+  """
+  tvs: String
+
+  """
+
+  """
+  sequence: Int
+
+  """
+
+  """
+  seid: Int
+
+  """
+
+  """
+  writeingame: Boolean
+
+  """
+
+  """
+  scores: [Score]
+
+  """
+
+  """
+  league: LeagueWithSettings
+
+  """
+
+  """
+  participants(allParticipants: Boolean): [Participant]
+
+  """
+  Event statistics
+  Statistics Group Id: Int
+  """
+  statistics(sgid: Int, typ: String, sgidWhenFinished: Int): [Statistic]
+
+  """
+
+  """
+  statisticsByGroups(
+    statisticGroup: [String]!
+    identities: [String]
+    eids: [Int]
+    tmids: [Int]
+    partids: [Int]
+    seids: [Int]
+    ent: [ENT]
+  ): [StatisticByGroup]
+
+  """
+  Event statistics by EventId on entity reference id
+  """
+  eventStatisticsByGroup(statisticGroup: String!): [StatisticByGroup]
+
+  """
+
+  """
+  marketType: MarketTypeWithSettings
+
+  """
+
+  """
+  marketTypes: [MarketTypeWithSettings]
+
+  """
+
+  """
+  currentLines(needSbid: Boolean, paid: [Int], sbid: [Int], catid: Int): [JSON]
+
+  """
+
+  """
+  openingLines(needSbid: Boolean, paid: [Int], sbid: [Int], catid: Int): [JSON]
+
+  """
+
+  """
+  bestLines(mtid: Int, paid: [Int], catid: Int): [JSON]
+
+  """
+
+  """
+  bettingOptions: [EventBettingOption]
+
+  """
+  Event play by play
+  Play Group Id: Int
+  """
+  plays(pgid: Int, limitLastSeq: Int, pgidWhenFinished: Int): [Play]
+
+  """
+
+  """
+  eventGroup: EventGroup
+
+  """
+
+  """
+  eventTags: [EventTag]
+
+  """
+
+  """
+  consensus: [Consensus]
+
+  """
+
+  """
+  consensusV2: [ConsensusV2]
+
+  """
+
+  """
+  weather: [WeatherOutput]
+
+  """
+
+  """
+  eventMarketsCount: Int
+
+  """
+
+  """
+  tl: String
+
+  """
+
+  """
+  att: Int
+
+  """
+
+  """
+  fo: String
+
+  """
+
+  """
+  tr: Int
+
+  """
+
+  """
+  lat: Float
+
+  """
+
+  """
+  lon: Float
+
+  """
+  Season Group
+  """
+  seg: String
+
+  """
+  Slug
+  """
+  slg: String
+
+  """
+  Coverage
+  """
+  cov: String
+
+  """
+  Roof type
+  """
+  rft: String
+
+  """
+  Is prop competition?
+  """
+  ipc: Boolean
+
+  """
+  Market Types Counter
+  """
+  marketCounter: Int
+
+  """
+
+  """
+  marketResults: [MarketResult]
+
+  """
+
+  """
+  lastRoster: Participant
+}
+
+"""
+
+"""
+type Score {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Period Number
+  """
+  pn: Int
+
+  """
+  Value
+  """
+  val: String
+
+  """
+  Sequence
+  """
+  sequence: Int
+}
+
+"""
+
+"""
+type LeagueWithSettings {
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Region Id
+  """
+  rid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Domain id
+  """
+  did: Int
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  logo image url
+  """
+  lurl: String
+
+  """
+  League MarketType
+  """
+  marketType: MarketTypeWithSettings
+
+  """
+
+  """
+  region: Region
+
+  """
+  League Settings coalesced between site - domain specific and default
+  """
+  settings: LeagueSetting
+
+  """
+  League Sport
+  """
+  sport: Sport
+}
+
+"""
+
+"""
+type MarketTypeWithSettings {
+  """
+  MarketType Id
+  """
+  mtid: Int
+
+  """
+  Order
+  """
+  ord: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  MarketType Group
+  """
+  mtgid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Description
+  """
+  des: String
+
+  """
+  MarketType format
+  """
+  format: String
+
+  """
+  MarketType layout
+  """
+  layout: String
+
+  """
+  MarketType settings
+  """
+  settings: MarketTypeSetting
+}
+
+"""
+
+"""
+type MarketTypeSetting {
+  """
+  MarketType Id
+  """
+  mtid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Is Market Type enabled?
+  """
+  enabled: Boolean
+
+  """
+  MarketType alias
+  """
+  alias: String
+
+  """
+  MarketType url
+  """
+  url: String
+
+  """
+  MarketType sortable option
+  """
+  sort: String
+
+  """
+  MarketType template
+  """
+  template: String
+
+  """
+  MarketType format
+  """
+  format: String
+
+  """
+  # MarketType layout
+  """
+  layout: String
+
+  """
+
+  """
+  _isCustom: Boolean
+}
+
+"""
+
+"""
+type Region {
+  """
+  Region Id
+  """
+  rid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Short Name
+  """
+  sn: String
+}
+
+"""
+
+"""
+type LeagueSetting {
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Is Enabled?
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  alias: String
+
+  """
+  Show Rotation?
+  """
+  rotation: Boolean
+
+  """
+  Order
+  """
+  ord: Int
+
+  """
+  Short name for alias
+  """
+  shortnamealias: String
+
+  """
+  Specifies the breakpoint to display the short name alias instead of the alias
+  """
+  shortnamebreakpoint: String
+
+  """
+  Matchup link?
+  """
+  matchupline: Boolean
+
+  """
+  Is Custom League
+  """
+  _isCustom: Boolean
+
+  """
+  Is Favorite League
+  """
+  _isFavorite: Boolean
+
+  """
+  Is Default Favorite Setting
+  """
+  _isDefaultFavorite: Boolean
+}
+
+"""
+
+"""
+type Sport {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Sport Settings
+  """
+  settings: SportSetting
+}
+
+"""
+
+"""
+type SportSetting {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Is Enabled Sport?
+  """
+  enabled: Boolean
+
+  """
+  Sport Alias
+  """
+  alias: String
+
+  """
+  Mode Setting
+  """
+  mode: String
+
+  """
+  Order on the list
+  """
+  ord: Int
+
+  """
+  Navigation mode
+  """
+  nav: String
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+}
+
+"""
+
+"""
+type Participant {
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Participant Type Id (1=Team, 2=Player, 3=Group, 5=Division, 6=Conference)
+  """
+  ptid: Int
+
+  """
+  Participant Source Id (Team, Player, Group, Division or Conference ID)
+  """
+  psid: Int
+
+  """
+  Particpant by Event Id
+  """
+  partbeid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Status
+  """
+  stt: String
+
+  """
+  Rotation
+  """
+  rot: Int
+
+  """
+  Is Home?
+  """
+  ih: Boolean
+
+  """
+  Sports BookReview Id
+  """
+  sbrid: Int
+
+  """
+  Starting Pitcher Player Laterality
+  """
+  sppil: String
+
+  """
+  Starting Pitcher Player Change
+  """
+  sppic: Boolean
+
+  """
+  Team Rank
+  """
+  tr: Int
+
+  """
+
+  """
+  startingPitcher: Player
+
+  """
+
+  """
+  source: Source
+
+  """
+
+  """
+  statsIdentity: [StatisticByGroup]
+
+  """
+  ParticpantBySeason Id
+  """
+  pbsid: Int
+
+  """
+
+  """
+  statisticsByGroups(
+    statisticGroup: [String]!
+    identities: [String]
+    eids: [Int]
+    tmids: [Int]
+    partids: [Int]
+    seids: [Int]
+    ent: [ENT]
+  ): [StatisticByGroup]
+
+  """
+
+  """
+  participantSeasonStatistics(
+    ent: [ENT]!
+    statisticGroup: [String]
+    idty: [String]
+  ): [StatisticByGroup]
+
+  """
+
+  """
+  isFavorite: Boolean
+
+  """
+
+  """
+  eventrosters: [EventRoster]
+}
+
+"""
+
+"""
+union Source = Team | Player | Division | Conference | ParticipantGroup
+
+"""
+
+"""
+type ParticipantGroup {
+  """
+  Participant Group Id
+  """
+  partgid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Status
+  """
+  stt: Int
+
+  """
+  Participants
+  """
+  participants: [Participant]
+}
+
+"""
+
+"""
+type EventRoster {
+  """
+  EventRoster Id
+  """
+  erid: Int
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Side Id
+  """
+  sid: Int
+
+  """
+  PlayerId
+  """
+  pid: Int
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Sequence
+  """
+  sequence: Int
+
+  """
+  Is line up?
+  """
+  ilu: Boolean
+
+  """
+  Line up order
+  """
+  luo: Int
+
+  """
+  Event Player
+  """
+  roster: Player
+
+  """
+  Statistics  By Groups
+  """
+  statisticsByGroups(
+    statisticGroup: [String]!
+    identities: [String]
+    eids: [Int]
+    tmids: [Int]
+    partids: [Int]
+    seids: [Int]
+    ent: [ENT]
+  ): [StatisticByGroup]
+}
+
+"""
+
+"""
+type Statistic {
+  """
+  Type
+  """
+  typ: String
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Partcipant Id
+  """
+  partid: Int
+
+  """
+  Player Id
+  """
+  pid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Value
+  """
+  val: String
+
+  """
+  Player Info
+  """
+  player: Player
+
+  """
+  Stat id
+  """
+  siid: Float
+
+  """
+  Sequence
+  """
+  sequence: Float
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+
+"""
+type EventBettingOption {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Betting Option ID
+  """
+  boid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  MarketType Id
+  """
+  mtid: Int
+
+  """
+  TODO Deprecate this in ticket OM-3615
+  """
+  spid: Int
+
+  """
+
+  """
+  sequence: Int
+}
+
+"""
+
+"""
+type Play {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Sequence Id
+  """
+  sqid: Int
+
+  """
+  Stat Info Id
+  """
+  siid: Int
+
+  """
+  Group Id
+  """
+  gid: Int
+
+  """
+  Play Name
+  """
+  nam: String
+
+  """
+  Play Value
+  """
+  val: String
+
+  """
+  Timestamp
+  """
+  tim: Float
+
+  """
+  Sequence
+  """
+  sequence: Int
+
+  """
+
+  """
+  driveid: String
+
+  """
+
+  """
+  playid: String
+
+  """
+  Play Sequence
+  """
+  seq: Float
+
+  """
+  Home Points
+  """
+  hPoints: Int
+
+  """
+  Away Points
+  """
+  aPoints: Int
+
+  """
+  Play Type
+  """
+  typ: String
+
+  """
+  Start Situation Possession Team
+  """
+  sspt: String
+
+  """
+  Start Situation Location Team
+  """
+  sslt: String
+
+  """
+  Start Situation Location Yardline
+  """
+  sslyl: Int
+
+  """
+  Start Situation Clock
+  """
+  ssc: String
+
+  """
+  Start Situation Down
+  """
+  ssd: Int
+
+  """
+  End Situation Possession Team
+  """
+  espt: String
+
+  """
+  End Situation Location Team
+  """
+  eslt: String
+
+  """
+  End Situation Location Yardline
+  """
+  eslyl: Int
+
+  """
+  End Situation Clock
+  """
+  esc: String
+
+  """
+  End Situation Down
+  """
+  esd: Int
+
+  """
+  Play Description
+  """
+  desc: String
+
+  """
+
+  """
+  scoretype: String
+
+  """
+
+  """
+  scoreteam: String
+
+  """
+  Play Period Number (Quarter)
+  """
+  qt: Int
+}
+
+"""
+
+"""
+type EventGroup {
+  """
+  Event Group Id
+  """
+  egid: Int
+
+  """
+  Event Group Name
+  """
+  nam: String
+
+  """
+  Event Group Alias
+  """
+  alias: String
+
+  """
+  League ID
+  """
+  lid: Int
+
+  """
+  Event ID
+  """
+  eid: Int
+
+  """
+  Display Order
+  """
+  disord: Int
+
+  """
+  Is competition?
+  """
+  ic: Boolean
+
+  """
+  Start Date
+  """
+  sdt: Float
+
+  """
+  End Date
+  """
+  edt: Float
+
+  """
+
+  """
+  parentname: String
+
+  """
+
+  """
+  parentid: Int
+}
+
+"""
+
+"""
+type EventTag {
+  """
+
+  """
+  ID: Int
+
+  """
+
+  """
+  link: String
+
+  """
+
+  """
+  tag: Tag
+
+  """
+
+  """
+  eid: [Int]
+}
+
+"""
+
+"""
+type Tag {
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  backgroundColor: String
+
+  """
+
+  """
+  textColor: String
+
+  """
+
+  """
+  dotColor: String
+}
+
+"""
+
+"""
+type Consensus {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+
+  """
+  Best Bet
+  """
+  bb: Int
+
+  """
+  Betting Option Id
+  """
+  boid: Int
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Sportsbook Id
+  """
+  sbid: Int
+
+  """
+  Provider Id
+  """
+  paid: Int
+
+  """
+  Line Id
+  """
+  lineid: Float
+
+  """
+  Wager
+  """
+  wag: Int
+
+  """
+  Consensus Percentage
+  """
+  perc: Float
+
+  """
+  Consensus Volume
+  """
+  vol: Float
+
+  """
+  Consensus Volume Total
+  """
+  tvol: Float
+
+  """
+  Sequence
+  """
+  sequence: Int
+
+  """
+  Timestamp
+  """
+  tim: Float
+
+  """
+  WhaleBets
+  """
+  wb: Int
+
+  """
+  Line from line history
+  """
+  line: JSON
+}
+
+"""
+
+"""
+type ConsensusV2 {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Consensus Percentage
+  """
+  perc: Float
+
+  """
+  Sequence
+  """
+  sequence: Int
+}
+
+"""
+
+"""
+type WeatherOutput {
+  """
+
+  """
+  location: String
+
+  """
+
+  """
+  offset: Int
+
+  """
+
+  """
+  ep: Float
+
+  """
+
+  """
+  request: [Request]
+
+  """
+
+  """
+  current_condition: [CurrentCondition]
+
+  """
+
+  """
+  weather: [Weather]
+
+  """
+
+  """
+  ClimateAverages: [ClimateAverages]
+}
+
+"""
+
+"""
+type Request {
+  """
+
+  """
+  type: String
+
+  """
+
+  """
+  query: String
+}
+
+"""
+
+"""
+type CurrentCondition {
+  """
+
+  """
+  observation_time: String
+
+  """
+
+  """
+  temp_C: String
+
+  """
+
+  """
+  temp_F: String
+
+  """
+
+  """
+  weatherCode: String
+
+  """
+
+  """
+  weatherIconUrl: [Value]
+
+  """
+
+  """
+  weatherDesc: [Value]
+
+  """
+
+  """
+  windspeedMiles: String
+
+  """
+
+  """
+  windspeedKmph: String
+
+  """
+
+  """
+  winddirDegree: String
+
+  """
+
+  """
+  winddir16Point: String
+
+  """
+
+  """
+  precipMM: String
+
+  """
+
+  """
+  humidity: String
+
+  """
+
+  """
+  visibility: String
+
+  """
+
+  """
+  pressure: String
+
+  """
+
+  """
+  cloudcover: String
+
+  """
+
+  """
+  FeelsLikeC: String
+
+  """
+
+  """
+  FeelsLikeF: String
+}
+
+"""
+
+"""
+type Value {
+  """
+
+  """
+  value: String
+}
+
+"""
+
+"""
+type Weather {
+  """
+
+  """
+  date: String
+
+  """
+
+  """
+  astronomy: [Astronomy]
+
+  """
+
+  """
+  maxtempC: String
+
+  """
+
+  """
+  maxtempF: String
+
+  """
+
+  """
+  mintempC: String
+
+  """
+
+  """
+  mintempF: String
+
+  """
+
+  """
+  totalSnow_cm: String
+
+  """
+
+  """
+  sunHour: String
+
+  """
+
+  """
+  uvIndex: String
+
+  """
+
+  """
+  hourly: [Hourly]
+}
+
+"""
+
+"""
+type Astronomy {
+  """
+
+  """
+  sunrise: String
+
+  """
+
+  """
+  sunset: String
+
+  """
+
+  """
+  moonrise: String
+
+  """
+
+  """
+  moonset: String
+}
+
+"""
+
+"""
+type Hourly {
+  """
+
+  """
+  time: String
+
+  """
+
+  """
+  UTCdate: String
+
+  """
+
+  """
+  UTCtime: String
+
+  """
+
+  """
+  tempC: String
+
+  """
+
+  """
+  tempF: String
+
+  """
+
+  """
+  windspeedMiles: String
+
+  """
+
+  """
+  windspeedKmph: String
+
+  """
+
+  """
+  winddirDegree: String
+
+  """
+
+  """
+  winddir16Point: String
+
+  """
+
+  """
+  weatherCode: String
+
+  """
+
+  """
+  weatherIconUrl: [Value]
+
+  """
+
+  """
+  weatherDesc: [Value]
+
+  """
+
+  """
+  precipMM: String
+
+  """
+
+  """
+  humidity: String
+
+  """
+
+  """
+  visibility: String
+
+  """
+
+  """
+  pressure: String
+
+  """
+
+  """
+  cloudcover: String
+
+  """
+
+  """
+  HeatIndexC: String
+
+  """
+
+  """
+  HeatIndexF: String
+
+  """
+
+  """
+  DewPointC: String
+
+  """
+
+  """
+  DewPointF: String
+
+  """
+
+  """
+  WindChillC: String
+
+  """
+
+  """
+  WindChillF: String
+
+  """
+
+  """
+  WindGustMiles: String
+
+  """
+
+  """
+  WindGustKmph: String
+
+  """
+
+  """
+  FeelsLikeC: String
+
+  """
+
+  """
+  FeelsLikeF: String
+
+  """
+
+  """
+  chanceofrain: String
+
+  """
+
+  """
+  chanceofremdry: String
+
+  """
+
+  """
+  chanceofwindy: String
+
+  """
+
+  """
+  chanceofovercast: String
+
+  """
+
+  """
+  chanceofsunshine: String
+
+  """
+
+  """
+  chanceoffrost: String
+
+  """
+
+  """
+  chanceofhightemp: String
+
+  """
+
+  """
+  chanceoffog: String
+
+  """
+
+  """
+  chanceofsnow: String
+
+  """
+
+  """
+  chanceofthunder: String
+}
+
+"""
+
+"""
+type ClimateAverages {
+  """
+
+  """
+  month: [Month]
+}
+
+"""
+
+"""
+type Month {
+  """
+
+  """
+  index: String
+
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  avgMinTemp: String
+
+  """
+
+  """
+  avgMinTemp_F: String
+
+  """
+
+  """
+  absMaxTemp: String
+
+  """
+
+  """
+  absMaxTemp_F: String
+
+  """
+
+  """
+  avgDailyRainfall: String
+}
+
+"""
+
+"""
+type MarketResult {
+  """
+
+  """
+  mtid: Int
+
+  """
+
+  """
+  resultValue: Float
+
+  """
+
+  """
+  adj: Float
+
+  """
+
+  """
+  val: Float
+
+  """
+
+  """
+  pri: Float
+
+  """
+
+  """
+  paid: Int
+
+  """
+
+  """
+  ap: Float
+
+  """
+
+  """
+  entref: Int
+
+  """
+
+  """
+  result: String
+
+  """
+
+  """
+  lineid: Float
+
+  """
+
+  """
+  partid: Int
+}
+
+"""
+
+"""
+type TeamLeague {
+  """
+  League ID
+  """
+  lid: Int
+
+  """
+  League name
+  """
+  lnam: String
+
+  """
+  Season ID
+  """
+  seid: Int
+
+  """
+  Season name
+  """
+  senam: String
+}
+
+"""
+
+"""
+type ParticipantByEvent {
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Participant Type Id
+  """
+  ptid: Int
+
+  """
+  Is Active?
+  """
+  act: Boolean
+
+  """
+  Participant Source Id
+  """
+  psid: Int
+
+  """
+  Rotation
+  """
+  rot: Int
+
+  """
+  Is Home?
+  """
+  ih: Boolean
+
+  """
+  Team Rank
+  """
+  tr: Int
+
+  """
+  Sports BookReview Id
+  """
+  sbrid: Int
+
+  """
+  Starting Pitcher Player Laterality
+  """
+  sppil: String
+
+  """
+  Starting Pitcher Player Change
+  """
+  sppic: Boolean
+
+  """
+  Starting Pitcher Player Id
+  """
+  sppid: Int
+
+  """
+  ParticipantByEventId
+  """
+  partbeid: Int
+
+  """
+  Season Id
+  """
+  seid: Int
+
+  """
+  ParticpantBySeason Id
+  """
+  pbsid: Int
+}
+
+"""
+
+"""
+type EventInfoByParticipant {
+  """
+
+  """
+  partid: Int
+
+  """
+
+  """
+  eid: [Int]
+
+  """
+
+  """
+  events(es: [String], mtid: [Int], limitDate: Float): [Event]
+
+  """
+
+  """
+  eventsByParticipant(
+    es: String!
+    sort: SortInput!
+    limit: Int!
+    limitDate: Float
+  ): [Event]
+}
+
+"""
+
+"""
+input SortInput {
+  """
+
+  """
+  by: [String]!
+
+  """
+
+  """
+  order: ORDER
+}
+
+"""
+
+"""
+enum ORDER {
+  """
+
+  """
+  ASC
+
+  """
+
+  """
+  DESC
+}
+
+"""
+
+"""
+type MatchupId {
+  """
+  Event Id
+  """
+  eid: Int
+}
+
+"""
+
+"""
+type MatchupEvents {
+  """
+
+  """
+  events: [Event]
+}
+
+"""
+
+"""
+enum SEASONGROUP {
+  """
+
+  """
+  PRE
+
+  """
+
+  """
+  REG
+
+  """
+
+  """
+  PST
+}
+
+"""
+
+"""
+enum ShowLive {
+  """
+
+  """
+  ONLY_LIVE_EVENTS
+
+  """
+
+  """
+  HIDE_LIVE_EVENTS
+
+  """
+
+  """
+  IGNORE
+}
+
+"""
+
+"""
+input EventFilterGroupMarketTypeSetting {
+  """
+  Sport id
+  """
+  spid: Int
+
+  """
+  Default market type
+  """
+  mtid: Int
+
+  """
+  Default market type layout
+  """
+  layout: String
+}
+
+"""
+
+"""
+type EventFilterGroup {
+  """
+  Event Filter Group Id
+  """
+  efgid: String
+
+  """
+  Event Filter Group Name
+  """
+  nam: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Order on the list
+  """
+  ord: Int
+
+  """
+  Maximum number of events to show
+  """
+  maxshow: Int
+
+  """
+  is Event Group Enabled
+  """
+  enabled: Boolean
+
+  """
+  Logical delete
+  """
+  active: Boolean
+
+  """
+
+  """
+  eventsFilters: [EventFilter]
+
+  """
+
+  """
+  maxSequences: MaxSequences
+}
+
+"""
+
+"""
+type EventFilter {
+  """
+  EventFilterId
+  """
+  efid: String
+
+  """
+  Event Filter Name
+  """
+  nam: String
+
+  """
+  Event Filter Groups Ids
+  """
+  efgids: String
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Market Types Ids
+  """
+  mtids: [Int]
+
+  """
+  Array of Events
+  """
+  events: [Event]
+
+  """
+  Array of Leagues Ids
+  """
+  lids: [Int]
+
+  """
+  Array of Event Ids for filter
+  """
+  eids: [Int]
+
+  """
+  Array of Event Ids for filter
+  """
+  rids: [Int]
+
+  """
+
+  """
+  sortmode: String
+
+  """
+  Form Select Type
+  """
+  filtertype: String
+
+  """
+  Number of Events to Show
+  """
+  eventtoshow: Int
+
+  """
+  Hours or Days option
+  """
+  cutoffpoint: String
+
+  """
+  Amount of Game to Appears
+  """
+  amount: Int
+
+  """
+  Order on the list
+  """
+  ord: Int
+
+  """
+  is Event Show Live
+  """
+  showlive: Boolean
+
+  """
+  Minutes to Show Live
+  """
+  minutes: Int
+
+  """
+  is Event Filter Enabled
+  """
+  enabled: Boolean
+
+  """
+  Logical delete
+  """
+  active: Boolean
+}
+
+"""
+
+"""
+type MaxSequences {
+  """
+
+  """
+  eventsMaxSequence: Float
+
+  """
+
+  """
+  scoresMaxSequence: Float
+
+  """
+
+  """
+  linesMaxSequence: Float
+
+  """
+
+  """
+  liveLinesMaxSequence: Float
+
+  """
+
+  """
+  statisticsMaxSequence: Float
+
+  """
+
+  """
+  statisticsByGroupsMaxSequence: Float
+
+  """
+
+  """
+  consensusMaxSequence: Float
+
+  """
+
+  """
+  consensusV2MaxSequence: Float
+
+  """
+
+  """
+  playsMaxSequence: Float
+}
+
+"""
+
+"""
+enum TypeInput {
+  """
+
+  """
+  TOP
+
+  """
+
+  """
+  UPCOMING
+}
+
+"""
+
+"""
+input RangeInput {
+  """
+
+  """
+  gt: Float
+
+  """
+
+  """
+  gte: Float
+
+  """
+
+  """
+  eq: Float
+
+  """
+
+  """
+  between: [Float]
+}
+
+"""
+
+"""
+input GroupInput {
+  """
+
+  """
+  by: [String]!
+}
+
+"""
+
+"""
+type EventsWithMaxSequences {
+  """
+
+  """
+  events: [Event]
+
+  """
+
+  """
+  maxSequences: MaxSequences
+}
+
+"""
+
+"""
+input LeagueGroup {
+  """
+
+  """
+  mtid: [Int]!
+
+  """
+
+  """
+  lid: Int!
+
+  """
+
+  """
+  spid: Int!
+
+  """
+
+  """
+  writeingame: Boolean
+}
+
+"""
+
+"""
+type EventMarkets {
+  """
+
+  """
+  mtids: [Int]
+}
+
+"""
+
+"""
+input LeagueFilter {
+  """
+
+  """
+  enabled: Boolean!
+
+  """
+
+  """
+  sitid: Int!
+
+  """
+
+  """
+  did: Int!
+
+  """
+
+  """
+  lid: [Int]
+}
+
+"""
+
+"""
+type EventRegion {
+  """
+  Available regions
+  """
+  available: [Int]
+
+  """
+  Active regions
+  """
+  active: [Int]
+}
+
+"""
+
+"""
+type EventDateCount {
+  """
+
+  """
+  dt: Float
+
+  """
+
+  """
+  size: Int
+}
+
+"""
+
+"""
+type EventsWithMaxSequence {
+  """
+
+  """
+  events: [Event]
+
+  """
+
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+type Sports {
+  """
+
+  """
+  spids: [Int]
+}
+
+"""
+
+"""
+type EventLocation {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Latitude
+  """
+  lat: Float
+
+  """
+  Longitude
+  """
+  lon: Float
+
+  """
+  Address
+  """
+  add: String
+
+  """
+  Country
+  """
+  cou: String
+
+  """
+  Stadium
+  """
+  sta: String
+
+  """
+  Venue
+  """
+  ven: String
+
+  """
+  City
+  """
+  cit: String
+
+  """
+  Zip Code
+  """
+  zcode: String
+
+  """
+  Attendance
+  """
+  att: Int
+
+  """
+  Field Orientation
+  """
+  fo: String
+}
+
+"""
+
+"""
+input GeolocationIntput {
+  """
+
+  """
+  latitude: Float!
+
+  """
+
+  """
+  longitude: Float!
+
+  """
+  Max distance in km from the location
+  """
+  maxDistance: Float!
+}
+
+"""
+
+"""
+type EventsByParticipant {
+  """
+  Participant Id
+  """
+  partid: Int
+
+  """
+  Events
+  """
+  events: [Event]
+}
+
+"""
+
+"""
+type EventIdsSlugInfo {
+  """
+  Current Event Id
+  """
+  ceid: Int
+
+  """
+  Last Event Id
+  """
+  leid: Int
+}
+
+"""
+
+"""
+type CompetitionWinner {
+  """
+
+  """
+  eid: Int
+
+  """
+
+  """
+  partid: Int
+}
+
+"""
+
+"""
+type EventWithPrediction {
+  """
+  Sequence
+  """
+  sequence: Int
+
+  """
+  EventId
+  """
+  eid: Int
+
+  """
+  League ID
+  """
+  lid: Int
+}
+
+"""
+
+"""
+type LeagueV2 {
+  """
+
+  """
+  lid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  rid: Int
+
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  marketType: MarketTypeWithSettings
+
+  """
+
+  """
+  sport: Sport
+
+  """
+
+  """
+  sn: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  alias: String
+
+  """
+
+  """
+  rotation: Boolean
+
+  """
+
+  """
+  sitid: Int
+
+  """
+
+  """
+  did: Int
+
+  """
+
+  """
+  region: Region
+
+  """
+  League Logo URL
+  """
+  lurl: String
+
+  """
+  Custom Settings for the league
+  Domain Name did: Int!
+  """
+  settings(sitid: Int!, did: Int!, merge: Boolean): LeagueSetting
+}
+
+"""
+
+"""
+type LeagueMarket {
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+}
+
+"""
+
+"""
+type LeagueWithSettingsV2 {
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Region Id
+  """
+  rid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Domain id
+  """
+  did: Int
+
+  """
+  logo image url
+  """
+  lurl: String
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  League MarketType
+  """
+  marketType: MarketTypeWithSettings
+
+  """
+
+  """
+  region: RegionLeagueV2
+
+  """
+  League Settings coalesced between site - domain specific and default
+  """
+  settings: LeagueSetting
+}
+
+"""
+
+"""
+type RegionLeagueV2 {
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  rid: Int
+
+  """
+
+  """
+  sn: String
+}
+
+"""
+
+"""
+type League {
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Region Id
+  """
+  rid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  League Logo URL
+  """
+  lurl: String
+}
+
+"""
+
+"""
+type SportV2 {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Sport has one o more leagues with custom settings
+  """
+  sportHasCustomLeagueSettings(did: Int!): Customized
+
+  """
+  Sport has one o more market types with custom settings
+  """
+  sportHasCustomMarketTypeSettings(did: Int!): Customized
+
+  """
+  Sport has one o more market type groups with custom settings
+  """
+  sportHasCustomMarketTypeGroupSettings(did: Int!): Customized
+
+  """
+  Custom Settings for the sport
+  Domain Name did: Int!, Merge indicates if custom and default settings should be merged
+  """
+  settings(did: Int!, merge: Boolean): SportSetting
+}
+
+"""
+
+"""
+type Customized {
+  """
+  Indicates if setting is customized
+  """
+  value: Boolean
+
+  """
+  Queried entities' Id
+  """
+  parentid: Int
+}
+
+"""
+
+"""
+type SportWithSettings {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Active
+  """
+  act: Boolean
+
+  """
+  Settings
+  """
+  settings: SportSettingsV2
+}
+
+"""
+
+"""
+type SportSettingsV2 {
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  act: Boolean
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  alias: String
+
+  """
+
+  """
+  mode: String
+
+  """
+
+  """
+  nav: String
+
+  """
+
+  """
+  mtid: Int
+
+  """
+
+  """
+  ord: Int
+
+  """
+
+  """
+  _isCustom: Boolean
+
+  """
+
+  """
+  _isFavorite: Boolean
+}
+
+"""
+
+"""
+type LeaguesAndRegionsBySport {
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+
+  """
+  sports: [SportsWithRegions]
+}
+
+"""
+
+"""
+type SportsWithRegions {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Sport Name
+  """
+  nam: String
+
+  """
+  Sport Alias
+  """
+  alias: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  nav: String
+
+  """
+  Home Team Sort Mode
+  """
+  mode: String
+
+  """
+
+  """
+  domainOrd: Int
+
+  """
+
+  """
+  defaultOrd: Int
+
+  """
+
+  """
+  regions: [RegionWithLeagues]
+}
+
+"""
+
+"""
+type RegionWithLeagues {
+  """
+  RegionId
+  """
+  rid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+  Region Short name
+  """
+  sn: String
+
+  """
+
+  """
+  leagues: [LeaguesWithEventGroups]
+}
+
+"""
+
+"""
+type LeaguesWithEventGroups {
+  """
+  LeagueId
+  """
+  lid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  sn: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  alias: String
+
+  """
+
+  """
+  rotation: Boolean
+
+  """
+
+  """
+  domainOrd: Int
+
+  """
+
+  """
+  defaultOrd: Int
+
+  """
+
+  """
+  shortnamealias: String
+
+  """
+
+  """
+  shortnamebreakpoint: String
+
+  """
+
+  """
+  matchupline: Boolean
+
+  """
+  League Logo URL
+  """
+  lurl: String
+
+  """
+
+  """
+  eventGroupsByLeague: [EventGroup]
+}
+
+"""
+
+"""
+type LeagueSeasonInfo {
+  """
+
+  """
+  lid: Int
+
+  """
+
+  """
+  lnam: String
+
+  """
+
+  """
+  seid: Int
+
+  """
+
+  """
+  senam: String
+
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  spnam: String
+
+  """
+
+  """
+  rid: Int
+
+  """
+
+  """
+  rnam: String
+
+  """
+
+  """
+  sdt: Float
+
+  """
+
+  """
+  edt: Float
+}
+
+"""
+
+"""
+input InputQueryFloat {
+  """
+  Grater than
+  """
+  gt: Float
+
+  """
+  Equal to
+  """
+  eq: Float
+
+  """
+
+  """
+  between: [Float]
+}
+
+"""
+
+"""
+type RegionsBySport {
+  """
+
+  """
+  active: [Int]
+
+  """
+
+  """
+  available: [Int]
+}
+
+"""
+
+"""
+type ScoreWithMaxSequence {
+  """
+  lits of scores
+  """
+  scores: [Score]
+
+  """
+  max sequense in score
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+type StatisticWithMaxSequence {
+  """
+
+  """
+  statistics: [Statistic]
+
+  """
+
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+type MarketType {
+  """
+  MarketType Id
+  """
+  mtid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Description
+  """
+  des: String
+}
+
+"""
+
+"""
+scalar BestLine
+
+"""
+
+"""
+type CurrentLinesWithMaxSequence {
+  """
+  list of lines
+  """
+  currentLines: [JSON]
+
+  """
+  max sequence in lines
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+type EventMarketLine {
+  """
+  Market Type Id
+  """
+  mtid: Int
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Acttive Market
+  """
+  act: Boolean
+
+  """
+  MaxSequence
+  """
+  maxsequence: Float
+}
+
+"""
+
+"""
+type LineById {
+  """
+
+  """
+  lineid: Float
+
+  """
+
+  """
+  mtid: Int
+
+  """
+
+  """
+  eid: Int
+
+  """
+
+  """
+  boid: Int
+
+  """
+
+  """
+  paid: Int
+
+  """
+
+  """
+  sbid: Int
+
+  """
+
+  """
+  tim: Float
+
+  """
+
+  """
+  partid: Int
+
+  """
+
+  """
+  sequence: Float
+
+  """
+
+  """
+  adj: Float
+
+  """
+
+  """
+  pri: Float
+
+  """
+
+  """
+  dp: Float
+
+  """
+
+  """
+  bs: String
+
+  """
+
+  """
+  iof: Boolean
+
+  """
+
+  """
+  ap: Int
+
+  """
+
+  """
+  fpd: Int
+
+  """
+
+  """
+  fpn: Int
+
+  """
+
+  """
+  entrid: Float
+
+  """
+
+  """
+  mtgrp: String
+
+  """
+
+  """
+  tmid: Int
+
+  """
+
+  """
+  isbestline: Boolean
+
+  """
+
+  """
+  event: Event
+
+  """
+
+  """
+  entityReference: EntityReference
+
+  """
+
+  """
+  player: PlayerInfo
+
+  """
+
+  """
+  team: TeamInfo
+}
+
+"""
+
+"""
+scalar EntityReference
+
+"""
+
+"""
+scalar PlayerInfo
+
+"""
+
+"""
+scalar TeamInfo
+
+"""
+
+"""
+type ConsensusWithMaxSequence {
+  """
+  list of consensus
+  """
+  consensus: [Consensus]
+
+  """
+  max sequence in consensus
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+input LocationInput {
+  """
+  Can be: zip(USA, CA), latitude and longitude("lat,long" *decimal),
+  ip(###.###.###.###), or a City or town name
+  """
+  city: String!
+
+  """
+  Date yyyy-MM-dd | today | tomorrow
+  """
+  dt: String
+
+  """
+  Epoch time
+  """
+  ep: Float
+}
+
+"""
+
+"""
+type weekWeatherOutput {
+  """
+
+  """
+  location: String
+
+  """
+
+  """
+  offset: Int
+
+  """
+
+  """
+  ep: Float
+
+  """
+
+  """
+  date: String
+
+  """
+
+  """
+  avgDayForecast: Hourly
+
+  """
+
+  """
+  dayForecast: Hourly
+
+  """
+
+  """
+  nightForecast: Hourly
+}
+
+"""
+
+"""
+type SportsbookBonusList {
+  """
+
+  """
+  ID: Int
+
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  sportsbookBonuses: [SportsbookBonus]
+}
+
+"""
+
+"""
+type SportsbookBonus {
+  """
+
+  """
+  ID: Int
+
+  """
+
+  """
+  title: String
+
+  """
+
+  """
+  subtitle: String
+
+  """
+
+  """
+  tag: String
+
+  """
+
+  """
+  sportsbook: CMSSportsbook
+
+  """
+
+  """
+  regions: [CMSRegion]
+}
+
+"""
+
+"""
+type CMSSportsbook {
+  """
+
+  """
+  ID: Int
+
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  providerId: Int
+
+  """
+
+  """
+  affiliateLink: String
+
+  """
+
+  """
+  image: String
+}
+
+"""
+
+"""
+type CMSRegion {
+  """
+
+  """
+  name: String
+
+  """
+
+  """
+  catid: Int
+}
+
+"""
+
+"""
+type BettingOption {
+  """
+  Betting Option ID
+  """
+  boid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+
+  """
+  sequence: Int
+}
+
+"""
+
+"""
+input BetSlipArgs {
+  """
+
+  """
+  eid: Int!
+
+  """
+
+  """
+  mtid: Int!
+
+  """
+
+  """
+  partid: Int!
+
+  """
+
+  """
+  boid: Int
+
+  """
+
+  """
+  sbid: [Int]
+}
+
+"""
+
+"""
+enum MarketTypeLayout {
+  """
+
+  """
+  PARTICIPANTS
+
+  """
+
+  """
+  BETTING_OPTIONS
+}
+
+"""
+
+"""
+type BetSlipInfo {
+  """
+
+  """
+  events: [Event]
+
+  """
+
+  """
+  currentLines(paid: [Int]): [JSON]
+
+  """
+
+  """
+  marketTypes: [MarketTypeWithSettings]
+}
+
+"""
+
+"""
+type MarketTypeGroupWithSettings {
+  """
+  MarketType Group Id
+  """
+  mtgid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  MarketTypes List
+  """
+  marketTypes: [MarketTypeWithSettings]
+
+  """
+
+  """
+  settings: MarketTypeGroupSetting
+}
+
+"""
+
+"""
+type MarketTypeGroupSetting {
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  MarketType Id
+  """
+  mtgid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Is Market Type enabled?
+  """
+  enabled: Boolean
+
+  """
+  Order on the list
+  """
+  ord: Int
+
+  """
+  MarketType alias
+  """
+  alias: String
+
+  """
+  MarketType url
+  """
+  url: String
+
+  """
+  MarketTypeGroup active?
+  """
+  active: Boolean
+
+  """
+
+  """
+  _isCustom: Boolean
+
+  """
+
+  """
+  _isFavorite: Boolean
+
+  """
+
+  """
+  _isDefaultFavorite: Boolean
+}
+
+"""
+
+"""
+type MarketTypeGroupFiltered {
+  """
+  MarketType Group Id
+  """
+  mtgid: Int
+
+  """
+  Order
+  """
+  ord: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Alias
+  """
+  alias: String
+
+  """
+  MarketTypes List with settings
+  """
+  mtids: [MarketTypeWithSettings]
+}
+
+"""
+
+"""
+type MarketTypeGroupWithMarketTypes {
+  """
+  Market Type Group Id
+  """
+  mtgid: Int!
+
+  """
+  List of Market Types
+  """
+  mtids: [MarketTypesByMarketTypeGroup!]
+}
+
+"""
+
+"""
+type MarketTypesByMarketTypeGroup {
+  """
+  Market Type Id
+  """
+  mtid: Int!
+
+  """
+  Order
+  """
+  ord: Int
+}
+
+"""
+
+"""
+type MarketTypeGroup {
+  """
+  MarketType Group Id
+  """
+  mtgid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Name
+  """
+  nam: String
+}
+
+"""
+
+"""
+type OddFormat {
+  """
+
+  """
+  id: Int
+
+  """
+  Decimal Price
+  """
+  dcp: Float
+
+  """
+  Numerator
+  """
+  np: Int
+
+  """
+  Denominator
+  """
+  dep: Int
+
+  """
+  Timestamp
+  """
+  tim: Float
+
+  """
+  Is Active?
+  """
+  act: Boolean
+}
+
+"""
+
+"""
+type SportsbookSetting {
+  """
+  Sportsbook ID
+  """
+  sbid: Int
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Category Id
+  """
+  cid: Int
+
+  """
+  Sportbook Order
+  """
+  ord: Int
+
+  """
+  Is Enabled?
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  alias: String
+}
+
+"""
+
+"""
+type Sportsbook {
+  """
+  Sportsbook ID
+  """
+  sbid: Int
+
+  """
+  Provider Account ID
+  """
+  paid: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Image ID
+  """
+  iid: String
+
+  """
+  Prefix
+  """
+  pre: String
+
+  """
+  Suffix
+  """
+  suf: String
+
+  """
+  Affiliate ID
+  """
+  afid: String
+
+  """
+
+  """
+  settings(
+    did: Int
+    sitid: Int
+    spid: Int
+    cid: Int
+    merge: Boolean
+  ): SportsbookSetting
+
+  """
+  Sportsbook Image
+  """
+  image: Image
+}
+
+"""
+
+"""
+type Image {
+  """
+  Image Id
+  """
+  id: String
+
+  """
+  Image File Name
+  """
+  filename: String
+
+  """
+  Image Title
+  """
+  title: String
+
+  """
+  Image Description
+  """
+  description: String
+
+  """
+  Image Tags
+  """
+  tags: [String]
+
+  """
+  Image Sizes
+  """
+  sizes: Size
+
+  """
+  Last Update
+  """
+  updatedAt: Float
+
+  """
+  Creation Date
+  """
+  createdAt: Float
+}
+
+"""
+
+"""
+type Size {
+  """
+  Original Size
+  """
+  original: String
+
+  """
+  Thumblr Size
+  """
+  thumb: String
+
+  """
+  Extra-Small Size
+  """
+  xs: String
+
+  """
+  Small Size
+  """
+  sm: String
+
+  """
+  Medium Size
+  """
+  md: String
+
+  """
+  Large Size
+  """
+  lg: String
+}
+
+"""
+
+"""
+type SportsbooksByCategory {
+  """
+
+  """
+  sbid: Int
+
+  """
+
+  """
+  catid: Int
+
+  """
+
+  """
+  affiliate: String
+
+  """
+
+  """
+  prefix: String
+
+  """
+
+  """
+  suffix: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  ord: Int
+
+  """
+
+  """
+  paid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  iid: String
+
+  """
+
+  """
+  image: Image
+}
+
+"""
+
+"""
+type Category {
+  """
+
+  """
+  catid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  alias: String
+
+  """
+
+  """
+  sitid: Int
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  ord: Int
+
+  """
+
+  """
+  generateBestLines: Boolean
+}
+
+"""
+
+"""
+type CategoryBySportsbook {
+  """
+
+  """
+  catid: Int
+
+  """
+
+  """
+  nam: String
+
+  """
+
+  """
+  alias: String
+
+  """
+
+  """
+  sitid: Int
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+  ord from Category table
+  """
+  ord: Int
+
+  """
+
+  """
+  generateBestLines: Boolean
+
+  """
+
+  """
+  sbid: Int
+
+  """
+
+  """
+  affiliate: String
+
+  """
+
+  """
+  prefix: String
+
+  """
+
+  """
+  suffix: String
+
+  """
+
+  """
+  paid: Int
+
+  """
+
+  """
+  iid: String
+}
+
+"""
+
+"""
+type GroupedHistoryLine {
+  """
+  Grouping history line
+  """
+  historyLine(
+    """
+    Grouping key id
+    """
+    groupId: Int!
+  ): [JSON]
+}
+
+"""
+
+"""
+type HistoryLine {
+  """
+
+  """
+  tim: Float
+
+  """
+
+  """
+  lines: [JSON]
+}
+
+"""
+
+"""
+type MenuOption {
+  """
+  Menu Option Id
+  """
+  mid: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Menu Bar Id
+  """
+  mbid: Int
+
+  """
+
+  """
+  parentlink: String
+
+  """
+  Menu level
+  """
+  level: Int
+
+  """
+  Menu Option Settings
+  """
+  settings(did: Int!, merge: Boolean): MenuOptionSetting
+
+  """
+  Submenu Options
+  """
+  submenuoptions: [MenuOption]
+}
+
+"""
+
+"""
+type MenuOptionSetting {
+  """
+  Menu Option Id
+  """
+  mid: String
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+
+  """
+  title: String
+
+  """
+
+  """
+  url: String
+
+  """
+
+  """
+  iconurl: String
+
+  """
+  List of sizes to show menu option icon
+  """
+  showicon: String
+
+  """
+  List of sizes to show menu option name
+  """
+  showtext: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+  Order of menu option
+  """
+  ord: Int
+}
+
+"""
+
+"""
+type EventCatalog {
+  """
+  Event description
+  """
+  des: String
+
+  """
+  Date
+  """
+  date: String
+
+  """
+  League
+  """
+  league: String
+
+  """
+  Sport
+  """
+  sport: String
+
+  """
+  Sport Id
+  """
+  spid: String
+
+  """
+  Region
+  """
+  region: String
+
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+  Participants used to filter
+  """
+  searchParticipants: [SearchParticipant]
+
+  """
+  Participants from events
+  """
+  eventParticipants: String
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  Path
+  """
+  path: String
+}
+
+"""
+
+"""
+type SearchParticipant {
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Last Name
+  """
+  lnam: String
+
+  """
+  First Name
+  """
+  fn: String
+
+  """
+  Nickname
+  """
+  nn: String
+
+  """
+  Short Name
+  """
+  sn: String
+
+  """
+  Abbreviature
+  """
+  abbr: String
+}
+
+"""
+
+"""
+type MultipleResult {
+  """
+
+  """
+  searchEvent: [EventCatalog]
+
+  """
+
+  """
+  searchSport: [SportCatalog]
+
+  """
+
+  """
+  searchLeague: [LeagueCatalog]
+}
+
+"""
+
+"""
+type SportCatalog {
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Sport Name
+  """
+  nam: String
+
+  """
+  Settings
+  """
+  settings: SportSettings
+
+  """
+  Path
+  """
+  path: String
+}
+
+"""
+
+"""
+type SportSettings {
+  """
+  Enable
+  """
+  enabled: Boolean
+
+  """
+  Sport Alias
+  """
+  alias: String
+
+  """
+  Sport Order
+  """
+  ord: Int
+}
+
+"""
+
+"""
+type LeagueCatalog {
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  League Id
+  """
+  lid: Int
+
+  """
+  League Name
+  """
+  nam: String
+
+  """
+  Region Id
+  """
+  rid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  League Short Name
+  """
+  sn: String
+
+  """
+  Region
+  """
+  region: RegionLeague
+
+  """
+  Settings
+  """
+  settings: LeagueSettings
+
+  """
+  Path
+  """
+  path: String
+}
+
+"""
+
+"""
+type RegionLeague {
+  """
+  Name
+  """
+  nam: String
+
+  """
+  Short Name
+  """
+  sn: String
+}
+
+"""
+
+"""
+type LeagueSettings {
+  """
+  Enable
+  """
+  enabled: Boolean
+
+  """
+  League Alias
+  """
+  alias: String
+
+  """
+  League Order
+  """
+  ord: Int
+
+  """
+  League Short Name Alias
+  """
+  shortnamealias: String
+}
+
+"""
+
+"""
+type Domain {
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Name
+  """
+  nam: String
+
+  """
+  Are Domain Sports Customized?
+  """
+  isSportCustomized: Customized
+
+  """
+  Indicates if domain has custom league settings
+  """
+  isLeagueCustomized: Customized
+
+  """
+  Indicates if domain has custom market type settings
+  """
+  isMarketTypeCustomized: Customized
+
+  """
+  Indicates if domain has custom market type group settings
+  """
+  isMarketTypeGroupCustomized: Customized
+
+  """
+  Indicates if domain has footer bar options settings
+  """
+  isFooterBarCustomized: Customized
+
+  """
+  Indicates if domain has family bar options settings
+  """
+  isFamilyBarCustomized: Customized
+
+  """
+  Domain List Order
+  """
+  ord: Int
+
+  """
+  Is Main region
+  """
+  ismainregion: Boolean
+
+  """
+  Country Id List
+  """
+  countries: String
+
+  """
+  Is Domain enabled
+  """
+  enabled: Boolean
+}
+
+"""
+
+"""
+type PlaysWithMaxSequence {
+  """
+  list of plays
+  """
+  plays: [Play]
+
+  """
+  max sequence in plays
+  """
+  maxSequence: Float
+}
+
+"""
+
+"""
+type PlayGroup {
+  """
+  Event Id
+  """
+  eid: Int
+
+  """
+
+  """
+  gameid: String
+
+  """
+
+  """
+  driveid: String
+
+  """
+  PlayGroup Sequence
+  """
+  seq: Float
+
+  """
+  Start Reason
+  """
+  sr: String
+
+  """
+  End Reason
+  """
+  er: String
+
+  """
+  Duration
+  """
+  dur: String
+
+  """
+  First Downs
+  """
+  fd: Int
+
+  """
+
+  """
+  gain: Int
+
+  """
+  Penalty Yards
+  """
+  py: Int
+
+  """
+  Home Points
+  """
+  hPoints: Int
+
+  """
+  Away Points
+  """
+  aPoints: Int
+
+  """
+
+  """
+  scoretype: String
+
+  """
+  Period Number (Quarter)
+  """
+  qt: Int
+
+  """
+  Play Count
+  """
+  pc: Int
+
+  """
+  Scoring Drive?
+  """
+  sd: Boolean
+
+  """
+
+  """
+  clock: String
+
+  """
+
+  """
+  yardline: Int
+
+  """
+  Team Logo (SportRadarId)
+  """
+  tl: String
+
+  """
+
+  """
+  plays: [Play]
+}
+
+"""
+
+"""
+type SportbooksByCategory {
+  """
+  Category Id
+  """
+  cid: Int
+
+  """
+  Affiliate Id
+  """
+  afid: String
+
+  """
+  Short Affiliate ID
+  """
+  shortafid: String
+
+  """
+  SubAffiliate Id
+  """
+  safid: String
+
+  """
+  Category name
+  """
+  categoryName: String
+
+  """
+  Affiliate Url
+  """
+  affiliateURL: String
+
+  """
+  Main Affiliate
+  """
+  mainAffiliate: MainAffiliate
+
+  """
+  Is Link enabled
+  """
+  enabled: Boolean
+
+  """
+  Sportbook
+  """
+  sportsbooksadmin: Sportsbook
+}
+
+"""
+
+"""
+type MainAffiliate {
+  """
+  affiliate name
+  """
+  nam: String
+
+  """
+  Is Affiliate Enabled
+  """
+  enabled: Boolean
+}
+
+"""
+
+"""
+input EventInput {
+  """
+
+  """
+  eid: Int!
+
+  """
+
+  """
+  partids: [Int]!
+}
+
+"""
+
+"""
+type PicksPageType {
+  """
+
+  """
+  eid: String
+
+  """
+
+  """
+  consensusV2: [ConsensusV2]
+
+  """
+
+  """
+  stats: [pickStats]
+}
+
+"""
+
+"""
+type pickStats {
+  """
+  Statistic name
+  """
+  stat: String
+
+  """
+  Value
+  """
+  val: String
+
+  """
+  Identity
+  """
+  idty: String
+
+  """
+  EventId
+  """
+  eid: Int
+
+  """
+  participant Id
+  """
+  partid: Int
+
+  """
+  provider Id
+  """
+  paid: Int
+}
+
+"""
+
+"""
+type teamPerformanceType {
+  """
+
+  """
+  wins: Int
+
+  """
+
+  """
+  losses: Int
+
+  """
+
+  """
+  ties: Int
+
+  """
+
+  """
+  winPercentage: String
+
+  """
+
+  """
+  rank: String
+
+  """
+
+  """
+  streak: String
+
+  """
+
+  """
+  conferenceRank: String
+
+  """
+
+  """
+  divisionRank: String
+}
+
+"""
+
+"""
+type Trends {
+  """
+  Value Text
+  """
+  vltext: String
+
+  """
+  Value Number
+  """
+  vln: String
+
+  """
+  Participant By EventId
+  """
+  partbeid: Int
+
+  """
+  Identity
+  """
+  identity: String
+}
+
+"""
+
+"""
+enum TopPerformerIdentity {
+  """
+
+  """
+  PASSING
+
+  """
+
+  """
+  RUSHING
+
+  """
+
+  """
+  RECEIVING
+}
+
+"""
+
+"""
+type TopPerformer {
+  """
+
+  """
+  topRosters: [TopPerformerRoster]
+
+  """
+
+  """
+  statistics: [StatisticByGroup]
+}
+
+"""
+
+"""
+type TopPerformerRoster {
+  """
+
+  """
+  teamRoster: TeamRoster
+
+  """
+
+  """
+  player: Player
+}
+
+"""
+
+"""
+type EventFilterGroupLegacy {
+  """
+  Event filter Group Id
+  """
+  egid: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+
+  """
+  settings(did: Int, enabled: Boolean): EventFilterGroupSettings
+}
+
+"""
+
+"""
+type EventFilterGroupSettings {
+  """
+  Event Filter Group Id
+  """
+  egid: String
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Name
+  """
+  nam: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+
+  """
+  active: Boolean
+}
+
+"""
+
+"""
+type EventFilterGroupWithEvents {
+  """
+  Event filter Group Id
+  """
+  egid: String
+
+  """
+  Events Grouped by Sport
+  """
+  eventsBySport: [EventsBySport]
+
+  """
+
+  """
+  eventsByFilter: [EventsByFilter]
+
+  """
+
+  """
+  maxSequences: MaxSequences
+}
+
+"""
+
+"""
+type EventsBySport {
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  events: [Event]
+}
+
+"""
+
+"""
+type EventsByFilter {
+  """
+
+  """
+  efid: String
+
+  """
+
+  """
+  spid: Int
+
+  """
+
+  """
+  lids: [Int]
+
+  """
+
+  """
+  sortmode: String
+
+  """
+
+  """
+  events: [Event]
+}
+
+"""
+
+"""
+type EventFilterGroupWithEventIds {
+  """
+  Event Group Id
+  """
+  egid: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Event Ids grouped by Sport
+  """
+  eventIdsBySport(did: Int): [EventIdsBySport]
+
+  """
+
+  """
+  eventIdsByFilter(did: Int): [eventIdsByFilter]
+}
+
+"""
+
+"""
+type EventIdsBySport {
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+
+  """
+  Array of Event Ids
+  """
+  eids: [Int]
+}
+
+"""
+
+"""
+type eventIdsByFilter {
+  """
+  EventFilterId
+  """
+  efid: String
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Market Type Id
+  """
+  mtid: Int
+
+  """
+  Array of Event Ids
+  """
+  eids: [Int]
+
+  """
+  Array of Leagues Ids
+  """
+  lids: [Int]
+
+  """
+
+  """
+  sortmode: String
+}
+
+"""
+
+"""
+input SportbooksByCategoryArgs {
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+  Category Id
+  """
+  cid: Int
+
+  """
+  Sport Id
+  """
+  spid: Int
+
+  """
+  Enabled
+  """
+  enabled: Boolean
+
+  """
+  Sort With
+  """
+  sortWith: Boolean
+
+  """
+  Family Id
+  """
+  famid: Int
+}
+
+"""
+
+"""
+input EventFilterGroupsArgs {
+  """
+  Event Filter Group
+  """
+  efgids: [String]
+
+  """
+  Site id
+  """
+  sitid: Int
+
+  """
+  Time zone offset
+  """
+  timeZoneOffset: Float
+
+  """
+  Start date
+  """
+  startdate: Float
+
+  """
+  Setting to manage live events
+  """
+  showLive: ShowLive
+
+  """
+  Setting to filter event filter groups by sport ids
+  """
+  spid: [Int]
+
+  """
+
+  """
+  marketTypes: [EventFilterGroupMarketTypeSetting]
+
+  """
+
+  """
+  active: Boolean
+
+  """
+
+  """
+  enabled: Boolean
+}
+
+"""
+
+"""
+type EventsCarousel {
+  """
+
+  """
+  eventFilterGroups: [EventFilterGroup]
+
+  """
+
+  """
+  sportbooksByCategory: [SportbooksByCategory]
+
+  """
+
+  """
+  maxSequences: MaxSequences
+}
+
+"""
+
+"""
+type New {
+  """
+  headLines
+  """
+  hl: String
+
+  """
+  notes
+  """
+  not: String
+
+  """
+  analysis
+  """
+  anly: String
+
+  """
+  priority
+  """
+  prio: Int
+
+  """
+  InjuryId
+  """
+  inid: Int
+
+  """
+  Player id
+  """
+  pid: Int
+
+  """
+  season id
+  """
+  seid: Int
+
+  """
+  Active
+  """
+  act: String
+
+  """
+  Timestamp
+  """
+  tim: Float
+
+  """
+
+  """
+  date: Float
+}
+
+"""
+
+"""
+type TwitterResponse {
+  """
+
+  """
+  first: [TwitterFeed]
+
+  """
+
+  """
+  second: [TwitterFeed]
+
+  """
+
+  """
+  firstCacheStatus: String
+
+  """
+
+  """
+  secondCacheStatus: String
+}
+
+"""
+
+"""
+type TwitterFeed {
+  """
+
+  """
+  id: String
+
+  """
+
+  """
+  text: String
+
+  """
+
+  """
+  image: String
+
+  """
+
+  """
+  date: String
+
+  """
+
+  """
+  twitter: String
+}
+
+"""
+
+"""
+scalar TeamDepthChart
+
+"""
+
+"""
+scalar WinnerLineByEvent
+
+"""
+
+"""
+scalar LinesByPlayer
+
+"""
+
+"""
+type MarketsByPlayer {
+  """
+
+  """
+  seid: Int
+
+  """
+
+  """
+  mtids: [Int]
+}
+
+"""
+
+"""
+type PlayerDetails {
+  """
+
+  """
+  nextEvent: Event
+
+  """
+
+  """
+  teamRoster: TeamRoster
+}
+
+"""
+
+"""
+enum LINESOPTIONS {
+  """
+
+  """
+  BESTLINES
+
+  """
+
+  """
+  CURRENTLINES
+
+  """
+
+  """
+  OPENINGLINES
+}
+
+"""
+
+"""
+scalar PropLines
+
+"""
+
+"""
+type MatchupDates {
+  """
+
+  """
+  dates: [String]
+}
+
+"""
+
+"""
+input EidsByPartid {
+  """
+
+  """
+  partid: Int!
+
+  """
+
+  """
+  eids: [Int!]!
+}
+
+"""
+
+"""
+input LineGroupArgs {
+  """
+
+  """
+  eid: Int!
+
+  """
+
+  """
+  mtid: Int!
+
+  """
+
+  """
+  partid: Int!
+
+  """
+
+  """
+  boid: Int!
+
+  """
+
+  """
+  sbid: Int
+
+  """
+
+  """
+  marketTypeLayout: MarketTypeLayout!
+}
+
+"""
+
+"""
+input MenuOptionInput {
+  """
+  Menu Option Id
+  """
+  mid: String
+
+  """
+  Site Id
+  """
+  sitid: Int
+
+  """
+  Menu Bar Id
+  """
+  mbid: Int
+
+  """
+
+  """
+  parentlink: String
+
+  """
+  Menu level
+  """
+  level: Int
+}
+
+"""
+
+"""
+input MenuOptionSettingInput {
+  """
+  Menu Option Id
+  """
+  mid: String
+
+  """
+  Domain Id
+  """
+  did: Int
+
+  """
+
+  """
+  title: String
+
+  """
+
+  """
+  url: String
+
+  """
+
+  """
+  iconurl: String
+
+  """
+  List of sizes to show menu option icon
+  """
+  showicon: String
+
+  """
+  List of sizes to show menu option name
+  """
+  showtext: String
+
+  """
+
+  """
+  enabled: Boolean
+
+  """
+  Order of menu option
+  """
+  ord: Int
+}
+
+"""
+
+"""
+type MaxSequence {
+  """
+
+  """
+  maxSequence: Float
+}

@@ -1,0 +1,22 @@
+spectaql:
+  embeddable: false
+  oneFile: true
+
+introspection:
+  schemaFile: ./sdl.gql
+
+
+info:
+  title: SportsbookReview GraphQL API Reference
+  description: SportsbookReview GraphQL API
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: https://ms.production-us-east-1.bookmakersreview.com/ms-odds-v2/odds-v2-service
+    description: Production
+    production: true
+  - url: https://www.oddstrader.com/odds-v2/odds-v2-service
+    description: Oddstrader production
+    production: true
