@@ -1,6 +1,8 @@
 spectaql:
   embeddable: false
   oneFile: true
+  displayAllServers: true
+  targetDir: .
 
 introspection:
   schemaFile: ./sdl.gql
@@ -17,6 +19,7 @@ servers:
   - url: https://ms.production-us-east-1.bookmakersreview.com/ms-odds-v2/odds-v2-service
     description: Production
     production: true
+
   - url: https://www.oddstrader.com/odds-v2/odds-v2-service
     description: Oddstrader production
     production: true
